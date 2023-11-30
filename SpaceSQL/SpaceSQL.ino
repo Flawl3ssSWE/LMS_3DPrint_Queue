@@ -29,17 +29,18 @@
 #include <MySQL_Connection.h>
 #include <MySQL_Cursor.h>
 #include <string>
+#include "TotalltNotJonatansMasterPassword.h"
 
 IPAddress server_addr(192,168,1,38);  // IP of the MySQL *server* here
-char user[] = "root";              // MySQL user login username
-char password[] = "password";        // MySQL user login password
+char user[] = MySQLUsr;              // MySQL user login username
+char password[] = MySQLPsw;        // MySQL user login password
 
 // Sample query
 char INSERT_SQL[512];
 
 // WiFi card example
-char ssid[] = "SSID";         // your SSID
-char pass[] = "WiFiPassword";     // your SSID Password
+char ssid[] = WiFiSSID;         // your SSID
+char pass[] = WiFiPswd;     // your SSID Password
 
 WiFiClient client;                 // Use this for WiFi instead of EthernetClient
 MySQL_Connection conn(&client);

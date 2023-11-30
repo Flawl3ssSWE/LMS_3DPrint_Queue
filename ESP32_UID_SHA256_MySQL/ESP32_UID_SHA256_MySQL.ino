@@ -2,7 +2,11 @@
 #include <MFRC522.h>
 #include <WiFi.h>
 #include "mbedtls/md.h"
+#include <MySQL_Connection.h>
+#include <MySQL_Cursor.h>
+#include "TotalltNotJonatansMasterPassword.h"
 
+#define DEBUG
 #define SS_PIN 21
 #define RST_PIN 22
 
@@ -11,14 +15,30 @@ MFRC522::MIFARE_Key key;
 
 byte previousUID[4] = {0, 0, 0, 0}; // Initialize with an invalid UID
 
+
+char INSERT_SQL[1024];
+IPAddress server_addr(192,168,1,38);  // IP of the MySQL *server* here
+char user[] = MySQLUsr;              // MySQL user login username
+char password[] = MySQLPsw;        // MySQL user login password
+char ssid[] = WiFiSSID;         // your SSID
+char pass[] = WiFiPswd;     // your SSID Password
+
+WiFiClient client;                 // Use this for WiFi instead of EthernetClient
+MySQL_Connection conn(&client);
+MySQL_Cursor* cursor;
+
+
 void setup() {
-  Serial.begin(9600);
+  Serial.begin(250000);
   SPI.begin();          // Init SPI bus
   rfid.PCD_Init();      // Init MFRC522
 
   for (byte i = 0; i < 6; i++) {
     key.keyByte[i] = 0xFF;
   }
+
+  connectToWifi();
+  connectToMySQL();
 }
 
 void loop() {
@@ -32,17 +52,26 @@ void loop() {
   }
 
   if (!compareUID(nuidPICC, previousUID)) {
-    calculateAndPrintSHA256(nuidPICC, rfid.uid.size);
+    String SHA256UID = calculateSHA256FromUID(nuidPICC, rfid.uid.size);
+
+    #ifdef DEBUG
+    Serial.println(SHA256UID);
+    #endif
+
+    insertIntoMySQL(SHA256UID);
     memcpy(previousUID, nuidPICC, sizeof(previousUID));
   } else {
     Serial.println("Same card as before");
   }
+  
+
+  
 
   rfid.PICC_HaltA();
   rfid.PCD_StopCrypto1();
 }
 
-void calculateAndPrintSHA256(byte *buffer, byte bufferSize) {
+String calculateSHA256FromUID(byte *buffer, byte bufferSize) {
   char payload[2 * bufferSize + 1]; // Each byte represented by 2 characters in HEX + null terminator
   mbedtls_md_context_t ctx;
   mbedtls_md_type_t md_type = MBEDTLS_MD_SHA256;
@@ -60,17 +89,22 @@ void calculateAndPrintSHA256(byte *buffer, byte bufferSize) {
   mbedtls_md_finish(&ctx, shaResult);
   mbedtls_md_free(&ctx);
 
-  Serial.print("UID: ");
-  printHex(buffer, bufferSize);
-  Serial.print(" | SHA-256: ");
-
+  
+  String UIDSTRING =  "";
   for (byte i = 0; i < sizeof(shaResult); i++) {
     char str[3];
+    #ifdef DEBUG
     sprintf(str, "%02x", (int)shaResult[i]);
     Serial.print(str);
+    #endif
+    UIDSTRING += str;
   }
-
+  #ifdef DEBUG
   Serial.println();
+  Serial.println(UIDSTRING);
+  Serial.println();
+  #endif
+  return UIDSTRING;
 }
 
 void printHex(byte *buffer, byte bufferSize) {
@@ -82,4 +116,54 @@ void printHex(byte *buffer, byte bufferSize) {
 
 bool compareUID(byte *uid1, byte *uid2) {
   return memcmp(uid1, uid2, sizeof(previousUID)) == 0;
+}
+
+void insertIntoMySQL(String SHA256UID){
+  char SHA256UID2[64];
+  SHA256UID.toCharArray(SHA256UID2, 64);
+  sprintf(INSERT_SQL, "INSERT INTO printingQueue.queue (Name, PhoneNumber, RFID, Printquota) VALUE ('Test', '07000000', '%s', '100000')", SHA256UID2);
+  cursor = new MySQL_Cursor(&conn);
+  if (conn.connected()){
+      cursor->execute(INSERT_SQL);
+      Serial.println("*** INSERTED THIS MATE");
+      #ifdef DEBUG
+        Serial.println(INSERT_SQL);
+        Serial.println(SHA256UID);
+      #endif
+  }else{
+    Serial.println("cannot connect cannot insert wääh");
+  }
+    
+}
+
+void connectToMySQL(){
+  
+  Serial.print("Connecting to SQL...  ");
+  if (conn.connect(server_addr, 3306, user, password)){
+    Serial.println("OK.");
+
+      
+  }
+  else{
+    Serial.println("FAILED.");
+  }
+   
+  
+}
+
+void connectToWifi(){
+  WiFi.begin(ssid, pass);
+  int timeout = 40;
+  while (WiFi.status() != WL_CONNECTED && timeout > 0) {
+    delay(500);
+    Serial.print(".");
+    timeout--;
+  }
+  
+    Serial.println("\nConnected to network");
+    Serial.print("My IP address is: ");
+    Serial.println(WiFi.localIP());
+    
+    
+  
 }
