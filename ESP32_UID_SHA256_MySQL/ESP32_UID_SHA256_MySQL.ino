@@ -17,6 +17,8 @@ byte previousUID[4] = {0, 0, 0, 0}; // Initialize with an invalid UID
 
 
 char INSERT_SQL[1024];
+char SELECT_SQL[1024];
+
 IPAddress server_addr(192,168,1,38);  // IP of the MySQL *server* here
 char user[] = MySQLUsr;              // MySQL user login username
 char password[] = MySQLPsw;        // MySQL user login password
@@ -33,6 +35,8 @@ void setup() {
   SPI.begin();          // Init SPI bus
   rfid.PCD_Init();      // Init MFRC522
 
+  pinMode(27, INPUT_PULLDOWN);
+
   for (byte i = 0; i < 6; i++) {
     key.keyByte[i] = 0xFF;
   }
@@ -42,6 +46,8 @@ void setup() {
 }
 
 void loop() {
+  Serial.println(digitalRead(27));
+
   if (!rfid.PICC_IsNewCardPresent() || !rfid.PICC_ReadCardSerial()) {
     return;
   }
@@ -50,7 +56,7 @@ void loop() {
   for (byte i = 0; i < 4; i++) {
     nuidPICC[i] = rfid.uid.uidByte[i];
   }
-
+  switch mode:
   if (!compareUID(nuidPICC, previousUID)) {
     String SHA256UID = calculateSHA256FromUID(nuidPICC, rfid.uid.size);
 
@@ -61,7 +67,9 @@ void loop() {
     insertIntoMySQL(SHA256UID);
     memcpy(previousUID, nuidPICC, sizeof(previousUID));
   } else {
+    String SHA256UID = calculateSHA256FromUID(nuidPICC, rfid.uid.size);
     Serial.println("Same card as before");
+    selectFromMySQL(SHA256UID);
   }
   
 
@@ -119,9 +127,9 @@ bool compareUID(byte *uid1, byte *uid2) {
 }
 
 void insertIntoMySQL(String SHA256UID){
-  char SHA256UID2[64];
-  SHA256UID.toCharArray(SHA256UID2, 64);
-  sprintf(INSERT_SQL, "INSERT INTO printingQueue.queue (Name, PhoneNumber, RFID, Printquota) VALUE ('Test', '07000000', '%s', '100000')", SHA256UID2);
+  char SHA256UIDtoCharArray[64];
+  SHA256UID.toCharArray(SHA256UIDtoCharArray, 64);
+  sprintf(INSERT_SQL, "INSERT INTO printingQueue.queue (Name, PhoneNumber, RFID, Printquota) VALUE ('Test', '07000000', '%s', '100000')", SHA256UIDtoCharArray);
   cursor = new MySQL_Cursor(&conn);
   if (conn.connected()){
       cursor->execute(INSERT_SQL);
@@ -133,7 +141,48 @@ void insertIntoMySQL(String SHA256UID){
   }else{
     Serial.println("cannot connect cannot insert wääh");
   }
-    
+}
+
+void selectFromMySQL(String SHA256UID){
+  char SHA256UIDtoCharArray[64];
+  SHA256UID.toCharArray(SHA256UIDtoCharArray, 64);
+  sprintf(SELECT_SQL, "SELECT Name, PhoneNumber, Printquota FROM printingQueue.queue WHERE RFID = '%s'", SHA256UIDtoCharArray);
+  
+  MySQL_Cursor *cur_mem = new MySQL_Cursor(&conn);
+  // Supply the parameter for the query
+  // Here we use the QUERY_POP as the format string and query as the
+  // destination. This uses twice the memory so another option would be
+  // to allocate one buffer for all formatted queries or allocate the
+  // memory as needed (just make sure you allocate enough memory and
+  // free it when you're done!).
+
+  // Execute the query
+  cur_mem->execute(SELECT_SQL);
+  // Fetch the columns and print them
+  column_names *cols = cur_mem->get_columns();
+  for (int f = 0; f < cols->num_fields; f++) {
+    Serial.print(cols->fields[f]->name);
+    if (f < cols->num_fields-1) {
+      Serial.print(',');
+    }
+  }
+  Serial.println();
+  // Read the rows and print them
+  row_values *row = NULL;
+  do {
+    row = cur_mem->get_next_row();
+    if (row != NULL) {
+      for (int f = 0; f < cols->num_fields; f++) {
+        Serial.print(row->values[f]);
+        if (f < cols->num_fields-1) {
+          Serial.print(',');
+        }
+      }
+      Serial.println();
+    }
+  } while (row != NULL);
+  // Deleting the cursor also frees up memory used
+  delete cur_mem;
 }
 
 void connectToMySQL(){
@@ -159,11 +208,7 @@ void connectToWifi(){
     Serial.print(".");
     timeout--;
   }
-  
     Serial.println("\nConnected to network");
     Serial.print("My IP address is: ");
     Serial.println(WiFi.localIP());
-    
-    
-  
 }
