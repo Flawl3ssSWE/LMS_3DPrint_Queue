@@ -5,11 +5,14 @@
     #include <MySQL_Cursor.h>
     #include "connectWIFIandMySQL.h"
 
+    struct userData {
+        String Name;
+        String PhoneNumber;
+        String uniqueSHA256ID;
+        String Role;
+    }; 
 
-    void insertIntoMySQL(String SHA256UID);
-    void selectFromMySQL(String SHA256UID);
-
-
-
+    void addUserIntoMySQL(userData user);
+    void getUserFromMySQL(String SHA256UID);
 
 #endif //SQLFUNCTIONS_H

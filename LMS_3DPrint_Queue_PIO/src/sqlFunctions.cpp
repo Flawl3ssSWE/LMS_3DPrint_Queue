@@ -6,24 +6,26 @@ MySQL_Cursor* cursor;
 char INSERT_SQL[1024];
 char SELECT_SQL[1024];
 
-void insertIntoMySQL(String SHA256UID){
+
+
+void addUserIntoMySQL(userData user) {
   char SHA256UIDtoCharArray[64];
-  SHA256UID.toCharArray(SHA256UIDtoCharArray, 64);
-  sprintf(INSERT_SQL, "INSERT INTO printingQueue.queue (Name, PhoneNumber, RFID, Printquota, Admin) VALUE ('Test', '07000000', '%s', '100000', 0)", SHA256UIDtoCharArray);
+  user.uniqueSHA256ID.toCharArray(SHA256UIDtoCharArray, 64);
+  sprintf(INSERT_SQL, "INSERT INTO printingQueue.queue (Name, PhoneNumber, uniqueSHA256ID, Printquota, Role) VALUE ('%s', '%s', '%s', 0, '%s')", user.Name, user.PhoneNumber, user.uniqueSHA256ID, user.Role);
   cursor = new MySQL_Cursor(&conn);
   if (conn.connected()){
       cursor->execute(INSERT_SQL);
       Serial.println("*** INSERTED THIS MATE");
       #ifdef DEBUG
         Serial.println(INSERT_SQL);
-        Serial.println(SHA256UID);
+        Serial.println(user.uniqueSHA256ID);
       #endif
   }else{
-    Serial.println("cannot connect cannot insert wääh");
+    Serial.println("Cannot add user to MySQL");
   }
 }
 
-void selectFromMySQL(String SHA256UID){
+void getUserFromMySQL(String SHA256UID) {
   char SHA256UIDtoCharArray[64];
   SHA256UID.toCharArray(SHA256UIDtoCharArray, 64);
   sprintf(SELECT_SQL, "SELECT Name, PhoneNumber, Printquota FROM printingQueue.queue WHERE RFID = '%s'", SHA256UIDtoCharArray);

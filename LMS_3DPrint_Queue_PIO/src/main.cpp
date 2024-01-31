@@ -21,6 +21,7 @@ byte previousUID[4] = {0, 0, 0, 0}; // Initialize with an invalid UID
 String calculateSHA256FromUID(byte *buffer, byte bufferSize);
 bool compareUID(byte *uid1, byte *uid2);
 void printHex(byte *buffer, byte bufferSize);
+String readRFID();
 
 void setup() {
   Serial.begin(250000);
@@ -36,36 +37,39 @@ void setup() {
 }
 
 void loop() {
-  if (!rfid.PICC_IsNewCardPresent() || !rfid.PICC_ReadCardSerial()) {
-    return;
-  }
+  userData userAdd;
+  userAdd.Name = "Jonatan";
+  userAdd.PhoneNumber = "0701234567";
+  userAdd.uniqueSHA256ID = readRFID();
+  userAdd.Role = "Admin";
+  addUserIntoMySQL(userAdd);
+  Serial.println(userAdd.uniqueSHA256ID);
+}
 
-  byte nuidPICC[4];
-  for (byte i = 0; i < 4; i++) {
-    nuidPICC[i] = rfid.uid.uidByte[i];
-  }
+String readRFID() {
+  unsigned long startTime = millis();
 
-  if (!compareUID(nuidPICC, previousUID)) {
-    String SHA256UID = calculateSHA256FromUID(nuidPICC, rfid.uid.size);
-
-    #ifdef DEBUG
-    Serial.println(SHA256UID);
-    #endif
-
-    insertIntoMySQL(SHA256UID);
-    memcpy(previousUID, nuidPICC, sizeof(previousUID));
-  } else {
-    String SHA256UID = calculateSHA256FromUID(nuidPICC, rfid.uid.size);
-    Serial.println("Same card as before");
-    selectFromMySQL(SHA256UID);
+  byte uniqueID[4] = {};
+  while (uniqueID == NULL && (millis() - startTime > 5000)) {
+    if (!rfid.PICC_IsNewCardPresent() || !rfid.PICC_ReadCardSerial()) {
+      continue;
+    } else {
+      for (byte i = 0; i < 4; i++) {
+        uniqueID[i] = rfid.uid.uidByte[i];
+      }
+    }
   }
   
-  
-
-  
-
   rfid.PICC_HaltA();
   rfid.PCD_StopCrypto1();
+
+  String SHA256UID = calculateSHA256FromUID(uniqueID, rfid.uid.size);
+  
+  #ifdef DEBUG
+  Serial.println(SHA256UID);
+  #endif  
+
+  return SHA256UID;
 }
 
 String calculateSHA256FromUID(byte *buffer, byte bufferSize) {
