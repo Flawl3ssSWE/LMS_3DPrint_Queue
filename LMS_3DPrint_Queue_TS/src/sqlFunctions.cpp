@@ -1,3 +1,7 @@
+#include <Arduino.h>
+#include <MySQL_Connection.h>
+#include <MySQL_Cursor.h>
+#include "connectWIFIandMySQL.h"
 #include "sqlFunctions.h"
 
 MySQL_Cursor* cursor;
@@ -26,44 +30,43 @@ void addUserIntoMySQL(userData user) {
   }
 }
 
-void getUserFromMySQL(String SHA256UID) {
-  char SHA256UIDtoCharArray[64];
-  SHA256UID.toCharArray(SHA256UIDtoCharArray, 64);
-  sprintf(SELECT_SQL, "SELECT Name, PhoneNumber, Printquota FROM printingQueue.queue WHERE RFID = '%s'", SHA256UIDtoCharArray);
-  
-  MySQL_Cursor *cur_mem = new MySQL_Cursor(&conn);
-  // Supply the parameter for the query
-  // Here we use the QUERY_POP as the format string and query as the
-  // destination. This uses twice the memory so another option would be
-  // to allocate one buffer for all formatted queries or allocate the
-  // memory as needed (just make sure you allocate enough memory and
-  // free it when you're done!).
+userData getUserFromMySQL(String SHA256UID) {
+  // Convert SHA256UID to char array
+  char SHA256UIDtoCharArray[65];
+  SHA256UID.toCharArray(SHA256UIDtoCharArray, 65);
 
-  // Execute the query
+  // Create and execute the query
+  sprintf(SELECT_SQL, "SELECT Name, PhoneNumber, Printquota, Role FROM printingQueue.queue WHERE uniqueSHA256ID = '%s'", SHA256UIDtoCharArray);
+  MySQL_Cursor *cur_mem = new MySQL_Cursor(&conn);
   cur_mem->execute(SELECT_SQL);
-  // Fetch the columns and print them
+
+  // Get the returned user
   column_names *cols = cur_mem->get_columns();
-  for (int f = 0; f < cols->num_fields; f++) {
-    Serial.print(cols->fields[f]->name);
-    if (f < cols->num_fields-1) {
-      Serial.print(',');
-    }
+  row_values *row = cur_mem->get_next_row();
+
+  if (row == NULL) {
+    #ifdef DEBUG
+      Serial.println("No user found");
+    #endif  
+
+    userData userInfo;
+    userInfo.Name = "No user found";
+    userInfo.PhoneNumber = "No user found";
+    userInfo.Printquota = "No user found";
+    userInfo.Role = "No user found";
+    delete cur_mem;
+    return userInfo;
   }
-  Serial.println();
-  // Read the rows and print them
-  row_values *row = NULL;
-  do {
-    row = cur_mem->get_next_row();
-    if (row != NULL) {
-      for (int f = 0; f < cols->num_fields; f++) {
-        Serial.print(row->values[f]);
-        if (f < cols->num_fields-1) {
-          Serial.print(',');
-        }
-      }
-      Serial.println();
-    }
-  } while (row != NULL);
+
+  // Add the info to the struct
+  userData userInfo;
+  userInfo.Name = row->values[0];
+  userInfo.PhoneNumber = row->values[1];
+  userInfo.Printquota = row->values[2];
+  userInfo.Role = row->values[3];
+
   // Deleting the cursor also frees up memory used
   delete cur_mem;
+
+  return userInfo;
 }

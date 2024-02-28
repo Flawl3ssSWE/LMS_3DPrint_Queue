@@ -1,4 +1,8 @@
-#include "connectWIFIandMySQL.h"
+#include <Arduino.h>
+#include <WiFi.h>
+#include <MySQL_Connection.h>
+#include <MySQL_Cursor.h>
+#include "TotalltNotJonatansMasterPassword.h"
 
 IPAddress server_addr(192, 168, 1, 38);  // IP of the MySQL *server* here
 char user[] = MySQLUsr;                  // MySQL user login username

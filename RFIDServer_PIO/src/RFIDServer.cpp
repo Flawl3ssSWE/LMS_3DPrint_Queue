@@ -75,11 +75,11 @@ String readRFID() {
     } else {
       for (byte i = 0; i < 4; i++) {
         uniqueID[i] = rfid.uid.uidByte[i];
+        Serial.print(rfid.uid.uidByte[i], HEX);
       }
 
       rfid.PICC_HaltA();
       rfid.PCD_StopCrypto1();
-
       String SHA256UID = calculateSHA256FromUID(uniqueID, rfid.uid.size);
 
       #ifdef DEBUG
@@ -102,6 +102,11 @@ String calculateSHA256FromUID(byte *buffer, byte bufferSize) {
     sprintf(payload + 2 * i, "%02x", buffer[i]);
   }
   payload[2 * bufferSize] = '\0';
+
+  // Print payload
+  #ifdef DEBUG
+  Serial.println(payload);
+  #endif
 
   mbedtls_md_init(&ctx);
   mbedtls_md_setup(&ctx, mbedtls_md_info_from_type(md_type), 0);
