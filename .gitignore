@@ -3,3 +3,4 @@ ESP32_UID_SHA256_MySQL/TotalltNotJonatansMasterPassword.h
 SpaceSQL/TotalltNotJonatansMasterPassword.h
 LMS_3DPrint_Queue_PIO/src/TotalltNotJonatansMasterPassword.h
 RFIDServer/TotalltNotJonatansMasterPassword.h
+RFIDServer_PIO/src/TotalltNotJonatansMasterPassword.h
