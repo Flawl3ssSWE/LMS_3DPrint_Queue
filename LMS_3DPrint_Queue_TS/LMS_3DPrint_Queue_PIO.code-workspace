@@ -1,0 +1,12 @@
+{
+	"folders": [
+		{
+			"path": "../LMS_3DPrint_Queue_PIO"
+		},
+		{
+			"name": "LMS_3DPrint_Queue_TS",
+			"path": "."
+		}
+	],
+	"settings": {}
+}
