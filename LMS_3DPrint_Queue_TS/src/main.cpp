@@ -26,6 +26,7 @@ void setup() {
 }
 
 void loop() {
+  // Add user
   // userData userAdd;
   // userAdd.Name = "Jonatan";
   // userAdd.PhoneNumber = "0701234567";
@@ -38,18 +39,28 @@ void loop() {
   //   Serial.println(UID);
   // }
 
-  if (modifyUser()) {
-    Serial.println("User modified");
-  } else {
-    Serial.println("User not modified");
-  }
+  // Modify user
+  // if (modifyUser()) {
+  //   Serial.println("User modified");
+  // } else {
+  //   Serial.println("User not modified");
+  // }
 
+  // Check if admin
   // bool check = checkIfAdmin();
   // if (check) {
   //   Serial.println("Admin");
   // } else {
   //   Serial.println("Not admin");
   // }
+
+  // Delete user
+  if (deleteUser()) {
+    Serial.println("User deleted");
+  } else {
+    Serial.println("User not deleted");
+  }
+
   lv_timer_handler();
   delay(10000);
 }

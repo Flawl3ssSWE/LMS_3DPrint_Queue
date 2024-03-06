@@ -13,6 +13,7 @@
     userData getUserFromMySQL(String SHA256UID);
     bool checkIfUserExistsInMySQL(String SHA256UID);
     bool modifyUserInMySQL(userData userInfo);
+    bool deleteUserFromMySQL(String SHA256UID);
 
 
 #endif //SQLFUNCTIONS_H

@@ -4,5 +4,6 @@
     bool addUser();
     bool checkIfAdmin();
     bool modifyUser();
+    bool deleteUser();
 
 #endif

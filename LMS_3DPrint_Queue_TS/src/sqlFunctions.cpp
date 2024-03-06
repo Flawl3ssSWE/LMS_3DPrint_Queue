@@ -115,3 +115,18 @@ bool modifyUserInMySQL(userData userInfo) {
   delete cursor;
   return true;
 }
+
+bool deleteUserFromMySQL(String SHA256UID) {
+  // Convert SHA256UID to char array
+  char SHA256UIDtoCharArray[65];
+  SHA256UID.toCharArray(SHA256UIDtoCharArray, 65);
+
+  // Create and execute the query
+  sprintf(INSERT_SQL, "DELETE FROM printingQueue.queue WHERE uniqueSHA256ID = '%s'", SHA256UIDtoCharArray);
+  cursor = new MySQL_Cursor(&conn);
+  cursor->execute(INSERT_SQL);
+
+  // Deleting the cursor also frees up memory used
+  delete cursor;
+  return true;
+}

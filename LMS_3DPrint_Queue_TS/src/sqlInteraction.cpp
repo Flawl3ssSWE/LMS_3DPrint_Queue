@@ -62,3 +62,21 @@ bool modifyUser() {
     }
 }
 
+bool deleteUser() {
+    userData userInfo;
+    userInfo.uniqueSHA256ID = requestRFIDRemote();
+    if (userInfo.uniqueSHA256ID == "-1" ){return false;}
+
+    if (checkIfUserExistsInMySQL(userInfo.uniqueSHA256ID)) {
+        Serial.println("User exists");
+    } else {
+        Serial.println("User does not exist");
+        return false;
+    }
+
+    if (deleteUserFromMySQL(userInfo.uniqueSHA256ID)) {
+        return true;
+    } else {
+        return false;
+    }
+}
