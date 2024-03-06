@@ -20,7 +20,7 @@ void addUserIntoMySQL(userData user) {
 
   char SHA256UIDtoCharArray[65];
   user.uniqueSHA256ID.toCharArray(SHA256UIDtoCharArray, 65);
-  sprintf(INSERT_SQL, "INSERT INTO printingQueue.queue (Name, PhoneNumber, uniqueSHA256ID, Printquota, Role) VALUE ('%s', '%s', '%s', 0, '%s')", user.Name, user.PhoneNumber, SHA256UIDtoCharArray, user.Role);
+  sprintf(INSERT_SQL, "INSERT INTO printingQueue.users (Name, PhoneNumber, uniqueSHA256ID, Printquota, Role) VALUE ('%s', '%s', '%s', 0, '%s')", user.Name, user.PhoneNumber, SHA256UIDtoCharArray, user.Role);
   cursor = new MySQL_Cursor(&conn);
   if (conn.connected()){
       cursor->execute(INSERT_SQL);
@@ -40,7 +40,7 @@ bool checkIfUserExistsInMySQL(String SHA256UID) {
   Serial.print("G");
   Serial.print(SHA256UID);
   Serial.print("G\n");
-  sprintf(SELECT_SQL, "SELECT uniqueSHA256ID FROM printingQueue.queue WHERE uniqueSHA256ID = '%s'", SHA256UIDtoCharArray);
+  sprintf(SELECT_SQL, "SELECT uniqueSHA256ID FROM printingQueue.users WHERE uniqueSHA256ID = '%s'", SHA256UIDtoCharArray);
   cursor = new MySQL_Cursor(&conn);
   cursor->execute(SELECT_SQL);
   column_names *cols = cursor->get_columns();
@@ -66,7 +66,7 @@ userData getUserFromMySQL(String SHA256UID) {
   SHA256UID.toCharArray(SHA256UIDtoCharArray, 65);
 
   // Create and execute the query
-  sprintf(SELECT_SQL, "SELECT Name, PhoneNumber, Printquota, Role FROM printingQueue.queue WHERE uniqueSHA256ID = '%s'", SHA256UIDtoCharArray);
+  sprintf(SELECT_SQL, "SELECT Name, PhoneNumber, Printquota, Role FROM printingQueue.users WHERE uniqueSHA256ID = '%s'", SHA256UIDtoCharArray);
   MySQL_Cursor *cur_mem = new MySQL_Cursor(&conn);
   cur_mem->execute(SELECT_SQL);
 
@@ -107,7 +107,7 @@ bool modifyUserInMySQL(userData userInfo) {
   userInfo.uniqueSHA256ID.toCharArray(SHA256UIDtoCharArray, 65);
 
   // Create and execute the query
-  sprintf(INSERT_SQL, "UPDATE printingQueue.queue SET Name = '%s', PhoneNumber = '%s', Printquota = '%s', Role = '%s' WHERE uniqueSHA256ID = '%s'", userInfo.Name, userInfo.PhoneNumber, userInfo.Printquota, userInfo.Role, SHA256UIDtoCharArray);
+  sprintf(INSERT_SQL, "UPDATE printingQueue.users SET Name = '%s', PhoneNumber = '%s', Printquota = '%s', Role = '%s' WHERE uniqueSHA256ID = '%s'", userInfo.Name, userInfo.PhoneNumber, userInfo.Printquota, userInfo.Role, SHA256UIDtoCharArray);
   cursor = new MySQL_Cursor(&conn);
   cursor->execute(INSERT_SQL);
 
@@ -122,7 +122,7 @@ bool deleteUserFromMySQL(String SHA256UID) {
   SHA256UID.toCharArray(SHA256UIDtoCharArray, 65);
 
   // Create and execute the query
-  sprintf(INSERT_SQL, "DELETE FROM printingQueue.queue WHERE uniqueSHA256ID = '%s'", SHA256UIDtoCharArray);
+  sprintf(INSERT_SQL, "DELETE FROM printingQueue.users WHERE uniqueSHA256ID = '%s'", SHA256UIDtoCharArray);
   cursor = new MySQL_Cursor(&conn);
   cursor->execute(INSERT_SQL);
 
