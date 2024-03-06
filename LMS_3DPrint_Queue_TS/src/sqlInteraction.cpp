@@ -39,8 +39,7 @@ bool checkIfAdmin() {
     }
 }
 
-bool modifyUser() {
-    userData userInfo;
+bool modifyUser(userData userInfo) {
     userInfo.uniqueSHA256ID = requestRFIDRemote();
     if (userInfo.uniqueSHA256ID == "-1" ){return false;}
 
@@ -51,10 +50,6 @@ bool modifyUser() {
         return false;
     }
 
-    userInfo.Name = "Anton";
-    userInfo.PhoneNumber = "23456";
-    userInfo.Role = "Member";
-    userInfo.Printquota = "100";
     if (modifyUserInMySQL(userInfo)) {
         return true;
     } else {

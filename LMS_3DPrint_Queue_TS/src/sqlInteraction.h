@@ -3,7 +3,7 @@
 
     bool addUser();
     bool checkIfAdmin();
-    bool modifyUser();
+    bool modifyUser(userData userInfo);
     bool deleteUser();
 
 #endif
