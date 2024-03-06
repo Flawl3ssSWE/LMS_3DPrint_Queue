@@ -13,9 +13,13 @@ char SELECT_SQL[1024];
 
 
 void addUserIntoMySQL(userData user) {
-  // TODO verify that user does not exist 
-  char SHA256UIDtoCharArray[64];
-  user.uniqueSHA256ID.toCharArray(SHA256UIDtoCharArray, 64);
+  if (checkIfUserExistsInMySQL(user.uniqueSHA256ID)) {
+    Serial.println("User already exists");
+    return;
+  }
+
+  char SHA256UIDtoCharArray[65];
+  user.uniqueSHA256ID.toCharArray(SHA256UIDtoCharArray, 65);
   sprintf(INSERT_SQL, "INSERT INTO printingQueue.queue (Name, PhoneNumber, uniqueSHA256ID, Printquota, Role) VALUE ('%s', '%s', '%s', 0, '%s')", user.Name, user.PhoneNumber, SHA256UIDtoCharArray, user.Role);
   cursor = new MySQL_Cursor(&conn);
   if (conn.connected()){
@@ -28,6 +32,32 @@ void addUserIntoMySQL(userData user) {
   }else{
     Serial.println("Cannot add user to MySQL");
   }
+}
+
+bool checkIfUserExistsInMySQL(String SHA256UID) {
+  char SHA256UIDtoCharArray[65];
+  SHA256UID.toCharArray(SHA256UIDtoCharArray, 65);
+  Serial.print("G");
+  Serial.print(SHA256UID);
+  Serial.print("G\n");
+  sprintf(SELECT_SQL, "SELECT uniqueSHA256ID FROM printingQueue.queue WHERE uniqueSHA256ID = '%s'", SHA256UIDtoCharArray);
+  cursor = new MySQL_Cursor(&conn);
+  cursor->execute(SELECT_SQL);
+  column_names *cols = cursor->get_columns();
+  row_values *row = NULL;
+  row = cursor->get_next_row();
+  
+  if (row == NULL) {
+    #ifdef DEBUG
+      Serial.println("No user found");
+    #endif
+    
+    delete cursor;
+    return false;
+  }
+  Serial.print(row->values[0]);
+  delete cursor;
+  return true;
 }
 
 userData getUserFromMySQL(String SHA256UID) {

@@ -11,5 +11,7 @@
 
     void addUserIntoMySQL(userData user);
     userData getUserFromMySQL(String SHA256UID);
+    bool checkIfUserExistsInMySQL(String SHA256UID);
+
 
 #endif //SQLFUNCTIONS_H
