@@ -26,17 +26,24 @@ void setup() {
 }
 
 void loop() {
-  userData userAdd;
-  userAdd.Name = "Jonatan";
-  userAdd.PhoneNumber = "0701234567";
-  userAdd.uniqueSHA256ID = requestRFIDRemote();
-  userAdd.Role = "Admin";
-  if (userAdd.uniqueSHA256ID != "-1" ) {
-    addUserIntoMySQL(userAdd);
-    Serial.println(userAdd.uniqueSHA256ID);
-    bool UID = addUser();
-    Serial.println(UID);
+  // userData userAdd;
+  // userAdd.Name = "Jonatan";
+  // userAdd.PhoneNumber = "0701234567";
+  // userAdd.uniqueSHA256ID = requestRFIDRemote();
+  // userAdd.Role = "Admin";
+  // if (userAdd.uniqueSHA256ID != "-1" ) {
+  //   addUserIntoMySQL(userAdd);
+  //   Serial.println(userAdd.uniqueSHA256ID);
+  //   bool UID = addUser();
+  //   Serial.println(UID);
+  // }
+
+  if (modifyUser()) {
+    Serial.println("User modified");
+  } else {
+    Serial.println("User not modified");
   }
+
   // bool check = checkIfAdmin();
   // if (check) {
   //   Serial.println("Admin");

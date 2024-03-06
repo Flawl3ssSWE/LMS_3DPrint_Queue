@@ -3,5 +3,6 @@
 
     bool addUser();
     bool checkIfAdmin();
+    bool modifyUser();
 
 #endif

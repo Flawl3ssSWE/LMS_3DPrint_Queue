@@ -100,3 +100,18 @@ userData getUserFromMySQL(String SHA256UID) {
 
   return userInfo;
 }
+
+bool modifyUserInMySQL(userData userInfo) {
+  // Convert SHA256UID to char array
+  char SHA256UIDtoCharArray[65];
+  userInfo.uniqueSHA256ID.toCharArray(SHA256UIDtoCharArray, 65);
+
+  // Create and execute the query
+  sprintf(INSERT_SQL, "UPDATE printingQueue.queue SET Name = '%s', PhoneNumber = '%s', Printquota = '%s', Role = '%s' WHERE uniqueSHA256ID = '%s'", userInfo.Name, userInfo.PhoneNumber, userInfo.Printquota, userInfo.Role, SHA256UIDtoCharArray);
+  cursor = new MySQL_Cursor(&conn);
+  cursor->execute(INSERT_SQL);
+
+  // Deleting the cursor also frees up memory used
+  delete cursor;
+  return true;
+}
