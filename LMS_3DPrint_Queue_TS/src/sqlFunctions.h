@@ -25,5 +25,6 @@
     printData getFirstPrintFromQueueMySQL();
     bool deleteFirstPrintFromQueueMySQL();
     bool deleteUsersPrintFromQueueMySQL(String SHA256UID);
+    bool deleteEntireQueueMySQL();
 
 #endif //SQLFUNCTIONS_H

@@ -201,3 +201,11 @@ bool deleteUsersPrintFromQueueMySQL(String SHA256UID) {
   delete cursor;
   return true;
 }
+
+bool deleteEntireQueueMySQL() {
+  sprintf(INSERT_SQL, "DELETE FROM printingQueue.queue");
+  cursor = new MySQL_Cursor(&conn);
+  cursor->execute(INSERT_SQL);
+  delete cursor;
+  return true;
+}

@@ -89,6 +89,13 @@ void loop() {
   //   Serial.println("Print not deleted");
   // }
 
+  // Delete entire queue
+  // if (deleteEntireQueue()) {
+  //   Serial.println("Queue deleted");
+  // } else {
+  //   Serial.println("Queue not deleted");
+  // }
+
   lv_timer_handler();
   delay(10000);
 }
