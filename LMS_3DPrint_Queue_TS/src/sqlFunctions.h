@@ -9,11 +9,20 @@
         String Role;
     }; 
 
+    struct printData {
+        String Name;
+        String PhoneNumber;
+        String printWeight;
+        String printTime;
+    };
+
     void addUserIntoMySQL(userData user);
     userData getUserFromMySQL(String SHA256UID);
     bool checkIfUserExistsInMySQL(String SHA256UID);
     bool modifyUserInMySQL(userData userInfo);
     bool deleteUserFromMySQL(String SHA256UID);
-
+    bool addPrintIntoMySQL(String SHA256UID, String printWeight, String printTime);
+    printData getFirstPrintFromQueue();
+    bool deleteFirstPrintFromQueue();
 
 #endif //SQLFUNCTIONS_H

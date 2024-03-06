@@ -75,3 +75,19 @@ bool deleteUser() {
         return false;
     }
 }
+
+bool addPrintToQueue() {
+    String SHA256ID = requestRFIDRemote();
+    if (SHA256ID == "-1" ){return false;}
+
+    String printWeight;
+    String printTime;
+
+    // Add to printque
+    if (addPrintIntoMySQL(SHA256ID, printWeight, printTime)) {
+        return true;
+    } else {
+        return false;
+    }
+}
+

@@ -55,11 +55,32 @@ void loop() {
   // }
 
   // Delete user
-  if (deleteUser()) {
-    Serial.println("User deleted");
-  } else {
-    Serial.println("User not deleted");
-  }
+  // if (deleteUser()) {
+  //   Serial.println("User deleted");
+  // } else {
+  //   Serial.println("User not deleted");
+  // }
+
+  // Add print to queue
+  // if (addPrintToQueue()) {
+  //   Serial.println("Print added");
+  // } else {
+  //   Serial.println("Print not added");
+  // }
+
+  // Get first print from queue
+  // printData print = getFirstPrintFromQueue();
+  // Serial.println(print.Name);
+  // Serial.println(print.PhoneNumber);
+  // Serial.println(print.printWeight);
+  // Serial.println(print.printTime);
+
+  // Delete print from queue
+  // if (deleteFirstPrintFromQueue()) {
+  //   Serial.println("Print deleted");
+  // } else {
+  //   Serial.println("Print not deleted");
+  // }
 
   lv_timer_handler();
   delay(10000);

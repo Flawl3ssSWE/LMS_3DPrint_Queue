@@ -130,3 +130,62 @@ bool deleteUserFromMySQL(String SHA256UID) {
   delete cursor;
   return true;
 }
+
+bool addPrintIntoMySQL(String SHA256UID, String printWeight, String printTime) {
+  // Convert SHA256UID to char array
+  char SHA256UIDtoCharArray[65];
+  SHA256UID.toCharArray(SHA256UIDtoCharArray, 65);
+
+    userData userInfo;
+    userInfo = getUserFromMySQL(SHA256UID);
+    if (userInfo.Name == "No user found") {
+        Serial.println("User does not exist, cannot add print to queue");
+        return false;
+    }
+
+  // Create and execute the query
+  sprintf(INSERT_SQL, "INSERT INTO printingQueue.queue (Name, PhoneNumber, uniqueSHA256UID, printTime, printWeight) VALUE ('%s', '%s', '%s', '%s', '%s')", userInfo.Name, userInfo.PhoneNumber, SHA256UIDtoCharArray, printTime, printWeight);
+  cursor = new MySQL_Cursor(&conn);
+  cursor->execute(INSERT_SQL);
+
+  // Deleting the cursor also frees up memory used
+  delete cursor;
+  return true;
+}
+
+printData getFirstPrintFromQueue() {
+  printData printInfo;
+  sprintf(SELECT_SQL, "SELECT Name, PhoneNumber, printWeight, printTime FROM printingQueue.queue LIMIT 1");
+  cursor = new MySQL_Cursor(&conn);
+  cursor->execute(SELECT_SQL);
+  column_names *cols = cursor->get_columns();
+  row_values *row = cursor->get_next_row();
+
+  if (row == NULL) {
+    #ifdef DEBUG
+      Serial.println("No print found");
+    #endif
+
+    printInfo.Name = "No print found";
+    printInfo.PhoneNumber = "No print found";
+    printInfo.printWeight = "No print found";
+    printInfo.printTime = "No print found";
+    delete cursor;
+    return printInfo;
+  }
+
+  printInfo.Name = row->values[0];
+  printInfo.PhoneNumber = row->values[1];
+  printInfo.printWeight = row->values[3];
+  printInfo.printTime = row->values[4];
+  
+  return printInfo;
+}
+
+bool deleteFirstPrintFromQueue() {
+  sprintf(INSERT_SQL, "DELETE FROM printingQueue.queue LIMIT 1");
+  cursor = new MySQL_Cursor(&conn);
+  cursor->execute(INSERT_SQL);
+  delete cursor;
+  return true;
+}
