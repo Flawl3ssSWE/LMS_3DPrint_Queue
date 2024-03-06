@@ -62,14 +62,14 @@ void loop() {
   // }
 
   // Add print to queue
-  // if (addPrintToQueue()) {
+  // if (addPrintToQueueMySQL()) {
   //   Serial.println("Print added");
   // } else {
   //   Serial.println("Print not added");
   // }
 
   // Get first print from queue
-  // printData print = getFirstPrintFromQueue();
+  // printData print = getFirstPrintFromQueueMySQL();
   // Serial.println(print.Name);
   // Serial.println(print.PhoneNumber);
   // Serial.println(print.printWeight);
@@ -77,6 +77,13 @@ void loop() {
 
   // Delete print from queue
   // if (deleteFirstPrintFromQueue()) {
+  //   Serial.println("Print deleted");
+  // } else {
+  //   Serial.println("Print not deleted");
+  // }
+
+  // Delete users print from queue
+  // if (deleteUsersPrintFromQueue()) {
   //   Serial.println("Print deleted");
   // } else {
   //   Serial.println("Print not deleted");

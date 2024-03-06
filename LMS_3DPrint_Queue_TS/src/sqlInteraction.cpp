@@ -91,3 +91,13 @@ bool addPrintToQueue() {
     }
 }
 
+bool deleteUsersPrintFromQueue() {
+    String SHA256UID = requestRFIDRemote();
+    if (SHA256UID == "-1" ){return false;}
+
+    if (deleteUsersPrintFromQueueMySQL(SHA256UID)) {
+        return true;
+    } else {
+        return false;
+    }
+}

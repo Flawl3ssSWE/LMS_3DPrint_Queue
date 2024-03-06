@@ -153,7 +153,7 @@ bool addPrintIntoMySQL(String SHA256UID, String printWeight, String printTime) {
   return true;
 }
 
-printData getFirstPrintFromQueue() {
+printData getFirstPrintFromQueueMySQL() {
   printData printInfo;
   sprintf(SELECT_SQL, "SELECT Name, PhoneNumber, printWeight, printTime FROM printingQueue.queue LIMIT 1");
   cursor = new MySQL_Cursor(&conn);
@@ -182,8 +182,20 @@ printData getFirstPrintFromQueue() {
   return printInfo;
 }
 
-bool deleteFirstPrintFromQueue() {
+bool deleteFirstPrintFromQueueMySQL() {
   sprintf(INSERT_SQL, "DELETE FROM printingQueue.queue LIMIT 1");
+  cursor = new MySQL_Cursor(&conn);
+  cursor->execute(INSERT_SQL);
+  delete cursor;
+  return true;
+}
+
+bool deleteUsersPrintFromQueueMySQL(String SHA256UID) {
+  // Convert SHA256UID to char array
+  char SHA256UIDtoCharArray[65];
+  SHA256UID.toCharArray(SHA256UIDtoCharArray, 65);
+
+  sprintf(INSERT_SQL, "DELETE FROM printingQueue.queue WHERE uniqueSHA256UID = '%s'", SHA256UIDtoCharArray);
   cursor = new MySQL_Cursor(&conn);
   cursor->execute(INSERT_SQL);
   delete cursor;

@@ -7,5 +7,6 @@
     bool deleteUser();
     bool addPrintquota();
     bool addPrintToQueue();
+    bool deleteUsersPrintFromQueue();
 
 #endif

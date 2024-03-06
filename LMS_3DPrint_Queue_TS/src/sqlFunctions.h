@@ -22,7 +22,8 @@
     bool modifyUserInMySQL(userData userInfo);
     bool deleteUserFromMySQL(String SHA256UID);
     bool addPrintIntoMySQL(String SHA256UID, String printWeight, String printTime);
-    printData getFirstPrintFromQueue();
-    bool deleteFirstPrintFromQueue();
+    printData getFirstPrintFromQueueMySQL();
+    bool deleteFirstPrintFromQueueMySQL();
+    bool deleteUsersPrintFromQueueMySQL(String SHA256UID);
 
 #endif //SQLFUNCTIONS_H
