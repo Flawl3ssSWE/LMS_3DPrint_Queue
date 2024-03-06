@@ -15,10 +15,21 @@ MySQL_Connection conn(&client);           // Define MySQL_Connection
 
 void connectToMySQL() {
   Serial.print("Connecting to SQL...  ");
-  if (conn.connect(server_addr, 3306, user, password)) {
-    Serial.println("OK.");
-  } else {
-    Serial.println("FAILED.");
+  int attempts = 0;
+  while (attempts < 5) {
+    if (conn.connect(server_addr, 3306, user, password)) {
+      Serial.println("OK.");
+      break;
+    } else {
+      Serial.print("Attempt ");
+      Serial.print(attempts + 1);
+      Serial.println(" failed.");
+      attempts++;
+      delay(1000); // Wait for 1 second before retrying
+    }
+  }
+  if (attempts == 5) {
+    Serial.println("Connection to SQL failed after 5 attempts.");
   }
 }
 
