@@ -15,16 +15,22 @@
 #define DEBUG
 
 void setup() {
+  #ifdef ARDUINO_USB_CDC_ON_BOOT
+    delay(5000);
+  #endif
   Serial.begin(250000);
-  SPI.begin();          // Init SPI bus
+  // SPI.begin();          // Init SPI bus
 
   smartdisplay_init();
+  lv_disp_set_rotation(lv_disp_get_default(), LV_DISP_ROT_90);
   ui_init();
 
-  connectToWifi();
-  connectToMySQL();
 
-  lv_disp_set_rotation(lv_disp_get_default(), LV_DISP_ROT_90);
+  lv_timer_handler();
+  connectToWifi();
+  lv_timer_handler();
+  connectToMySQL();
+  // lv_timer_handler();
 }
 
 void loop() {
@@ -99,5 +105,5 @@ void loop() {
   // }
 
   lv_timer_handler();
-  delay(10000);
+  // delay(10000);
 }

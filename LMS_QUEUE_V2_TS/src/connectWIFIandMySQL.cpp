@@ -4,7 +4,7 @@
 #include <MySQL_Cursor.h>
 #include "TotalltNotJonatansMasterPassword.h"
 
-IPAddress server_addr(192, 168, 1, 38);  // IP of the MySQL *server* here
+IPAddress server_addr(192, 168, 1, 21);  // IP of the MySQL *server* here
 char user[] = MySQLUsr;                  // MySQL user login username
 char password[] = MySQLPsw;              // MySQL user login password
 char ssid[] = WiFiSSID;                   // your SSID
