@@ -10,6 +10,12 @@
 extern "C" {
 #endif
 
+void cancelButton(lv_event_t * e);
+void addPrintToQueueButton(lv_event_t * e);
+void scanCardButtonAction(lv_event_t * e);
+void arcHoursEventIncrement(lv_event_t * e);
+void arcMinutesEventIncrement(lv_event_t * e);
+
 #ifdef __cplusplus
 } /*extern "C"*/
 #endif

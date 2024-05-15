@@ -39,6 +39,7 @@ void setup() {
   }
 
   server.on("/get", HTTP_GET, [] (AsyncWebServerRequest *request) {
+        Serial.println("Got request");
         String UIDSHA256 = readRFID();
         request->send(200, "text/plain", UIDSHA256);
   });

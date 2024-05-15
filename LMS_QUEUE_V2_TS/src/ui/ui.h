@@ -13,8 +13,6 @@ extern "C" {
 #include "lvgl.h"
 
 #include "ui_helpers.h"
-#include "components/ui_comp.h"
-#include "components/ui_comp_hook.h"
 #include "ui_events.h"
 
 // SCREEN: ui_Queue_hueue
@@ -29,11 +27,42 @@ extern lv_obj_t * ui_queuespot1;
 extern lv_obj_t * ui_queuespot2;
 extern lv_obj_t * ui_queuespot3;
 extern lv_obj_t * ui_queuespot4;
+extern lv_obj_t * ui_queuespot5;
+extern lv_obj_t * ui_queuespot6;
+void ui_event_goToAddQueueScreenButton(lv_event_t * e);
+extern lv_obj_t * ui_goToAddQueueScreenButton;
+extern lv_obj_t * ui_goToAddQueueScreenButtonLabel;
+void ui_event_goToAddQueueScreenButton1(lv_event_t * e);
+extern lv_obj_t * ui_goToAddQueueScreenButton1;
+// SCREEN: ui_addToQueueScreen
+void ui_addToQueueScreen_screen_init(void);
+extern lv_obj_t * ui_addToQueueScreen;
+void ui_event_goToQueueScreenButton(lv_event_t * e);
+extern lv_obj_t * ui_goToQueueScreenButton;
+extern lv_obj_t * ui_goToQueueScreenButtonLabel;
+void ui_event_goToQueueScreenButton1(lv_event_t * e);
+extern lv_obj_t * ui_goToQueueScreenButton1;
+void ui_event_goToQueueScreenButtonLabel1(lv_event_t * e);
+extern lv_obj_t * ui_goToQueueScreenButtonLabel1;
+extern lv_obj_t * ui_Label3;
+void ui_event_scanCardButton(lv_event_t * e);
+extern lv_obj_t * ui_scanCardButton;
+extern lv_obj_t * ui_Label4;
+extern lv_obj_t * ui_Label5;
+extern lv_obj_t * ui_Label6;
+extern lv_obj_t * ui_Label7;
+void ui_event_arcHours(lv_event_t * e);
+extern lv_obj_t * ui_arcHours;
+void ui_event_arcMinutes(lv_event_t * e);
+extern lv_obj_t * ui_arcMinutes;
+extern lv_obj_t * ui_labelTimerHours;
+extern lv_obj_t * ui_labelTimerMinutes;
+extern lv_obj_t * ui_timerAndInfoLabel;
+extern lv_obj_t * ui_labelHours;
+extern lv_obj_t * ui_labelMinutes;
 extern lv_obj_t * ui____initial_actions0;
 
-
-
-
+LV_IMG_DECLARE(ui_img_lena80x80_png);    // assets/Lena80x80.png
 
 
 

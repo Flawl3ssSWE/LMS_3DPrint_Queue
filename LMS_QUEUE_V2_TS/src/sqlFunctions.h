@@ -16,15 +16,18 @@
         String printTime;
     };
 
+    extern printData printsInQueue[6];
+
     void addUserIntoMySQL(userData user);
     userData getUserFromMySQL(String SHA256UID);
     bool checkIfUserExistsInMySQL(String SHA256UID);
     bool modifyUserInMySQL(userData userInfo);
     bool deleteUserFromMySQL(String SHA256UID);
-    bool addPrintIntoMySQL(String SHA256UID, String printWeight, String printTime);
+    bool addPrintIntoMySQL(userData userInfo, String printWeight, String printTime, String SHA256UID);
     printData getFirstPrintFromQueueMySQL();
     bool deleteFirstPrintFromQueueMySQL();
     bool deleteUsersPrintFromQueueMySQL(String SHA256UID);
     bool deleteEntireQueueMySQL();
+    bool updateQueue();
 
 #endif //SQLFUNCTIONS_H

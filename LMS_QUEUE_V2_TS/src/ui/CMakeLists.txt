@@ -1,9 +1,9 @@
-SET(SOURCES components/ui_comp_roller1.c
-    components/ui_comp.c
-    screens/ui_Queue_hueue.c
+SET(SOURCES screens/ui_Queue_hueue.c
+    screens/ui_addToQueueScreen.c
     ui.c
     components/ui_comp_hook.c
     ui_helpers.c
-    ui_events.c)
+    ui_events.c
+    images/ui_img_lena80x80_png.c)
 
 add_library(ui ${SOURCES})

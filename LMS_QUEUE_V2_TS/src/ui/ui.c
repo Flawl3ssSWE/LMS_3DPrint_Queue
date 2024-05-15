@@ -21,7 +21,43 @@ lv_obj_t * ui_queuespot1;
 lv_obj_t * ui_queuespot2;
 lv_obj_t * ui_queuespot3;
 lv_obj_t * ui_queuespot4;
+lv_obj_t * ui_queuespot5;
+lv_obj_t * ui_queuespot6;
+void ui_event_goToAddQueueScreenButton(lv_event_t * e);
+lv_obj_t * ui_goToAddQueueScreenButton;
+lv_obj_t * ui_goToAddQueueScreenButtonLabel;
+void ui_event_goToAddQueueScreenButton1(lv_event_t * e);
+lv_obj_t * ui_goToAddQueueScreenButton1;
+
+
+// SCREEN: ui_addToQueueScreen
+void ui_addToQueueScreen_screen_init(void);
+lv_obj_t * ui_addToQueueScreen;
+void ui_event_goToQueueScreenButton(lv_event_t * e);
+lv_obj_t * ui_goToQueueScreenButton;
+lv_obj_t * ui_goToQueueScreenButtonLabel;
+void ui_event_goToQueueScreenButton1(lv_event_t * e);
+lv_obj_t * ui_goToQueueScreenButton1;
+void ui_event_goToQueueScreenButtonLabel1(lv_event_t * e);
+lv_obj_t * ui_goToQueueScreenButtonLabel1;
+lv_obj_t * ui_Label3;
+void ui_event_scanCardButton(lv_event_t * e);
+lv_obj_t * ui_scanCardButton;
+lv_obj_t * ui_Label4;
+lv_obj_t * ui_Label5;
+lv_obj_t * ui_Label6;
+lv_obj_t * ui_Label7;
+void ui_event_arcHours(lv_event_t * e);
+lv_obj_t * ui_arcHours;
+void ui_event_arcMinutes(lv_event_t * e);
+lv_obj_t * ui_arcMinutes;
+lv_obj_t * ui_labelTimerHours;
+lv_obj_t * ui_labelTimerMinutes;
+lv_obj_t * ui_timerAndInfoLabel;
+lv_obj_t * ui_labelHours;
+lv_obj_t * ui_labelMinutes;
 lv_obj_t * ui____initial_actions0;
+const lv_img_dsc_t * ui_imgset_lenax[1] = {&ui_img_lena80x80_png};
 
 ///////////////////// TEST LVGL SETTINGS ////////////////////
 #if LV_COLOR_DEPTH != 16
@@ -34,18 +70,84 @@ lv_obj_t * ui____initial_actions0;
 ///////////////////// ANIMATIONS ////////////////////
 
 ///////////////////// FUNCTIONS ////////////////////
+void ui_event_goToAddQueueScreenButton(lv_event_t * e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+    lv_obj_t * target = lv_event_get_target(e);
+    if(event_code == LV_EVENT_CLICKED) {
+        _ui_screen_change(&ui_addToQueueScreen, LV_SCR_LOAD_ANIM_NONE, 500, 0, &ui_addToQueueScreen_screen_init);
+    }
+}
+void ui_event_goToAddQueueScreenButton1(lv_event_t * e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+    lv_obj_t * target = lv_event_get_target(e);
+    if(event_code == LV_EVENT_CLICKED) {
+        _ui_screen_change(&ui_addToQueueScreen, LV_SCR_LOAD_ANIM_NONE, 500, 0, &ui_addToQueueScreen_screen_init);
+    }
+}
+void ui_event_goToQueueScreenButton(lv_event_t * e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+    lv_obj_t * target = lv_event_get_target(e);
+    if(event_code == LV_EVENT_CLICKED) {
+        _ui_screen_change(&ui_Queue_hueue, LV_SCR_LOAD_ANIM_NONE, 500, 0, &ui_Queue_hueue_screen_init);
+    }
+    if(event_code == LV_EVENT_CLICKED) {
+        cancelButton(e);
+    }
+}
+void ui_event_goToQueueScreenButton1(lv_event_t * e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+    lv_obj_t * target = lv_event_get_target(e);
+    if(event_code == LV_EVENT_CLICKED) {
+        addPrintToQueueButton(e);
+    }
+}
+void ui_event_goToQueueScreenButtonLabel1(lv_event_t * e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+    lv_obj_t * target = lv_event_get_target(e);
+    if(event_code == LV_EVENT_CLICKED) {
+        addPrintToQueueButton(e);
+    }
+}
+void ui_event_scanCardButton(lv_event_t * e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+    lv_obj_t * target = lv_event_get_target(e);
+    if(event_code == LV_EVENT_CLICKED) {
+        scanCardButtonAction(e);
+    }
+}
+void ui_event_arcHours(lv_event_t * e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+    lv_obj_t * target = lv_event_get_target(e);
+    if(event_code == LV_EVENT_VALUE_CHANGED) {
+        arcHoursEventIncrement(e);
+    }
+}
+void ui_event_arcMinutes(lv_event_t * e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+    lv_obj_t * target = lv_event_get_target(e);
+    if(event_code == LV_EVENT_VALUE_CHANGED) {
+        arcMinutesEventIncrement(e);
+    }
+}
 
 ///////////////////// SCREENS ////////////////////
 
 void ui_init(void)
 {
-    LV_EVENT_GET_COMP_CHILD = lv_event_register_id();
-
     lv_disp_t * dispp = lv_disp_get_default();
     lv_theme_t * theme = lv_theme_default_init(dispp, lv_palette_main(LV_PALETTE_BLUE), lv_palette_main(LV_PALETTE_RED),
                                                false, LV_FONT_DEFAULT);
     lv_disp_set_theme(dispp, theme);
     ui_Queue_hueue_screen_init();
+    ui_addToQueueScreen_screen_init();
     ui____initial_actions0 = lv_obj_create(NULL);
     lv_disp_load_scr(ui_Queue_hueue);
 }

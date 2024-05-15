@@ -4,8 +4,56 @@
 // Project name: SquareLine_Project
 
 #include "ui.h"
+#include "Arduino.h"
+#include "string.h"
 
 void Killr(lv_event_t * e)
 {
 	// Your code here
 }
+
+// void scanCardButtonAction(lv_event_t * e)
+// {
+// 	lv_event_code_t event_code = lv_event_get_code(e);
+// 	lv_obj_t * target = lv_event_get_target(e);
+
+// 	if(event_code == LV_EVENT_CLICKED) {
+//     //_ui_label_set_property(ui_timerAndInfoLabel, _UI_LABEL_PROPERTY_TEXT, "Scanning...");
+//     String SHA256UID = requestRFIDRemote();
+//     if (SHA256UID == "-1" ){return;}
+//     user = getUserFromMySQL(SHA256UID);
+//     if (user.Name == "No user found") {
+//       _ui_label_set_property(ui_timerAndInfoLabel, _UI_LABEL_PROPERTY_TEXT, "No user found, try again.");
+//     } else {
+//       _ui_label_set_property(ui_timerAndInfoLabel, _UI_LABEL_PROPERTY_TEXT, ("Hello " + user.Name).c_str());
+//     } 
+//     lv_timer_handler();
+// 	}
+// }
+
+// void arcHoursEventIncrement(lv_event_t * e)
+// {
+// 	int value = lv_arc_get_value(ui_arcHours);
+// 	char hourArray[3];
+// 	sprintf(hourArray, "%d", value);
+//     _ui_label_set_property(ui_labelTimerHours, _UI_LABEL_PROPERTY_TEXT, hourArray);
+
+// }
+
+// void arcMinutesEventIncrement(lv_event_t * e)
+// {
+// 	int value = lv_arc_get_value(ui_arcMinutes);
+// 	char minuteArray[3];
+// 	sprintf(minuteArray, "%d", value);
+// 	_ui_label_set_property(ui_labelTimerMinutes, _UI_LABEL_PROPERTY_TEXT, minuteArray);
+// }
+
+// void addPrintToQueueButton(lv_event_t * e)
+// {
+// 	// Your code here
+// }
+
+// void cancelButton(lv_event_t * e)
+// {
+// 	// Your code here
+// }

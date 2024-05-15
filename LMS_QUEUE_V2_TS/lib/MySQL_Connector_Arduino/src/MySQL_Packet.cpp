@@ -33,7 +33,7 @@
 #include <MySQL_Packet.h>
 #include <MySQL_Encrypt_Sha1.h>
 
-#define MYSQL_DATA_TIMEOUT  3000   // Wifi client wait in milliseconds
+#define MYSQL_DATA_TIMEOUT  10000   // Wifi client wait in milliseconds
 #define MYSQL_WAIT_INTERVAL 300    // WiFi client wait interval
 
 /*

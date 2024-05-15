@@ -76,20 +76,25 @@ bool deleteUser() {
     }
 }
 
-bool addPrintToQueue() {
-    String SHA256ID = requestRFIDRemote();
-    if (SHA256ID == "-1" ){return false;}
+// bool addPrintToQueue() {
+//     String SHA256ID = requestRFIDRemote();
+//     if (SHA256ID == "-1" ){return false;}
 
-    String printWeight;
-    String printTime;
+//     #ifdef DEBUG
+//         Serial.print("SHA256ID is: ");
+//         Serial.println(SHA256ID);
+//     #endif
 
-    // Add to printque
-    if (addPrintIntoMySQL(SHA256ID, printWeight, printTime)) {
-        return true;
-    } else {
-        return false;
-    }
-}
+//     String printWeight;
+//     String printTime;
+
+//     // Add to printque
+//     if (addPrintIntoMySQL(SHA256ID, printWeight, printTime)) {
+//         return true;
+//     } else {
+//         return false;
+//     }
+// }
 
 bool deleteUsersPrintFromQueue() {
     String SHA256UID = requestRFIDRemote();

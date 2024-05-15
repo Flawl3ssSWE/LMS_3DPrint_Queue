@@ -3,6 +3,7 @@
 #include <MySQL_Cursor.h>
 #include "connectWIFIandMySQL.h"
 #include "sqlFunctions.h"
+#include "TotalltNotJonatansMasterPassword.h"
 
 MySQL_Cursor* cursor;
 
@@ -10,7 +11,7 @@ MySQL_Cursor* cursor;
 char INSERT_SQL[1024];
 char SELECT_SQL[1024];
 
-
+#define DEBUG
 
 void addUserIntoMySQL(userData user) {
   if (checkIfUserExistsInMySQL(user.uniqueSHA256ID)) {
@@ -40,6 +41,16 @@ bool checkIfUserExistsInMySQL(String SHA256UID) {
   Serial.print("G");
   Serial.print(SHA256UID);
   Serial.print("G\n");
+
+  // Check if MySQL connection is still alive else reconnect
+  bool connectionConnectedInThisFunction = false;
+  
+  if(!conn.connected()) {
+    conn.close();
+    connectToMySQL();
+    connectionConnectedInThisFunction = true;
+  }
+
   sprintf(SELECT_SQL, "SELECT uniqueSHA256ID FROM printingQueue.users WHERE uniqueSHA256ID = '%s'", SHA256UIDtoCharArray);
   cursor = new MySQL_Cursor(&conn);
   cursor->execute(SELECT_SQL);
@@ -53,14 +64,33 @@ bool checkIfUserExistsInMySQL(String SHA256UID) {
     #endif
     
     delete cursor;
+
+    if (connectionConnectedInThisFunction) {
+      conn.close();
+    }
+
     return false;
   }
   Serial.print(row->values[0]);
   delete cursor;
+
+  if (connectionConnectedInThisFunction) {
+    conn.close();
+  }
+
   return true;
 }
 
 userData getUserFromMySQL(String SHA256UID) {
+  // Check if MySQL connection is still alive else reconnect
+  bool connectionConnectedInThisFunction = false;
+  
+  if(!conn.connected()) {
+    conn.close();
+    connectToMySQL();
+    connectionConnectedInThisFunction = true;
+  }
+  
   // Convert SHA256UID to char array
   char SHA256UIDtoCharArray[65];
   SHA256UID.toCharArray(SHA256UIDtoCharArray, 65);
@@ -85,6 +115,11 @@ userData getUserFromMySQL(String SHA256UID) {
     userInfo.Printquota = "No user found";
     userInfo.Role = "No user found";
     delete cur_mem;
+
+    if (connectionConnectedInThisFunction) {
+      conn.close();
+    }
+
     return userInfo;
   }
 
@@ -131,22 +166,29 @@ bool deleteUserFromMySQL(String SHA256UID) {
   return true;
 }
 
-bool addPrintIntoMySQL(String SHA256UID, String printWeight, String printTime) {
+bool addPrintIntoMySQL(userData userInfo, String printWeight, String printTime, String SHA256UID) {
   // Convert SHA256UID to char array
-  char SHA256UIDtoCharArray[65];
-  SHA256UID.toCharArray(SHA256UIDtoCharArray, 65);
-
-    userData userInfo;
-    userInfo = getUserFromMySQL(SHA256UID);
-    if (userInfo.Name == "No user found") {
-        Serial.println("User does not exist, cannot add print to queue");
-        return false;
-    }
-
+  #ifdef DEBUG
+    Serial.print("SHA256UID is: ");
+    Serial.println(SHA256UID);
+    Serial.print("printTime is: ");
+    Serial.println(printTime);
+    Serial.print("printWeight is: ");
+    Serial.println(printWeight);
+    Serial.print("Name is: "); 
+    Serial.println(userInfo.Name);
+    Serial.print("PhoneNumber is: ");
+    Serial.println(userInfo.PhoneNumber);
+  #endif
   // Create and execute the query
-  sprintf(INSERT_SQL, "INSERT INTO printingQueue.queue (Name, PhoneNumber, uniqueSHA256UID, printTime, printWeight) VALUE ('%s', '%s', '%s', '%s', '%s')", userInfo.Name, userInfo.PhoneNumber, SHA256UIDtoCharArray, printTime, printWeight);
+  sprintf(INSERT_SQL, "INSERT INTO printingQueue.queue (Name, PhoneNumber, uniqueSHA256UID, printTime, printWeight) VALUE ('%s', '%s', '%s', '%s', '%s')", userInfo.Name, userInfo.PhoneNumber, SHA256UID.c_str(), printTime, printWeight);
   cursor = new MySQL_Cursor(&conn);
   cursor->execute(INSERT_SQL);
+
+  #ifdef DEBUG
+    Serial.print("Insert String: ");
+    Serial.println(INSERT_SQL);
+  #endif
 
   // Deleting the cursor also frees up memory used
   delete cursor;
@@ -207,5 +249,48 @@ bool deleteEntireQueueMySQL() {
   cursor = new MySQL_Cursor(&conn);
   cursor->execute(INSERT_SQL);
   delete cursor;
+  return true;
+}
+printData printsInQueue[6];
+
+bool updateQueue() {
+  Serial.println("Updating queue (updateQueue)");
+  sprintf(SELECT_SQL, "SELECT Name, PhoneNumber, printWeight, printTime FROM printingQueue.queue LIMIT 6");
+  cursor = new MySQL_Cursor(&conn);
+  cursor->execute(SELECT_SQL);
+  column_names *cols = cursor->get_columns();
+  row_values *row = cursor->get_next_row();
+
+  if (row == NULL) {
+    #ifdef DEBUG
+      Serial.println("No print found");
+    #endif
+
+    for (int i = 0 ; i < 6 ; i++) {
+      printsInQueue[i].Name = " ";
+      printsInQueue[i].PhoneNumber = " ";
+      printsInQueue[i].printWeight = " ";
+      printsInQueue[i].printTime = " ";
+      row = cursor->get_next_row();
+     }
+    delete cursor;
+    return false;
+  }
+
+  for (int i = 0 ; i < 6 ; i++) {
+    if (row == NULL) {
+      printsInQueue[i].Name = " ";
+      printsInQueue[i].PhoneNumber = " ";
+      printsInQueue[i].printWeight = " ";
+      printsInQueue[i].printTime = " ";
+    } else {
+      printsInQueue[i].Name = row->values[0];
+      printsInQueue[i].PhoneNumber = row->values[1];
+      printsInQueue[i].printWeight = row->values[3];
+      printsInQueue[i].printTime = row->values[4];
+    }
+
+    row = cursor->get_next_row();
+  }
   return true;
 }
