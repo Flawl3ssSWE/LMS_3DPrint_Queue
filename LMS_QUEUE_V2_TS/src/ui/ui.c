@@ -12,11 +12,13 @@
 // SCREEN: ui_Queue_hueue
 void ui_Queue_hueue_screen_init(void);
 lv_obj_t * ui_Queue_hueue;
+void ui_event_Printer1(lv_event_t * e);
 lv_obj_t * ui_Printer1;
 lv_obj_t * ui_Printer2;
 lv_obj_t * ui_printerspot1;
 lv_obj_t * ui_printerspot2;
 lv_obj_t * ui_queue;
+void ui_event_queuespot1(lv_event_t * e);
 lv_obj_t * ui_queuespot1;
 lv_obj_t * ui_queuespot2;
 lv_obj_t * ui_queuespot3;
@@ -28,6 +30,8 @@ lv_obj_t * ui_goToAddQueueScreenButton;
 lv_obj_t * ui_goToAddQueueScreenButtonLabel;
 void ui_event_goToAddQueueScreenButton1(lv_event_t * e);
 lv_obj_t * ui_goToAddQueueScreenButton1;
+void ui_event_updateButton(lv_event_t * e);
+lv_obj_t * ui_updateButton;
 
 
 // SCREEN: ui_addToQueueScreen
@@ -57,7 +61,7 @@ lv_obj_t * ui_timerAndInfoLabel;
 lv_obj_t * ui_labelHours;
 lv_obj_t * ui_labelMinutes;
 lv_obj_t * ui____initial_actions0;
-const lv_img_dsc_t * ui_imgset_lenax[1] = {&ui_img_lena80x80_png};
+const lv_img_dsc_t * ui_imgset_1953216864[1] = {&ui_img_31439854};
 
 ///////////////////// TEST LVGL SETTINGS ////////////////////
 #if LV_COLOR_DEPTH != 16
@@ -70,6 +74,28 @@ const lv_img_dsc_t * ui_imgset_lenax[1] = {&ui_img_lena80x80_png};
 ///////////////////// ANIMATIONS ////////////////////
 
 ///////////////////// FUNCTIONS ////////////////////
+void ui_event_Printer1(lv_event_t * e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+    lv_obj_t * target = lv_event_get_target(e);
+    if(event_code == LV_EVENT_SHORT_CLICKED) {
+        printer1Click(e);
+    }
+    if(event_code == LV_EVENT_LONG_PRESSED) {
+        printer1LongClick(e);
+    }
+}
+void ui_event_queuespot1(lv_event_t * e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+    lv_obj_t * target = lv_event_get_target(e);
+    if(event_code == LV_EVENT_SHORT_CLICKED) {
+        queueSpot1Click(e);
+    }
+    if(event_code == LV_EVENT_LONG_PRESSED) {
+        queueSpot1LongClick(e);
+    }
+}
 void ui_event_goToAddQueueScreenButton(lv_event_t * e)
 {
     lv_event_code_t event_code = lv_event_get_code(e);
@@ -84,6 +110,14 @@ void ui_event_goToAddQueueScreenButton1(lv_event_t * e)
     lv_obj_t * target = lv_event_get_target(e);
     if(event_code == LV_EVENT_CLICKED) {
         _ui_screen_change(&ui_addToQueueScreen, LV_SCR_LOAD_ANIM_NONE, 500, 0, &ui_addToQueueScreen_screen_init);
+    }
+}
+void ui_event_updateButton(lv_event_t * e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+    lv_obj_t * target = lv_event_get_target(e);
+    if(event_code == LV_EVENT_CLICKED) {
+        updateButtonEventAction(e);
     }
 }
 void ui_event_goToQueueScreenButton(lv_event_t * e)

@@ -11,12 +11,16 @@
 #include "sqlFunctions.h"
 #include "httpRFID.h"
 #include "sqlInteraction.h"
+#include "lvgl.h"
+
 
 #define DEBUG
 
 TaskHandle_t Task1;
 void Task1code(void * pvParameters);
 void updateQueueUi();
+
+int selectedQueueSpot = 7;
 
 void setup() {
   #ifdef ARDUINO_USB_CDC_ON_BOOT
@@ -271,4 +275,68 @@ void updateQueueUi() {
       }
     }
   }
+  lv_timer_handler();
+}
+
+void updateButtonEventAction(lv_event_t * e)
+{
+	updateQueueUi();
+}
+
+
+
+
+void queueSpot1Click(lv_event_t * e)
+{
+  Serial.println("Queue spot 1 clicked");
+  
+  String queueSpot1Text = lv_label_get_text(ui_queuespot1);
+  if (queueSpot1Text[0] == '*') {
+    queueSpot1Text = queueSpot1Text.substring(1, queueSpot1Text.length()-1);
+    lv_color_t blackColor = lv_color_hex(0x000000);
+    lv_obj_set_style_text_color(ui_queuespot1, blackColor, LV_PART_MAIN | LV_STATE_DEFAULT);
+    selectedQueueSpot = 7;
+  } else {
+    lv_color_t new_color = lv_color_hex(0xFF0BB0); // Red color
+    lv_obj_set_style_text_color(ui_queuespot1, new_color, LV_PART_MAIN | LV_STATE_DEFAULT);
+    queueSpot1Text = "*" + queueSpot1Text + "*";
+    selectedQueueSpot = 0;
+  }
+  _ui_label_set_property(ui_queuespot1, _UI_LABEL_PROPERTY_TEXT, queueSpot1Text.c_str());
+
+}
+
+void queueSpot1LongClick(lv_event_t * e)
+{
+  Serial.println("Queue spot 1 Long Pressed");
+  _ui_label_set_property(ui_queue, _UI_LABEL_PROPERTY_TEXT, "Queue spot 1 Long Pressed");
+    lv_color_t new_color = lv_color_hex(0x00FF00); // Red color
+  lv_obj_set_style_text_color(ui_queuespot1, new_color, LV_PART_MAIN | LV_STATE_DEFAULT); 
+  String label1text = lv_label_get_text(ui_queuespot1);
+  if (label1text[0] == '*') {
+    label1text = label1text.substring(1, label1text.length()-1);
+  }
+  _ui_label_set_property(ui_queuespot1, _UI_LABEL_PROPERTY_TEXT, label1text.c_str());
+}
+
+
+void printer1Click(lv_event_t * e)
+{
+	// Your code here
+  if (selectedQueueSpot == 7) {
+    Serial.println("No print selected");
+    String printerSpot1 = lv_label_get_text(ui_printerspot1);
+    _ui_label_set_property(ui_printerspot1, _UI_LABEL_PROPERTY_TEXT, "No print selected");
+    delay(1000);
+    _ui_label_set_property(ui_printerspot1, _UI_LABEL_PROPERTY_TEXT, printerSpot1.c_str());
+  } else {
+    Serial.println("Print selected");
+    _ui_label_set_property(ui_printerspot1, _UI_LABEL_PROPERTY_TEXT, printsInQueue[selectedQueueSpot].Name.c_str());
+    selectedQueueSpot = 7;
+  }
+}
+
+void printer1LongClick(lv_event_t * e)
+{
+	// Your code here
 }

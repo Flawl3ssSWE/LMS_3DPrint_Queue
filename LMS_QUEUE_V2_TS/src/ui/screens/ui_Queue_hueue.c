@@ -17,6 +17,7 @@ void ui_Queue_hueue_screen_init(void)
     lv_obj_set_y(ui_Printer1, -370);
     lv_obj_set_align(ui_Printer1, LV_ALIGN_CENTER);
     lv_label_set_text(ui_Printer1, "Printer Bert");
+    lv_obj_add_flag(ui_Printer1, LV_OBJ_FLAG_CLICKABLE);     /// Flags
     lv_obj_set_style_text_decor(ui_Printer1, LV_TEXT_DECOR_UNDERLINE, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_font(ui_Printer1, &lv_font_montserrat_36, LV_PART_MAIN | LV_STATE_DEFAULT);
 
@@ -64,6 +65,9 @@ void ui_Queue_hueue_screen_init(void)
     lv_obj_set_x(ui_queuespot1, 0);
     lv_obj_set_y(ui_queuespot1, -100);
     lv_obj_set_align(ui_queuespot1, LV_ALIGN_CENTER);
+    lv_obj_add_flag(ui_queuespot1, LV_OBJ_FLAG_CLICKABLE);     /// Flags
+    lv_obj_set_style_text_color(ui_queuespot1, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_opa(ui_queuespot1, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_font(ui_queuespot1, &lv_font_montserrat_36, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_queuespot2 = lv_label_create(ui_Queue_hueue);
@@ -133,7 +137,18 @@ void ui_Queue_hueue_screen_init(void)
     lv_obj_add_flag(ui_goToAddQueueScreenButton1, LV_OBJ_FLAG_SCROLL_ON_FOCUS);     /// Flags
     lv_obj_clear_flag(ui_goToAddQueueScreenButton1, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
 
+    ui_updateButton = lv_imgbtn_create(ui_Queue_hueue);
+    lv_imgbtn_set_src(ui_updateButton, LV_IMGBTN_STATE_RELEASED, NULL, &ui_img_31439854, NULL);
+    lv_obj_set_height(ui_updateButton, 33);
+    lv_obj_set_width(ui_updateButton, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_x(ui_updateButton, 222);
+    lv_obj_set_y(ui_updateButton, -380);
+    lv_obj_set_align(ui_updateButton, LV_ALIGN_CENTER);
+
+    lv_obj_add_event_cb(ui_Printer1, ui_event_Printer1, LV_EVENT_ALL, NULL);
+    lv_obj_add_event_cb(ui_queuespot1, ui_event_queuespot1, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui_goToAddQueueScreenButton, ui_event_goToAddQueueScreenButton, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui_goToAddQueueScreenButton1, ui_event_goToAddQueueScreenButton1, LV_EVENT_ALL, NULL);
+    lv_obj_add_event_cb(ui_updateButton, ui_event_updateButton, LV_EVENT_ALL, NULL);
 
 }

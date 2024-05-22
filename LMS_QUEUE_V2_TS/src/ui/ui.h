@@ -18,11 +18,13 @@ extern "C" {
 // SCREEN: ui_Queue_hueue
 void ui_Queue_hueue_screen_init(void);
 extern lv_obj_t * ui_Queue_hueue;
+void ui_event_Printer1(lv_event_t * e);
 extern lv_obj_t * ui_Printer1;
 extern lv_obj_t * ui_Printer2;
 extern lv_obj_t * ui_printerspot1;
 extern lv_obj_t * ui_printerspot2;
 extern lv_obj_t * ui_queue;
+void ui_event_queuespot1(lv_event_t * e);
 extern lv_obj_t * ui_queuespot1;
 extern lv_obj_t * ui_queuespot2;
 extern lv_obj_t * ui_queuespot3;
@@ -34,6 +36,8 @@ extern lv_obj_t * ui_goToAddQueueScreenButton;
 extern lv_obj_t * ui_goToAddQueueScreenButtonLabel;
 void ui_event_goToAddQueueScreenButton1(lv_event_t * e);
 extern lv_obj_t * ui_goToAddQueueScreenButton1;
+void ui_event_updateButton(lv_event_t * e);
+extern lv_obj_t * ui_updateButton;
 // SCREEN: ui_addToQueueScreen
 void ui_addToQueueScreen_screen_init(void);
 extern lv_obj_t * ui_addToQueueScreen;
@@ -62,7 +66,7 @@ extern lv_obj_t * ui_labelHours;
 extern lv_obj_t * ui_labelMinutes;
 extern lv_obj_t * ui____initial_actions0;
 
-LV_IMG_DECLARE(ui_img_lena80x80_png);    // assets/Lena80x80.png
+LV_IMG_DECLARE(ui_img_31439854);    // assets/update-12-32.png
 
 
 

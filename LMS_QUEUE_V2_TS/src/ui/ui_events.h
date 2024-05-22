@@ -10,6 +10,11 @@
 extern "C" {
 #endif
 
+void printer1Click(lv_event_t * e);
+void printer1LongClick(lv_event_t * e);
+void queueSpot1Click(lv_event_t * e);
+void queueSpot1LongClick(lv_event_t * e);
+void updateButtonEventAction(lv_event_t * e);
 void cancelButton(lv_event_t * e);
 void addPrintToQueueButton(lv_event_t * e);
 void scanCardButtonAction(lv_event_t * e);

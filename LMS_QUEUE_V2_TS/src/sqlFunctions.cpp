@@ -271,6 +271,8 @@ bool updateQueue() {
       printsInQueue[i].PhoneNumber = " ";
       printsInQueue[i].printWeight = " ";
       printsInQueue[i].printTime = " ";
+      Serial.print("No one in row: ");
+      Serial.println(i);
       row = cursor->get_next_row();
      }
     delete cursor;
@@ -289,7 +291,8 @@ bool updateQueue() {
       printsInQueue[i].printWeight = row->values[3];
       printsInQueue[i].printTime = row->values[4];
     }
-
+    Serial.print("Done getting row: ");
+    Serial.println(i);
     row = cursor->get_next_row();
   }
   return true;

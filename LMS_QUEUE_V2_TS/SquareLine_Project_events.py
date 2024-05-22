@@ -22,3 +22,19 @@ def addPrintToQueueButton(event_struct):
 def cancelButton(event_struct):
     return
 
+
+def updateButtonEventAction(event_struct):
+    return
+
+
+def queueSpot1Click(event_struct):
+    return
+
+
+def queueSpot1LongClick(event_struct):
+    return
+
+
+def printer1Click(event_struct):
+    return
+

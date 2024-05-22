@@ -1,8 +1,3 @@
-//
-// !!! WARNING !!! AUTO-GENERATED FILE!
-// PLEASE DO NOT MODIFY IT AND USE "platformio.ini":
-// https://docs.platformio.org/page/projectconf/section_env_build.html#build-flags
-//
 {
     "configurations": [
         {
@@ -243,7 +238,9 @@
                 "/home/flawl3ssswe/.platformio/packages/framework-arduinoespressif32/libraries/WebServer/src",
                 "/home/flawl3ssswe/.platformio/packages/framework-arduinoespressif32/libraries/WiFiProv/src",
                 "/home/flawl3ssswe/.platformio/packages/framework-arduinoespressif32/libraries/Wire/src",
-                ""
+                "",
+                "${workspaceFolder}/.pio/libdeps/esp32-8048S050C/lvgl/src/core",
+                "${workspaceFolder}/.pio/libdeps/esp32-8048S050C"
             ],
             "browse": {
                 "limitSymbolsToIncludedHeaders": true,
