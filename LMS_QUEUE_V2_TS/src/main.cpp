@@ -322,7 +322,10 @@ void queueSpot1LongClick(lv_event_t * e)
 
 void printer1Click(lv_event_t * e)
 {
-	// Your code here
+  String queueSpot1Text = lv_label_get_text(ui_queuespot1);
+	// Check which spot has been pressed and perform action
+
+  // If no print is selected
   if (selectedQueueSpot == 7) {
     Serial.println("No print selected");
     String printerSpot1 = lv_label_get_text(ui_printerspot1);
@@ -332,6 +335,26 @@ void printer1Click(lv_event_t * e)
   } else {
     Serial.println("Print selected");
     _ui_label_set_property(ui_printerspot1, _UI_LABEL_PROPERTY_TEXT, printsInQueue[selectedQueueSpot].Name.c_str());
+  
+  // Remove formatting from pressed name
+    if (selectedQueueSpot == 0 && queueSpot1Text[0] == '*') {
+      // Modify the label
+      Serial.print(queueSpot1Text);
+      Serial.println(": Print 0 add to queue");
+      queueSpot1Text = queueSpot1Text.substring(1, queueSpot1Text.length()-1);
+      lv_color_t blackColor = lv_color_hex(0x000000);
+      lv_obj_set_style_text_color(ui_queuespot1, blackColor, LV_PART_MAIN | LV_STATE_DEFAULT);
+      _ui_label_set_property(ui_queuespot1, _UI_LABEL_PROPERTY_TEXT, queueSpot1Text.c_str());
+
+      // Modify the SQL database
+      // Create request
+      Serial.println(printsInQueue[0].Name);
+      updatePrintBasedOnID(printsInQueue[0].id, Knut);
+      for (int i = 0; i < 6; i++) {
+        Serial.println(printsInQueue[i].Name);
+        Serial.println(printsInQueue[i].id);
+      }
+    }
     selectedQueueSpot = 7;
   }
 }

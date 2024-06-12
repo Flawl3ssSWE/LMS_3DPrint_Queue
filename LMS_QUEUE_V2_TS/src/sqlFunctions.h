@@ -14,9 +14,18 @@
         String PhoneNumber;
         String printWeight;
         String printTime;
+        String printer;
+        String startedPrintingTimestamp;
+        int id;
     };
 
     extern printData printsInQueue[6];
+    extern printData printsPrinting[2];
+
+    enum printStatus {
+        Knut,
+        Klumpen
+    };
 
     void addUserIntoMySQL(userData user);
     userData getUserFromMySQL(String SHA256UID);
@@ -29,5 +38,6 @@
     bool deleteUsersPrintFromQueueMySQL(String SHA256UID);
     bool deleteEntireQueueMySQL();
     bool updateQueue();
+    bool updatePrintBasedOnID(int id, int printer);
 
 #endif //SQLFUNCTIONS_H

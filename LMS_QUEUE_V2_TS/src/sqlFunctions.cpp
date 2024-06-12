@@ -252,10 +252,11 @@ bool deleteEntireQueueMySQL() {
   return true;
 }
 printData printsInQueue[6];
+printData printsPrinting[2];
 
 bool updateQueue() {
   Serial.println("Updating queue (updateQueue)");
-  sprintf(SELECT_SQL, "SELECT Name, PhoneNumber, printWeight, printTime FROM printingQueue.queue LIMIT 6");
+  sprintf(SELECT_SQL, "SELECT Name, PhoneNumber, printWeight, printTime, printer, startedPrintingTimestamp, id FROM printingQueue.queue LIMIT 6");
   cursor = new MySQL_Cursor(&conn);
   cursor->execute(SELECT_SQL);
   column_names *cols = cursor->get_columns();
@@ -286,14 +287,44 @@ bool updateQueue() {
       printsInQueue[i].printWeight = " ";
       printsInQueue[i].printTime = " ";
     } else {
-      printsInQueue[i].Name = row->values[0];
-      printsInQueue[i].PhoneNumber = row->values[1];
-      printsInQueue[i].printWeight = row->values[3];
-      printsInQueue[i].printTime = row->values[4];
+      if (row->values[7] == "0" || row->values[7] == "1") {
+        #ifdef DEBUG
+          Serial.println("Added to printsPrinting");
+        #endif
+        printsPrinting[i].Name = row->values[0];
+        printsPrinting[i].PhoneNumber = row->values[1];
+        printsPrinting[i].printWeight = row->values[2];
+        printsPrinting[i].printTime = row->values[3];
+        printsPrinting[i].printer = row->values[4];
+        printsPrinting[i].startedPrintingTimestamp = row->values[5];
+        printsPrinting[i].id = String(row->values[6]).toInt();
+      } else {
+        #ifdef DEBUG
+          Serial.println("Added to printsInQueue");
+        #endif
+        printsInQueue[i].Name = row->values[0];
+        printsInQueue[i].PhoneNumber = row->values[1];
+        printsInQueue[i].printWeight = row->values[2];
+        printsInQueue[i].printTime = row->values[3];
+        printsPrinting[i].id = String(row->values[6]).toInt();
+      }
+
+      Serial.print("Done getting row: ");
+      Serial.println(i);
+      row = cursor->get_next_row();
     }
-    Serial.print("Done getting row: ");
-    Serial.println(i);
-    row = cursor->get_next_row();
   }
+  return true;
+}
+
+bool updatePrintBasedOnID(int id, int printer) {
+  #ifdef DEBUG
+      Serial.println("Updating print based on ID");
+  #endif
+  sprintf(INSERT_SQL, "UPDATE printingQueue.queue SET printer = '%d' WHERE Id = '%d'", printer, id);
+  Serial.println(INSERT_SQL);
+  cursor = new MySQL_Cursor(&conn);
+  cursor->execute(INSERT_SQL);
+  delete cursor;
   return true;
 }

@@ -82,7 +82,7 @@
               {
                 "nid": 1639049521,
                 "strtype": "OBJECT/Clickable",
-                "strval": "False",
+                "strval": "True",
                 "InheritedType": 2
               },
               {
@@ -310,6 +310,136 @@
                 "strtype": "LABEL/Recolor",
                 "strval": "False",
                 "InheritedType": 2
+              },
+              {
+                "disabled": false,
+                "nid": -1770864158,
+                "strtype": "LABEL/EventHandler",
+                "strval": "SHORT_CLICKED",
+                "childs": [
+                  {
+                    "nid": 334722310,
+                    "strtype": "_custom/name",
+                    "strval": "printer1EventClick",
+                    "InheritedType": 10
+                  },
+                  {
+                    "nid": -267069737,
+                    "strtype": "_custom/condition_C",
+                    "strval": "",
+                    "InheritedType": 10
+                  },
+                  {
+                    "nid": -384560155,
+                    "strtype": "_custom/condition_P",
+                    "strval": "",
+                    "InheritedType": 10
+                  },
+                  {
+                    "nid": 1483419687,
+                    "strtype": "_custom/action",
+                    "strval": "CALL FUNCTION",
+                    "childs": [
+                      {
+                        "nid": 773510573,
+                        "strtype": "CALL FUNCTION/Name",
+                        "strval": "CALL FUNCTION",
+                        "InheritedType": 10
+                      },
+                      {
+                        "nid": -1093904324,
+                        "strtype": "CALL FUNCTION/Call",
+                        "strval": "<{Function_name}>( event_struct )",
+                        "InheritedType": 10
+                      },
+                      {
+                        "nid": 1043272904,
+                        "strtype": "CALL FUNCTION/CallC",
+                        "strval": "<{Function_name}>( e );",
+                        "InheritedType": 10
+                      },
+                      {
+                        "nid": -1195596959,
+                        "strtype": "CALL FUNCTION/Function_name",
+                        "strval": "printer1Click",
+                        "InheritedType": 10
+                      },
+                      {
+                        "nid": -16769035,
+                        "strtype": "CALL FUNCTION/Dont_export_function",
+                        "strval": "False",
+                        "InheritedType": 2
+                      }
+                    ],
+                    "InheritedType": 10
+                  }
+                ],
+                "InheritedType": 4
+              },
+              {
+                "disabled": false,
+                "nid": -1911871107,
+                "strtype": "LABEL/EventHandler",
+                "strval": "LONG_PRESSED",
+                "childs": [
+                  {
+                    "nid": -816706169,
+                    "strtype": "_custom/name",
+                    "strval": "printer1EventLongClick",
+                    "InheritedType": 10
+                  },
+                  {
+                    "nid": -818406451,
+                    "strtype": "_custom/condition_C",
+                    "strval": "",
+                    "InheritedType": 10
+                  },
+                  {
+                    "nid": 1531908897,
+                    "strtype": "_custom/condition_P",
+                    "strval": "",
+                    "InheritedType": 10
+                  },
+                  {
+                    "nid": -735843000,
+                    "strtype": "_custom/action",
+                    "strval": "CALL FUNCTION",
+                    "childs": [
+                      {
+                        "nid": -1535543432,
+                        "strtype": "CALL FUNCTION/Name",
+                        "strval": "CALL FUNCTION",
+                        "InheritedType": 10
+                      },
+                      {
+                        "nid": 484412400,
+                        "strtype": "CALL FUNCTION/Call",
+                        "strval": "<{Function_name}>( event_struct )",
+                        "InheritedType": 10
+                      },
+                      {
+                        "nid": 1893135203,
+                        "strtype": "CALL FUNCTION/CallC",
+                        "strval": "<{Function_name}>( e );",
+                        "InheritedType": 10
+                      },
+                      {
+                        "nid": -2065258064,
+                        "strtype": "CALL FUNCTION/Function_name",
+                        "strval": "printer1LongClick",
+                        "InheritedType": 10
+                      },
+                      {
+                        "nid": -675525239,
+                        "strtype": "CALL FUNCTION/Dont_export_function",
+                        "strval": "False",
+                        "InheritedType": 2
+                      }
+                    ],
+                    "InheritedType": 10
+                  }
+                ],
+                "InheritedType": 4
               }
             ],
             "saved_objtypeKey": "LABEL"
@@ -10845,7 +10975,7 @@
     "theme_color2": 0,
     "uiExportFolderPath": "/home/flawl3ssswe/Documents/GitHub/LMS_3DPrint_Queue/LMS_QUEUE_V2_TS/src/ui",
     "projectExportFolderPath": "/home/flawl3ssswe/Documents/GitHub/LMS_3DPrint_Queue/LMS_QUEUE_V2_TS",
-    "backup_cnt": 172,
+    "backup_cnt": 196,
     "autosave_cnt": 0,
     "lvgl_version": "8.3.6",
     "callfuncsexport": "C_FILE",

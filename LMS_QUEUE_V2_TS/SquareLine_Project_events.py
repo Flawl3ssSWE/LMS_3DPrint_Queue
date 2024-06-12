@@ -38,3 +38,7 @@ def queueSpot1LongClick(event_struct):
 def printer1Click(event_struct):
     return
 
+
+def printer1LongClick(event_struct):
+    return
+
