@@ -1,6 +1,8 @@
 #ifndef SQLFUNCTIONS_H
 #define SQLFUNCTIONS_H
 
+#include <sqlite3.h>
+
     struct userData {
         String Name;
         String PhoneNumber;
@@ -12,8 +14,10 @@
     struct printData {
         String Name;
         String PhoneNumber;
-        String printWeight;
+        String uniqueSHA256ID;
         String printTime;
+        String printWeight;
+        String date;
         String printer;
         String startedPrintingTimestamp;
         int id;
@@ -27,6 +31,7 @@
         Klumpen
     };
 
+
     void addUserIntoMySQL(userData user);
     userData getUserFromMySQL(String SHA256UID);
     bool checkIfUserExistsInMySQL(String SHA256UID);
@@ -39,5 +44,10 @@
     bool deleteEntireQueueMySQL();
     bool updateQueue();
     bool updatePrintBasedOnID(int id, int printer);
+
+    int openDBSQLite(const char *filename, sqlite3 **db);
+    userData getUserFromSQLite(String SHA256UID);
+    bool addPrintIntoSQLite(userData userInfo, String printWeight, String printTime, String SHA256UID);
+    bool updateQueueSQLite();
 
 #endif //SQLFUNCTIONS_H

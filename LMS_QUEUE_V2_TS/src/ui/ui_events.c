@@ -82,3 +82,23 @@ void Killr(lv_event_t * e)
 // {
 // 	// Your code here
 // }
+
+// void queueSpot2Click(lv_event_t * e)
+// {
+// 	// Your code here
+// }
+
+// void queueSpot2LongClick(lv_event_t * e)
+// {
+// 	// Your code here
+// }
+
+// void printer2Click(lv_event_t * e)
+// {
+// 	// Your code here
+// }
+
+// void printer2LongClick(lv_event_t * e)
+// {
+// 	// Your code here
+// }

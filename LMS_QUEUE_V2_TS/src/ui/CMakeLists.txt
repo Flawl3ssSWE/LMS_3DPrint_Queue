@@ -4,6 +4,7 @@ SET(SOURCES screens/ui_Queue_hueue.c
     components/ui_comp_hook.c
     ui_helpers.c
     ui_events.c
-    images/ui_img_31439854.c)
+    images/ui_img_31439854.c
+    ui_temporary_image.c)
 
 add_library(ui ${SOURCES})

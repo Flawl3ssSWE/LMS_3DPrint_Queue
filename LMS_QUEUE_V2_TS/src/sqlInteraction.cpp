@@ -23,7 +23,7 @@ bool checkIfAdmin() {
     Serial.println(sha256UID);
     if (sha256UID == "-1" ){return false;}
 
-    userInfo = getUserFromMySQL(sha256UID);
+    userInfo = getUserFromSQLite(sha256UID);
 
     #ifdef DEBUG
         Serial.println(userInfo.Name);
