@@ -1,8 +1,8 @@
-
-ESP32_UID_SHA256_MySQL/TotalltNotJonatansMasterPassword.h
-SpaceSQL/TotalltNotJonatansMasterPassword.h
-LMS_3DPrint_Queue_PIO/src/TotalltNotJonatansMasterPassword.h
-RFIDServer/TotalltNotJonatansMasterPassword.h
-RFIDServer_PIO/src/TotalltNotJonatansMasterPassword.h
 LMS_QUEUE_V2_TS/TODO
 LMS_QUEUE_V2_TS/LMS_Printque.db
+LMS_QUEUE_V2_TS/.pio
+RFIDServer_PIO/.pio
+LMS_QUEUE_V2_TS/.vscode
+RFIDServer_PIO/.vscode
+LMS_QUEUE_V2_TS/src/TotalltNotJonatansMasterPassword.h
+RFIDServer_PIO/src/TotalltNotJonatansMasterPassword.h
