@@ -1,7 +1,5 @@
 #include <Arduino.h>
-#include <MySQL_Connection.h>
-#include <MySQL_Cursor.h>
-#include "connectWIFIandMySQL.h"
+#include "connectWIFI.h"
 #include "sqlFunctions.h"
 #include "TotalltNotJonatansMasterPassword.h"
 #include <stdio.h>
@@ -12,7 +10,8 @@
 #include "SD.h"
 #include "queueHandler.h"
 
-MySQL_Cursor* cursor;
+#define DEBUG
+
 extern sqlite3 *printqueDB;
 
 char INSERT_SQL[1024];
@@ -20,9 +19,6 @@ char SELECT_SQL[1024];
 
 printData printsInQueue[6];
 printData printsPrinting[2];
-
-#define DEBUG
-
 
 userData userDataFromSQLite;
 printData printDataFromSQLite;
@@ -106,7 +102,6 @@ int callbackPrintqueue(void *data, int argc, char **argv, char **azColName) {
 
   return 0;
 }
-
 
 int openDBSQLite(const char *filename, sqlite3 **db) {
    int rc = sqlite3_open(filename, db);

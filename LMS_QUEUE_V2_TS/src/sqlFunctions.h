@@ -32,16 +32,7 @@
     };
 
 
-    void addUserIntoMySQL(userData user);
-    userData getUserFromMySQL(String SHA256UID);
-    bool modifyUserInMySQL(userData userInfo);
-    bool deleteUserFromMySQL(String SHA256UID);
-    bool addPrintIntoMySQL(userData userInfo, String printWeight, String printTime, String SHA256UID);
-    printData getFirstPrintFromQueueMySQL();
-    bool deleteFirstPrintFromQueueMySQL();
-    bool deleteUsersPrintFromQueueMySQL(String SHA256UID);
-    bool deleteEntireQueueMySQL();
-    bool updateQueue();
+        bool updateQueue();
     bool updatePrintBasedOnID(int id, int printer);
 
     int openDBSQLite(const char *filename, sqlite3 **db);

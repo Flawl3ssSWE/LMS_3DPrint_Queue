@@ -13,7 +13,7 @@
 #include "SD.h"
 
 #include "TotalltNotJonatansMasterPassword.h"
-#include "connectWIFIandMySQL.h"
+#include "connectWIFI.h"
 #include "sqlFunctions.h"
 #include "httpRFID.h"
 #include "lvgl.h"
@@ -80,10 +80,10 @@ void loop() {
   lv_timer_handler();
 }
 
-// Code to run the WiFi and MySQL connection on the second core
+// Code to run the WiFi connection on the second core
 void Task1code(void * pvParameters) {
 //   //connectToWifi();
-//   //connectToMySQL();
+
    for (;;) {
     delay(1000);
       if (WiFi.status() != WL_CONNECTED)
