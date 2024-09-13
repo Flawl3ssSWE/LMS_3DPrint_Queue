@@ -23,87 +23,6 @@ printData printsPrinting[2];
 
 #define DEBUG
 
-int openDBSQLite(const char *filename, sqlite3 **db) {
-   int rc = sqlite3_open(filename, db);
-   if (rc) {
-       Serial.printf("Can't open database: %s\n", sqlite3_errmsg(*db));
-       return rc;
-   } else {
-       Serial.printf("Opened database successfully\n");
-   }
-   return rc;
-}
-
-const char* data = "Callback function called";
-
-
-void addUserIntoMySQL(userData user) {
-  if (checkIfUserExistsInMySQL(user.uniqueSHA256ID)) {
-    Serial.println("User already exists");
-    return;
-  }
-
-  char SHA256UIDtoCharArray[65];
-  user.uniqueSHA256ID.toCharArray(SHA256UIDtoCharArray, 65);
-  sprintf(INSERT_SQL, "INSERT INTO printingQueue.users (Name, PhoneNumber, uniqueSHA256ID, Printquota, Role) VALUE ('%s', '%s', '%s', 0, '%s')", user.Name, user.PhoneNumber, SHA256UIDtoCharArray, user.Role);
-  cursor = new MySQL_Cursor(&conn);
-  if (conn.connected()){
-      cursor->execute(INSERT_SQL);
-      Serial.println("*** INSERTED THIS MATE");
-      #ifdef DEBUG
-        Serial.println(INSERT_SQL);
-        Serial.println(user.uniqueSHA256ID);
-      #endif
-  }else{
-    Serial.println("Cannot add user to MySQL");
-  }
-}
-
-bool checkIfUserExistsInMySQL(String SHA256UID) {
-  char SHA256UIDtoCharArray[65];
-  SHA256UID.toCharArray(SHA256UIDtoCharArray, 65);
-  Serial.print("G");
-  Serial.print(SHA256UID);
-  Serial.print("G\n");
-
-  // Check if MySQL connection is still alive else reconnect
-  bool connectionConnectedInThisFunction = false;
-  
-  if(!conn.connected()) {
-    conn.close();
-    connectToMySQL();
-    connectionConnectedInThisFunction = true;
-  }
-
-  sprintf(SELECT_SQL, "SELECT uniqueSHA256ID FROM printingQueue.users WHERE uniqueSHA256ID = '%s'", SHA256UIDtoCharArray);
-  cursor = new MySQL_Cursor(&conn);
-  cursor->execute(SELECT_SQL);
-  column_names *cols = cursor->get_columns();
-  row_values *row = NULL;
-  row = cursor->get_next_row();
-  
-  if (row == NULL) {
-    #ifdef DEBUG
-      Serial.println("No user found");
-    #endif
-    
-    delete cursor;
-
-    if (connectionConnectedInThisFunction) {
-      conn.close();
-    }
-
-    return false;
-  }
-  Serial.print(row->values[0]);
-  delete cursor;
-
-  if (connectionConnectedInThisFunction) {
-    conn.close();
-  }
-
-  return true;
-}
 
 userData userDataFromSQLite;
 printData printDataFromSQLite;
@@ -139,17 +58,18 @@ int callbackPrintdata(void *data, int argc, char **argv, char **azColName){
   printDataFromSQLite.Name = argv[8] ? argv[8]: "No print found";
   printDataFromSQLite.Name = argv[9] ? argv[9]: "No print found";
 
-
-  Serial.printf("Arg 0: %s \n", argv[0]);
-  Serial.printf("Arg 1: %s \n", argv[1]);
-  Serial.printf("Arg 2: %s \n", argv[2]);
-  Serial.printf("Arg 3: %s \n", argv[3]);
-  Serial.printf("Arg 4: %s \n", argv[4]);
-  Serial.printf("Arg 5: %s \n", argv[5]);
-  Serial.printf("Arg 6: %s \n", argv[6]);
-  Serial.printf("Arg 7: %s \n", argv[7]);
-  Serial.printf("Arg 8: %s \n", argv[8]);
-  Serial.printf("Arg 9: %s \n", argv[9]);
+  #ifdef DEBUG
+    Serial.printf("Arg 0: %s \n", argv[0]);
+    Serial.printf("Arg 1: %s \n", argv[1]);
+    Serial.printf("Arg 2: %s \n", argv[2]);
+    Serial.printf("Arg 3: %s \n", argv[3]);
+    Serial.printf("Arg 4: %s \n", argv[4]);
+    Serial.printf("Arg 5: %s \n", argv[5]);
+    Serial.printf("Arg 6: %s \n", argv[6]);
+    Serial.printf("Arg 7: %s \n", argv[7]);
+    Serial.printf("Arg 8: %s \n", argv[8]);
+    Serial.printf("Arg 9: %s \n", argv[9]);
+  #endif
 
   return 0;
 }
@@ -187,6 +107,75 @@ int callbackPrintqueue(void *data, int argc, char **argv, char **azColName) {
   return 0;
 }
 
+
+int openDBSQLite(const char *filename, sqlite3 **db) {
+   int rc = sqlite3_open(filename, db);
+   if (rc) {
+       Serial.printf("Can't open database: %s\n", sqlite3_errmsg(*db));
+       return rc;
+   } else {
+       Serial.printf("Opened database successfully\n");
+   }
+   return rc;
+}
+
+const char* data = "Callback function called";
+
+// TODO Test function :P
+void addUserIntoSQLite(userData user) {
+  if (checkIfUserExistsInSQLite(user.uniqueSHA256ID)) {
+    Serial.println("User already exists");
+    return;
+  }
+
+  char SHA256UIDtoCharArray[65];
+  user.uniqueSHA256ID.toCharArray(SHA256UIDtoCharArray, 65);
+  sprintf(INSERT_SQL, "INSERT INTO users (Name, PhoneNumber, uniqueSHA256ID, Printquota, Role) VALUE ('%s', '%s', '%s', 0, '%s')", user.Name, user.PhoneNumber, SHA256UIDtoCharArray, user.Role);
+  int rc;
+  char *zErrMsg = 0;
+  rc = sqlite3_exec(printqueDB, INSERT_SQL, callbackUserdata, (void*)data, &zErrMsg);
+  if (rc != SQLITE_OK) {
+    Serial.printf("SQL error: %s\n", zErrMsg);
+    sqlite3_free(zErrMsg);
+    sqlite3_close(printqueDB);
+  } else {
+    Serial.println("Added user to SQLite");
+  }
+}
+
+// TODO Test function :P
+bool checkIfUserExistsInSQLite(String SHA256UID) {
+  char SHA256UIDtoCharArray[65];
+  SHA256UID.toCharArray(SHA256UIDtoCharArray, 65);
+
+  sprintf(SELECT_SQL, "SELECT uniqueSHA256ID FROM users WHERE uniqueSHA256ID = '%s'", SHA256UIDtoCharArray);
+  
+  int rc;
+  char *zErrMsg = 0;
+  rc = sqlite3_exec(printqueDB, SELECT_SQL, callbackUserdata, (void*)data, &zErrMsg);
+  if (rc != SQLITE_OK) {
+    Serial.printf("SQL error: %s\n", zErrMsg);
+    sqlite3_free(zErrMsg);
+    sqlite3_close(printqueDB);
+    Serial.println("Error occured in checkIfUserExistsInSQLite");
+    return false;
+  } else {
+    if (userDataFromSQLite.uniqueSHA256ID == SHA256UID) {
+      #ifdef DEBUG
+        Serial.println("User exists in SQLite");
+      #endif
+
+      return true;
+    } else {
+      #ifdef DEBUG
+        Serial.println("User does not exist in SQLite");
+      #endif
+
+      return false;
+    }
+  }
+}
+
 userData getUserFromSQLite(String SHA256UID) {
   Serial.println("Getting user from SQLite");
   
@@ -207,36 +196,6 @@ userData getUserFromSQLite(String SHA256UID) {
   } else {
     return userDataFromSQLite;
   }
-}
-
-bool modifyUserInMySQL(userData userInfo) {
-  // Convert SHA256UID to char array
-  char SHA256UIDtoCharArray[65];
-  userInfo.uniqueSHA256ID.toCharArray(SHA256UIDtoCharArray, 65);
-
-  // Create and execute the query
-  sprintf(INSERT_SQL, "UPDATE printingQueue.users SET Name = '%s', PhoneNumber = '%s', Printquota = '%s', Role = '%s' WHERE uniqueSHA256ID = '%s'", userInfo.Name, userInfo.PhoneNumber, userInfo.Printquota, userInfo.Role, SHA256UIDtoCharArray);
-  cursor = new MySQL_Cursor(&conn);
-  cursor->execute(INSERT_SQL);
-
-  // Deleting the cursor also frees up memory used
-  delete cursor;
-  return true;
-}
-
-bool deleteUserFromMySQL(String SHA256UID) {
-  // Convert SHA256UID to char array
-  char SHA256UIDtoCharArray[65];
-  SHA256UID.toCharArray(SHA256UIDtoCharArray, 65);
-
-  // Create and execute the query
-  sprintf(INSERT_SQL, "DELETE FROM printingQueue.users WHERE uniqueSHA256ID = '%s'", SHA256UIDtoCharArray);
-  cursor = new MySQL_Cursor(&conn);
-  cursor->execute(INSERT_SQL);
-
-  // Deleting the cursor also frees up memory used
-  delete cursor;
-  return true;
 }
 
 bool addPrintIntoSQLite(userData userInfo, String printWeight, String printTime, String SHA256UID) {
@@ -275,66 +234,27 @@ bool addPrintIntoSQLite(userData userInfo, String printWeight, String printTime,
   }
 }
 
-printData getFirstPrintFromQueueMySQL() {
-  printData printInfo;
-  sprintf(SELECT_SQL, "SELECT Name, PhoneNumber, printWeight, printTime FROM printingQueue.queue LIMIT 1");
-  cursor = new MySQL_Cursor(&conn);
-  cursor->execute(SELECT_SQL);
-  column_names *cols = cursor->get_columns();
-  row_values *row = cursor->get_next_row();
-
-  if (row == NULL) {
-    #ifdef DEBUG
-      Serial.println("No print found");
-    #endif
-
-    printInfo.Name = "No print found";
-    printInfo.PhoneNumber = "No print found";
-    printInfo.printWeight = "No print found";
-    printInfo.printTime = "No print found";
-    delete cursor;
-    return printInfo;
+// TODO Test function :P
+bool deleteEntireQueueSQLite() {
+  sprintf(INSERT_SQL, "DELETE FROM queue");
+  int rc;
+  char *zErrMsg = 0;
+  rc = sqlite3_exec(printqueDB, INSERT_SQL, callbackPrintdata, (void*)data, &zErrMsg);
+  if (rc != SQLITE_OK) {
+    Serial.printf("SQL error: %s\n", zErrMsg);
+    sqlite3_free(zErrMsg);
+    sqlite3_close(printqueDB);
+    return false;
+  } else {
+    Serial.println("Deleted entire queue");
+    return true;
   }
-
-  printInfo.Name = row->values[0];
-  printInfo.PhoneNumber = row->values[1];
-  printInfo.printWeight = row->values[3];
-  printInfo.printTime = row->values[4];
-  
-  return printInfo;
-}
-
-bool deleteFirstPrintFromQueueMySQL() {
-  sprintf(INSERT_SQL, "DELETE FROM printingQueue.queue LIMIT 1");
-  cursor = new MySQL_Cursor(&conn);
-  cursor->execute(INSERT_SQL);
-  delete cursor;
-  return true;
-}
-
-bool deleteUsersPrintFromQueueMySQL(String SHA256UID) {
-  // Convert SHA256UID to char array
-  char SHA256UIDtoCharArray[65];
-  SHA256UID.toCharArray(SHA256UIDtoCharArray, 65);
-
-  sprintf(INSERT_SQL, "DELETE FROM printingQueue.queue WHERE uniqueSHA256UID = '%s'", SHA256UIDtoCharArray);
-  cursor = new MySQL_Cursor(&conn);
-  cursor->execute(INSERT_SQL);
-  delete cursor;
-  return true;
-}
-
-bool deleteEntireQueueMySQL() {
-  sprintf(INSERT_SQL, "DELETE FROM printingQueue.queue");
-  cursor = new MySQL_Cursor(&conn);
-  cursor->execute(INSERT_SQL);
-  delete cursor;
-  return true;
 }
 
 bool updateQueueSQLite() {
-
-  Serial.println("Updating queue (updateQueue) with data from SQLite");
+  #ifdef DEBUG
+    Serial.println("Updating queue (updateQueue) with data from SQLite");
+  #endif
 
   for (int i = 0; i < 6; i++) {
     printsInQueue[i].Name = "";
@@ -367,8 +287,6 @@ bool updateQueueSQLite() {
 
   
 }
-
-
 bool deletePrintBasedOnIDSQLite(int id) {
   sprintf(INSERT_SQL, "DELETE FROM queue WHERE Id = '%d'", id);
   int rc;

@@ -34,7 +34,6 @@
 
     void addUserIntoMySQL(userData user);
     userData getUserFromMySQL(String SHA256UID);
-    bool checkIfUserExistsInMySQL(String SHA256UID);
     bool modifyUserInMySQL(userData userInfo);
     bool deleteUserFromMySQL(String SHA256UID);
     bool addPrintIntoMySQL(userData userInfo, String printWeight, String printTime, String SHA256UID);
@@ -49,5 +48,6 @@
     userData getUserFromSQLite(String SHA256UID);
     bool addPrintIntoSQLite(userData userInfo, String printWeight, String printTime, String SHA256UID);
     bool updateQueueSQLite();
+    bool checkIfUserExistsInSQLite(String SHA256UID);
 
 #endif //SQLFUNCTIONS_H
