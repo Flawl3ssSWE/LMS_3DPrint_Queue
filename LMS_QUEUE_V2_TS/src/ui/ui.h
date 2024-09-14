@@ -20,7 +20,6 @@ void ui_Queue_hueue_screen_init(void);
 extern lv_obj_t * ui_Queue_hueue;
 void ui_event_Printer1(lv_event_t * e);
 extern lv_obj_t * ui_Printer1;
-void ui_event_Printer2(lv_event_t * e);
 extern lv_obj_t * ui_Printer2;
 extern lv_obj_t * ui_printerspot1;
 extern lv_obj_t * ui_printerspot2;
@@ -40,7 +39,10 @@ void ui_event_goToAddQueueScreenButton1(lv_event_t * e);
 extern lv_obj_t * ui_goToAddQueueScreenButton1;
 void ui_event_updateButton(lv_event_t * e);
 extern lv_obj_t * ui_updateButton;
-extern lv_obj_t * ui_Label1;
+extern lv_obj_t * ui_queueLength;
+void ui_event_adminButton(lv_event_t * e);
+extern lv_obj_t * ui_adminButton;
+extern lv_obj_t * ui_adminLabel;
 // SCREEN: ui_addToQueueScreen
 void ui_addToQueueScreen_screen_init(void);
 extern lv_obj_t * ui_addToQueueScreen;
@@ -67,10 +69,53 @@ extern lv_obj_t * ui_labelTimerMinutes;
 extern lv_obj_t * ui_timerAndInfoLabel;
 extern lv_obj_t * ui_labelHours;
 extern lv_obj_t * ui_labelMinutes;
+extern lv_obj_t * ui_addPrintLabel;
+// SCREEN: ui_adminScreen
+void ui_adminScreen_screen_init(void);
+extern lv_obj_t * ui_adminScreen;
+void ui_event_Button3(lv_event_t * e);
+extern lv_obj_t * ui_Button3;
+extern lv_obj_t * ui_Label8;
+extern lv_obj_t * ui_adminScanButton;
+extern lv_obj_t * ui_addPrintLabel2;
+extern lv_obj_t * ui_adminScanLabel;
+void ui_event_Button5(lv_event_t * e);
+extern lv_obj_t * ui_Button5;
+extern lv_obj_t * ui_Label9;
+extern lv_obj_t * ui_Button6;
+extern lv_obj_t * ui_Label10;
+// SCREEN: ui_addMemberScreen
+void ui_addMemberScreen_screen_init(void);
+extern lv_obj_t * ui_addMemberScreen;
+extern lv_obj_t * ui_Label11;
+void ui_event_scanMemberCardButton(lv_event_t * e);
+extern lv_obj_t * ui_scanMemberCardButton;
+extern lv_obj_t * ui_Label12;
+void ui_event_addMemberButton(lv_event_t * e);
+extern lv_obj_t * ui_addMemberButton;
+extern lv_obj_t * ui_memberScreenKeyboard;
+extern lv_obj_t * ui_Label13;
+extern lv_obj_t * ui_adminCheckBox;
+void ui_event_memberNameTextArea(lv_event_t * e);
+extern lv_obj_t * ui_memberNameTextArea;
+void ui_event_phoneNumberTextArea(lv_event_t * e);
+extern lv_obj_t * ui_phoneNumberTextArea;
+void ui_event_backButton(lv_event_t * e);
+extern lv_obj_t * ui_backButton;
+extern lv_obj_t * ui_backButtonLabel;
+extern lv_obj_t * ui_Label14;
+extern lv_obj_t * ui_Label15;
+extern lv_obj_t * ui_Label16;
+extern lv_obj_t * ui_Label17;
+extern lv_obj_t * ui_Label18;
+extern lv_obj_t * ui_scanMemberInfoLabel;
 extern lv_obj_t * ui____initial_actions0;
+
 
 LV_IMG_DECLARE(ui__temporary_image);
 LV_IMG_DECLARE(ui_img_31439854);    // assets/update-12-32.png
+
+
 
 
 

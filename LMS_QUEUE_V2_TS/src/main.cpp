@@ -21,12 +21,12 @@
 
 #include "startScreenUI.h"
 #include "addPrintScreenUI.h"
+#include "addMemberScreenUI.h"
 
 #define DEBUG
 
 TaskHandle_t Task1;
 void Task1code(void * pvParameters);
-void updateQueueUi();
 
 sqlite3 *printqueDB;
 
@@ -59,13 +59,20 @@ void setup() {
   _ui_label_set_property(ui_queuespot5, _UI_LABEL_PROPERTY_TEXT, "Sticky4President");
   _ui_label_set_property(ui_queuespot6, _UI_LABEL_PROPERTY_TEXT, "Styrelsen 21/22");
  
-    SPI.begin();
-    SD.begin();
- 
-    sqlite3_initialize();
- 
-     if (openDBSQLite("/sd/LMS_Printque.db", &printqueDB))
-         return;
+  SPI.begin();
+  SD.begin();
+
+  sqlite3_initialize();
+
+    if (openDBSQLite("/sd/LMS_Printque.db", &printqueDB))
+        return;
+  
+  // Credit the creators if not in debug mode
+  #ifndef DEBUG
+    delay(2000);
+  #endif
+
+  updateQueueUi();
  
     //sqlite3_close(printqueDB);
 }

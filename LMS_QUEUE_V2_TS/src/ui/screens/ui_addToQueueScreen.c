@@ -66,7 +66,7 @@ void ui_addToQueueScreen_screen_init(void)
     ui_scanCardButton = lv_btn_create(ui_addToQueueScreen);
     lv_obj_set_width(ui_scanCardButton, 167);
     lv_obj_set_height(ui_scanCardButton, 50);
-    lv_obj_set_x(ui_scanCardButton, -3);
+    lv_obj_set_x(ui_scanCardButton, 0);
     lv_obj_set_y(ui_scanCardButton, -235);
     lv_obj_set_align(ui_scanCardButton, LV_ALIGN_CENTER);
     lv_obj_add_flag(ui_scanCardButton, LV_OBJ_FLAG_SCROLL_ON_FOCUS);     /// Flags
@@ -78,7 +78,7 @@ void ui_addToQueueScreen_screen_init(void)
     lv_obj_set_width(ui_Label4, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_Label4, LV_SIZE_CONTENT);    /// 1
     lv_obj_set_x(ui_Label4, 0);
-    lv_obj_set_y(ui_Label4, -153);
+    lv_obj_set_y(ui_Label4, -150);
     lv_obj_set_align(ui_Label4, LV_ALIGN_CENTER);
     lv_label_set_text(ui_Label4, "Step 2: Enter Print Time");
     lv_obj_set_style_text_font(ui_Label4, &lv_font_montserrat_22, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -104,8 +104,8 @@ void ui_addToQueueScreen_screen_init(void)
     ui_Label7 = lv_label_create(ui_addToQueueScreen);
     lv_obj_set_width(ui_Label7, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_Label7, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_Label7, 2);
-    lv_obj_set_y(ui_Label7, -281);
+    lv_obj_set_x(ui_Label7, 0);
+    lv_obj_set_y(ui_Label7, -280);
     lv_obj_set_align(ui_Label7, LV_ALIGN_CENTER);
     lv_label_set_text(ui_Label7, "You have 5 seconds to scan your card");
 
@@ -148,8 +148,8 @@ void ui_addToQueueScreen_screen_init(void)
     ui_timerAndInfoLabel = lv_label_create(ui_addToQueueScreen);
     lv_obj_set_width(ui_timerAndInfoLabel, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_timerAndInfoLabel, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_timerAndInfoLabel, -1);
-    lv_obj_set_y(ui_timerAndInfoLabel, -186);
+    lv_obj_set_x(ui_timerAndInfoLabel, 0);
+    lv_obj_set_y(ui_timerAndInfoLabel, -185);
     lv_obj_set_align(ui_timerAndInfoLabel, LV_ALIGN_CENTER);
 
     ui_labelHours = lv_label_create(ui_addToQueueScreen);
@@ -169,6 +169,16 @@ void ui_addToQueueScreen_screen_init(void)
     lv_obj_set_align(ui_labelMinutes, LV_ALIGN_CENTER);
     lv_label_set_text(ui_labelMinutes, "MINUTES");
     lv_obj_set_style_text_font(ui_labelMinutes, &lv_font_montserrat_22, LV_PART_MAIN | LV_STATE_DEFAULT);
+
+    ui_addPrintLabel = lv_label_create(ui_addToQueueScreen);
+    lv_obj_set_width(ui_addPrintLabel, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_height(ui_addPrintLabel, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_x(ui_addPrintLabel, 0);
+    lv_obj_set_y(ui_addPrintLabel, -365);
+    lv_obj_set_align(ui_addPrintLabel, LV_ALIGN_CENTER);
+    lv_label_set_text(ui_addPrintLabel, "ADD PRINT");
+    lv_obj_set_style_text_decor(ui_addPrintLabel, LV_TEXT_DECOR_UNDERLINE, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_addPrintLabel, &lv_font_montserrat_40, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     lv_obj_add_event_cb(ui_goToQueueScreenButton, ui_event_goToQueueScreenButton, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui_goToQueueScreenButton1, ui_event_goToQueueScreenButton1, LV_EVENT_ALL, NULL);

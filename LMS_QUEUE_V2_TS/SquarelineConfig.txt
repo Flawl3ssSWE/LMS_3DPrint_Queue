@@ -1,0 +1,11 @@
+Linux Project Export Root:
+/home/flawl3ssswe/Documents/GitHub/LMS_3DPrint_Queue/LMS_QUEUE_V2_TS
+
+Linux UI Files Export Path:
+/home/flawl3ssswe/Documents/GitHub/LMS_3DPrint_Queue/LMS_QUEUE_V2_TS/src/ui
+
+Windows Project Export Root:
+C:\Users\Anton Lundh\Documents\GitHub\LMS_3DPrint_Queue\LMS_QUEUE_V2_TS
+
+Windows UI Files Export Path:
+C:\Users\Anton Lundh\Documents\GitHub\LMS_3DPrint_Queue\LMS_QUEUE_V2_TS\src\ui

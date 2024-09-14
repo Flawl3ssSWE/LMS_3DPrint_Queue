@@ -119,7 +119,6 @@ void queueSpot2Click(lv_event_t * e)
     selectedQueueSpot = 1;
   }
   _ui_label_set_property(ui_queuespot2, _UI_LABEL_PROPERTY_TEXT, queueSpot2Text.c_str());
-
 }
 
 void queueSpot2LongClick(lv_event_t * e)
@@ -187,3 +186,4 @@ void printer2LongClick(lv_event_t * e)
 {
 	// Your code here
 }
+

@@ -14,7 +14,6 @@ void ui_Queue_hueue_screen_init(void);
 lv_obj_t * ui_Queue_hueue;
 void ui_event_Printer1(lv_event_t * e);
 lv_obj_t * ui_Printer1;
-void ui_event_Printer2(lv_event_t * e);
 lv_obj_t * ui_Printer2;
 lv_obj_t * ui_printerspot1;
 lv_obj_t * ui_printerspot2;
@@ -34,7 +33,10 @@ void ui_event_goToAddQueueScreenButton1(lv_event_t * e);
 lv_obj_t * ui_goToAddQueueScreenButton1;
 void ui_event_updateButton(lv_event_t * e);
 lv_obj_t * ui_updateButton;
-lv_obj_t * ui_Label1;
+lv_obj_t * ui_queueLength;
+void ui_event_adminButton(lv_event_t * e);
+lv_obj_t * ui_adminButton;
+lv_obj_t * ui_adminLabel;
 
 
 // SCREEN: ui_addToQueueScreen
@@ -63,6 +65,50 @@ lv_obj_t * ui_labelTimerMinutes;
 lv_obj_t * ui_timerAndInfoLabel;
 lv_obj_t * ui_labelHours;
 lv_obj_t * ui_labelMinutes;
+lv_obj_t * ui_addPrintLabel;
+
+
+// SCREEN: ui_adminScreen
+void ui_adminScreen_screen_init(void);
+lv_obj_t * ui_adminScreen;
+void ui_event_Button3(lv_event_t * e);
+lv_obj_t * ui_Button3;
+lv_obj_t * ui_Label8;
+lv_obj_t * ui_adminScanButton;
+lv_obj_t * ui_addPrintLabel2;
+lv_obj_t * ui_adminScanLabel;
+void ui_event_Button5(lv_event_t * e);
+lv_obj_t * ui_Button5;
+lv_obj_t * ui_Label9;
+lv_obj_t * ui_Button6;
+lv_obj_t * ui_Label10;
+
+
+// SCREEN: ui_addMemberScreen
+void ui_addMemberScreen_screen_init(void);
+lv_obj_t * ui_addMemberScreen;
+lv_obj_t * ui_Label11;
+void ui_event_scanMemberCardButton(lv_event_t * e);
+lv_obj_t * ui_scanMemberCardButton;
+lv_obj_t * ui_Label12;
+void ui_event_addMemberButton(lv_event_t * e);
+lv_obj_t * ui_addMemberButton;
+lv_obj_t * ui_memberScreenKeyboard;
+lv_obj_t * ui_Label13;
+lv_obj_t * ui_adminCheckBox;
+void ui_event_memberNameTextArea(lv_event_t * e);
+lv_obj_t * ui_memberNameTextArea;
+void ui_event_phoneNumberTextArea(lv_event_t * e);
+lv_obj_t * ui_phoneNumberTextArea;
+void ui_event_backButton(lv_event_t * e);
+lv_obj_t * ui_backButton;
+lv_obj_t * ui_backButtonLabel;
+lv_obj_t * ui_Label14;
+lv_obj_t * ui_Label15;
+lv_obj_t * ui_Label16;
+lv_obj_t * ui_Label17;
+lv_obj_t * ui_Label18;
+lv_obj_t * ui_scanMemberInfoLabel;
 lv_obj_t * ui____initial_actions0;
 const lv_img_dsc_t * ui_imgset_1953216864[1] = {&ui_img_31439854};
 
@@ -88,17 +134,6 @@ void ui_event_Printer1(lv_event_t * e)
         printer1LongClick(e);
     }
 }
-void ui_event_Printer2(lv_event_t * e)
-{
-    lv_event_code_t event_code = lv_event_get_code(e);
-    lv_obj_t * target = lv_event_get_target(e);
-    if(event_code == LV_EVENT_SHORT_CLICKED) {
-        printer2Click(e);
-    }
-    if(event_code == LV_EVENT_LONG_PRESSED) {
-        printer2LongClick(e);
-    }
-}
 void ui_event_queuespot1(lv_event_t * e)
 {
     lv_event_code_t event_code = lv_event_get_code(e);
@@ -115,10 +150,10 @@ void ui_event_queuespot2(lv_event_t * e)
     lv_event_code_t event_code = lv_event_get_code(e);
     lv_obj_t * target = lv_event_get_target(e);
     if(event_code == LV_EVENT_SHORT_CLICKED) {
-        queueSpot2Click(e);
+        queueSpot1Click(e);
     }
     if(event_code == LV_EVENT_LONG_PRESSED) {
-        queueSpot2LongClick(e);
+        queueSpot1LongClick(e);
     }
 }
 void ui_event_goToAddQueueScreenButton(lv_event_t * e)
@@ -143,6 +178,14 @@ void ui_event_updateButton(lv_event_t * e)
     lv_obj_t * target = lv_event_get_target(e);
     if(event_code == LV_EVENT_CLICKED) {
         updateButtonEventAction(e);
+    }
+}
+void ui_event_adminButton(lv_event_t * e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+    lv_obj_t * target = lv_event_get_target(e);
+    if(event_code == LV_EVENT_CLICKED) {
+        _ui_screen_change(&ui_adminScreen, LV_SCR_LOAD_ANIM_FADE_ON, 0, 0, &ui_adminScreen_screen_init);
     }
 }
 void ui_event_goToQueueScreenButton(lv_event_t * e)
@@ -196,6 +239,71 @@ void ui_event_arcMinutes(lv_event_t * e)
         arcMinutesEventIncrement(e);
     }
 }
+void ui_event_Button3(lv_event_t * e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+    lv_obj_t * target = lv_event_get_target(e);
+    if(event_code == LV_EVENT_CLICKED) {
+        _ui_screen_change(&ui_Queue_hueue, LV_SCR_LOAD_ANIM_OVER_TOP, 500, 0, &ui_Queue_hueue_screen_init);
+    }
+}
+void ui_event_Button5(lv_event_t * e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+    lv_obj_t * target = lv_event_get_target(e);
+    if(event_code == LV_EVENT_CLICKED) {
+        _ui_screen_change(&ui_addMemberScreen, LV_SCR_LOAD_ANIM_NONE, 500, 0, &ui_addMemberScreen_screen_init);
+    }
+}
+void ui_event_scanMemberCardButton(lv_event_t * e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+    lv_obj_t * target = lv_event_get_target(e);
+    if(event_code == LV_EVENT_CLICKED) {
+        scanMemberCardButtonClick(e);
+    }
+}
+void ui_event_addMemberButton(lv_event_t * e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+    lv_obj_t * target = lv_event_get_target(e);
+    if(event_code == LV_EVENT_CLICKED) {
+        addMemberButtonClick(e);
+    }
+}
+void ui_event_memberNameTextArea(lv_event_t * e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+    lv_obj_t * target = lv_event_get_target(e);
+    if(event_code == LV_EVENT_CLICKED) {
+        _ui_keyboard_set_target(ui_memberScreenKeyboard,  ui_memberNameTextArea);
+    }
+    if(event_code == LV_EVENT_CLICKED) {
+        memberNameTextAreaClickChangeToNumbers(e);
+    }
+}
+void ui_event_phoneNumberTextArea(lv_event_t * e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+    lv_obj_t * target = lv_event_get_target(e);
+    if(event_code == LV_EVENT_CLICKED) {
+        _ui_keyboard_set_target(ui_memberScreenKeyboard,  ui_phoneNumberTextArea);
+    }
+    if(event_code == LV_EVENT_CLICKED) {
+        phoneNumberTextAreaClickChangeToNumbers(e);
+    }
+}
+void ui_event_backButton(lv_event_t * e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+    lv_obj_t * target = lv_event_get_target(e);
+    if(event_code == LV_EVENT_CLICKED) {
+        _ui_screen_change(&ui_adminScreen, LV_SCR_LOAD_ANIM_NONE, 500, 0, &ui_adminScreen_screen_init);
+    }
+    if(event_code == LV_EVENT_CLICKED) {
+        backButtonClick(e);
+    }
+}
 
 ///////////////////// SCREENS ////////////////////
 
@@ -207,6 +315,8 @@ void ui_init(void)
     lv_disp_set_theme(dispp, theme);
     ui_Queue_hueue_screen_init();
     ui_addToQueueScreen_screen_init();
+    ui_adminScreen_screen_init();
+    ui_addMemberScreen_screen_init();
     ui____initial_actions0 = lv_obj_create(NULL);
     lv_disp_load_scr(ui_Queue_hueue);
 }

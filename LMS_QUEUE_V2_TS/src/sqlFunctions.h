@@ -40,5 +40,7 @@
     bool addPrintIntoSQLite(userData userInfo, String printWeight, String printTime, String SHA256UID);
     bool updateQueueSQLite();
     bool checkIfUserExistsInSQLite(String SHA256UID);
+    int getCurrentQueueLengthSQLite();
+    void addUserIntoSQLite(userData user);
 
 #endif //SQLFUNCTIONS_H

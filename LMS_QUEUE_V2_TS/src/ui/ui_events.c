@@ -81,3 +81,28 @@ void Killr(lv_event_t * e)
 // {
 // 	// Your code here
 // }
+
+// void memberNameTextAreaClickChangeToNumbers(lv_event_t * e)
+// {
+// 	// Your code here
+// }
+
+// void phoneNumberTextAreaClickChangeToNumbers(lv_event_t * e)
+// {
+// 	// Your code here
+// }
+
+// void backButtonClick(lv_event_t * e)
+// {
+// 	// Your code here
+// }
+
+// void scanMemberCardButtonClick(lv_event_t * e)
+// {
+// 	// Your code here
+// }
+
+// void addMemberButtonClick(lv_event_t * e)
+// {
+// 	// Your code here
+// }

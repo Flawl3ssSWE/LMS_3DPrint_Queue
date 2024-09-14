@@ -28,7 +28,6 @@ void ui_Queue_hueue_screen_init(void)
     lv_obj_set_y(ui_Printer2, -290);
     lv_obj_set_align(ui_Printer2, LV_ALIGN_CENTER);
     lv_label_set_text(ui_Printer2, "Knut");
-    lv_obj_add_flag(ui_Printer2, LV_OBJ_FLAG_CLICKABLE);     /// Flags
     lv_obj_set_style_text_decor(ui_Printer2, LV_TEXT_DECOR_UNDERLINE, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_font(ui_Printer2, &lv_font_montserrat_36, LV_PART_MAIN | LV_STATE_DEFAULT);
 
@@ -38,7 +37,7 @@ void ui_Queue_hueue_screen_init(void)
     lv_obj_set_x(ui_printerspot1, 0);
     lv_obj_set_y(ui_printerspot1, -330);
     lv_obj_set_align(ui_printerspot1, LV_ALIGN_CENTER);
-    lv_label_set_text(ui_printerspot1, "No one printing");
+    lv_label_set_text(ui_printerspot1, "Placeholder 1");
     lv_obj_set_style_text_font(ui_printerspot1, &lv_font_montserrat_22, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_printerspot2 = lv_label_create(ui_Queue_hueue);
@@ -47,7 +46,7 @@ void ui_Queue_hueue_screen_init(void)
     lv_obj_set_x(ui_printerspot2, 0);
     lv_obj_set_y(ui_printerspot2, -250);
     lv_obj_set_align(ui_printerspot2, LV_ALIGN_CENTER);
-    lv_label_set_text(ui_printerspot2, "No one printing");
+    lv_label_set_text(ui_printerspot2, "Placeholder 2");
     lv_obj_set_style_text_font(ui_printerspot2, &lv_font_montserrat_22, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_queue = lv_label_create(ui_Queue_hueue);
@@ -77,7 +76,6 @@ void ui_Queue_hueue_screen_init(void)
     lv_obj_set_x(ui_queuespot2, 0);
     lv_obj_set_y(ui_queuespot2, -50);
     lv_obj_set_align(ui_queuespot2, LV_ALIGN_CENTER);
-    lv_obj_add_flag(ui_queuespot2, LV_OBJ_FLAG_CLICKABLE);     /// Flags
     lv_obj_set_style_text_font(ui_queuespot2, &lv_font_montserrat_36, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_queuespot3 = lv_label_create(ui_Queue_hueue);
@@ -160,22 +158,42 @@ void ui_Queue_hueue_screen_init(void)
     lv_obj_set_y(ui_updateButton, -380);
     lv_obj_set_align(ui_updateButton, LV_ALIGN_CENTER);
 
-    ui_Label1 = lv_label_create(ui_Queue_hueue);
-    lv_obj_set_width(ui_Label1, LV_SIZE_CONTENT);   /// 1
-    lv_obj_set_height(ui_Label1, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_Label1, 0);
-    lv_obj_set_y(ui_Label1, 205);
-    lv_obj_set_align(ui_Label1, LV_ALIGN_CENTER);
-    lv_label_set_text(ui_Label1, "and xx more in queue");
-    lv_obj_set_style_text_color(ui_Label1, lv_color_hex(0x808080), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_opa(ui_Label1, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    ui_queueLength = lv_label_create(ui_Queue_hueue);
+    lv_obj_set_width(ui_queueLength, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_height(ui_queueLength, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_x(ui_queueLength, 0);
+    lv_obj_set_y(ui_queueLength, 205);
+    lv_obj_set_align(ui_queueLength, LV_ALIGN_CENTER);
+    lv_label_set_text(ui_queueLength, "Queue length: X");
+    lv_obj_set_style_text_color(ui_queueLength, lv_color_hex(0x808080), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_opa(ui_queueLength, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+
+    ui_adminButton = lv_btn_create(ui_Queue_hueue);
+    lv_obj_set_width(ui_adminButton, 72);
+    lv_obj_set_height(ui_adminButton, 32);
+    lv_obj_set_x(ui_adminButton, -190);
+    lv_obj_set_y(ui_adminButton, -370);
+    lv_obj_set_align(ui_adminButton, LV_ALIGN_CENTER);
+    lv_obj_set_style_bg_color(ui_adminButton, lv_color_hex(0xE1E1E1), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_opa(ui_adminButton, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+
+    ui_adminLabel = lv_label_create(ui_Queue_hueue);
+    lv_obj_set_width(ui_adminLabel, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_height(ui_adminLabel, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_x(ui_adminLabel, -190);
+    lv_obj_set_y(ui_adminLabel, -370);
+    lv_obj_set_align(ui_adminLabel, LV_ALIGN_CENTER);
+    lv_label_set_text(ui_adminLabel, "Admin");
+    lv_obj_set_style_text_color(ui_adminLabel, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_opa(ui_adminLabel, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_adminLabel, &lv_font_montserrat_16, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     lv_obj_add_event_cb(ui_Printer1, ui_event_Printer1, LV_EVENT_ALL, NULL);
-    lv_obj_add_event_cb(ui_Printer2, ui_event_Printer2, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui_queuespot1, ui_event_queuespot1, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui_queuespot2, ui_event_queuespot2, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui_goToAddQueueScreenButton, ui_event_goToAddQueueScreenButton, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui_goToAddQueueScreenButton1, ui_event_goToAddQueueScreenButton1, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui_updateButton, ui_event_updateButton, LV_EVENT_ALL, NULL);
+    lv_obj_add_event_cb(ui_adminButton, ui_event_adminButton, LV_EVENT_ALL, NULL);
 
 }

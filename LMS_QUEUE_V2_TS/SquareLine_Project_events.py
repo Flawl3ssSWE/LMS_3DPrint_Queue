@@ -42,3 +42,23 @@ def printer1Click(event_struct):
 def printer1LongClick(event_struct):
     return
 
+
+def phoneNumberTextAreaClickChangeToNumbers(event_struct):
+    return
+
+
+def memberNameTextAreaClickChangeToNumbers(event_struct):
+    return
+
+
+def backButtonClick(event_struct):
+    return
+
+
+def scanMemberCardButtonClick(event_struct):
+    return
+
+
+def addMemberButtonClick(event_struct):
+    return
+

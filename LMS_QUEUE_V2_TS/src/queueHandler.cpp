@@ -2,6 +2,7 @@
 #include <ui/ui.h>
 #include "sqlFunctions.h"
 
+// Call this to update the queue on the screen
 void updateQueueUi() {
   if (updateQueueSQLite()) {
     Serial.println("Queue updated");
@@ -35,5 +36,10 @@ void updateQueueUi() {
       }
     }
   }
+  
+  int queueLength = getCurrentQueueLengthSQLite();
+  String queueLengthString = "Queue length: " + String(queueLength);
+  _ui_label_set_property(ui_queueLength, _UI_LABEL_PROPERTY_TEXT, queueLengthString.c_str());
+
   lv_timer_handler();
 }

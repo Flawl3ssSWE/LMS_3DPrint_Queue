@@ -103,6 +103,11 @@ int callbackPrintqueue(void *data, int argc, char **argv, char **azColName) {
   return 0;
 }
 
+int callbackCounter(void *data, int argc, char **argv, char **azColName) {
+  callbackPrintqueueCounter = String(argv[0]).toInt();
+  return 0;
+}
+
 int openDBSQLite(const char *filename, sqlite3 **db) {
    int rc = sqlite3_open(filename, db);
    if (rc) {
@@ -327,4 +332,18 @@ bool updatePrintBasedOnID(int id, int printer) {
   updateQueueUi();
 
   return true;
+}
+
+int getCurrentQueueLengthSQLite() {
+  int rc;
+  char *zErrMsg = 0;
+  rc = sqlite3_exec(printqueDB, "SELECT COUNT(*) FROM queue", callbackCounter, (void*)data, &zErrMsg);
+  if (rc != SQLITE_OK) {
+    Serial.printf("SQL error: %s\n", zErrMsg);
+    sqlite3_free(zErrMsg);
+    sqlite3_close(printqueDB);
+    return 0;
+  } else {
+    return callbackPrintqueueCounter;
+  }
 }
