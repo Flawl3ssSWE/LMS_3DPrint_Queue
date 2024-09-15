@@ -26,6 +26,8 @@
 #include "startScreenUI.h"
 #include "addPrintScreenUI.h"
 #include "addMemberScreenUI.h"
+#include "queueManagmentScreenUI.h"
+#include "adminScreen.h"
 
 
 

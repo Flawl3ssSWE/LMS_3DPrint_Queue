@@ -2,7 +2,7 @@
 #define SQLFUNCTIONS_H
 
 #include <sqlite3.h>
-
+#include <Arduino.h>
     struct userData {
         String Name;
         String PhoneNumber;
@@ -42,5 +42,6 @@
     bool checkIfUserExistsInSQLite(String SHA256UID);
     int getCurrentQueueLengthSQLite();
     void addUserIntoSQLite(userData user);
+    bool deleteEntireQueueSQLite();
 
 #endif //SQLFUNCTIONS_H

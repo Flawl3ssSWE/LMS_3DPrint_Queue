@@ -10,14 +10,14 @@ void ui_adminScreen_screen_init(void)
     ui_adminScreen = lv_obj_create(NULL);
     lv_obj_clear_flag(ui_adminScreen, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
 
-    ui_Button3 = lv_btn_create(ui_adminScreen);
-    lv_obj_set_width(ui_Button3, 400);
-    lv_obj_set_height(ui_Button3, 50);
-    lv_obj_set_x(ui_Button3, 0);
-    lv_obj_set_y(ui_Button3, 340);
-    lv_obj_set_align(ui_Button3, LV_ALIGN_CENTER);
-    lv_obj_set_style_bg_color(ui_Button3, lv_color_hex(0xFF0000), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_opa(ui_Button3, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    ui_backCancelAdminButton = lv_btn_create(ui_adminScreen);
+    lv_obj_set_width(ui_backCancelAdminButton, 400);
+    lv_obj_set_height(ui_backCancelAdminButton, 50);
+    lv_obj_set_x(ui_backCancelAdminButton, 0);
+    lv_obj_set_y(ui_backCancelAdminButton, 340);
+    lv_obj_set_align(ui_backCancelAdminButton, LV_ALIGN_CENTER);
+    lv_obj_set_style_bg_color(ui_backCancelAdminButton, lv_color_hex(0xFF0000), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_opa(ui_backCancelAdminButton, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_Label8 = lv_label_create(ui_adminScreen);
     lv_obj_set_width(ui_Label8, LV_SIZE_CONTENT);   /// 1
@@ -60,37 +60,59 @@ void ui_adminScreen_screen_init(void)
     lv_obj_set_style_text_opa(ui_adminScanLabel, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_font(ui_adminScanLabel, &lv_font_montserrat_22, LV_PART_MAIN | LV_STATE_DEFAULT);
 
-    ui_Button5 = lv_btn_create(ui_adminScreen);
-    lv_obj_set_width(ui_Button5, 100);
-    lv_obj_set_height(ui_Button5, 50);
-    lv_obj_set_x(ui_Button5, -24);
-    lv_obj_set_y(ui_Button5, -68);
-    lv_obj_set_align(ui_Button5, LV_ALIGN_CENTER);
+    ui_adminScreenAddMemberButton = lv_btn_create(ui_adminScreen);
+    lv_obj_set_width(ui_adminScreenAddMemberButton, 400);
+    lv_obj_set_height(ui_adminScreenAddMemberButton, 50);
+    lv_obj_set_x(ui_adminScreenAddMemberButton, 0);
+    lv_obj_set_y(ui_adminScreenAddMemberButton, -170);
+    lv_obj_set_align(ui_adminScreenAddMemberButton, LV_ALIGN_CENTER);
+    lv_obj_add_flag(ui_adminScreenAddMemberButton, LV_OBJ_FLAG_HIDDEN);     /// Flags
+    lv_obj_set_style_bg_color(ui_adminScreenAddMemberButton, lv_color_hex(0x0014FF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_opa(ui_adminScreenAddMemberButton, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_Label9 = lv_label_create(ui_adminScreen);
     lv_obj_set_width(ui_Label9, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_Label9, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_Label9, -20);
-    lv_obj_set_y(ui_Label9, -72);
+    lv_obj_set_x(ui_Label9, 0);
+    lv_obj_set_y(ui_Label9, -170);
     lv_obj_set_align(ui_Label9, LV_ALIGN_CENTER);
-    lv_label_set_text(ui_Label9, "Add Member");
+    lv_label_set_text(ui_Label9, "ADD MEMBER");
+    lv_obj_set_style_text_color(ui_Label9, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_opa(ui_Label9, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_Label9, &lv_font_montserrat_22, LV_PART_MAIN | LV_STATE_DEFAULT);
 
-    ui_Button6 = lv_btn_create(ui_adminScreen);
-    lv_obj_set_width(ui_Button6, 100);
-    lv_obj_set_height(ui_Button6, 50);
-    lv_obj_set_x(ui_Button6, -1);
-    lv_obj_set_y(ui_Button6, 88);
-    lv_obj_set_align(ui_Button6, LV_ALIGN_CENTER);
+    ui_adminScreenQueueManagmentButton = lv_btn_create(ui_adminScreen);
+    lv_obj_set_width(ui_adminScreenQueueManagmentButton, 400);
+    lv_obj_set_height(ui_adminScreenQueueManagmentButton, 50);
+    lv_obj_set_x(ui_adminScreenQueueManagmentButton, 0);
+    lv_obj_set_y(ui_adminScreenQueueManagmentButton, -30);
+    lv_obj_set_align(ui_adminScreenQueueManagmentButton, LV_ALIGN_CENTER);
+    lv_obj_add_flag(ui_adminScreenQueueManagmentButton, LV_OBJ_FLAG_HIDDEN);     /// Flags
+    lv_obj_set_style_bg_color(ui_adminScreenQueueManagmentButton, lv_color_hex(0x7000FF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_opa(ui_adminScreenQueueManagmentButton, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
 
-    ui_Label10 = lv_label_create(ui_adminScreen);
-    lv_obj_set_width(ui_Label10, LV_SIZE_CONTENT);   /// 1
-    lv_obj_set_height(ui_Label10, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_Label10, 8);
-    lv_obj_set_y(ui_Label10, 84);
-    lv_obj_set_align(ui_Label10, LV_ALIGN_CENTER);
-    lv_label_set_text(ui_Label10, "EMPTY QUEUE");
+    ui_queueManagmentLabel = lv_label_create(ui_adminScreen);
+    lv_obj_set_width(ui_queueManagmentLabel, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_height(ui_queueManagmentLabel, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_x(ui_queueManagmentLabel, 0);
+    lv_obj_set_y(ui_queueManagmentLabel, -30);
+    lv_obj_set_align(ui_queueManagmentLabel, LV_ALIGN_CENTER);
+    lv_label_set_text(ui_queueManagmentLabel, "MANAGE QUEUE");
+    lv_obj_set_style_text_color(ui_queueManagmentLabel, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_opa(ui_queueManagmentLabel, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_queueManagmentLabel, &lv_font_montserrat_22, LV_PART_MAIN | LV_STATE_DEFAULT);
 
-    lv_obj_add_event_cb(ui_Button3, ui_event_Button3, LV_EVENT_ALL, NULL);
-    lv_obj_add_event_cb(ui_Button5, ui_event_Button5, LV_EVENT_ALL, NULL);
+    ui_adminScanStatusLabel = lv_label_create(ui_adminScreen);
+    lv_obj_set_width(ui_adminScanStatusLabel, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_height(ui_adminScanStatusLabel, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_x(ui_adminScanStatusLabel, 0);
+    lv_obj_set_y(ui_adminScanStatusLabel, -270);
+    lv_obj_set_align(ui_adminScanStatusLabel, LV_ALIGN_CENTER);
+    lv_label_set_text(ui_adminScanStatusLabel, "Please Scan Your Union Card");
+
+    lv_obj_add_event_cb(ui_backCancelAdminButton, ui_event_backCancelAdminButton, LV_EVENT_ALL, NULL);
+    lv_obj_add_event_cb(ui_adminScanButton, ui_event_adminScanButton, LV_EVENT_ALL, NULL);
+    lv_obj_add_event_cb(ui_adminScreenAddMemberButton, ui_event_adminScreenAddMemberButton, LV_EVENT_ALL, NULL);
+    lv_obj_add_event_cb(ui_adminScreenQueueManagmentButton, ui_event_adminScreenQueueManagmentButton, LV_EVENT_ALL, NULL);
 
 }

@@ -73,17 +73,20 @@ extern lv_obj_t * ui_addPrintLabel;
 // SCREEN: ui_adminScreen
 void ui_adminScreen_screen_init(void);
 extern lv_obj_t * ui_adminScreen;
-void ui_event_Button3(lv_event_t * e);
-extern lv_obj_t * ui_Button3;
+void ui_event_backCancelAdminButton(lv_event_t * e);
+extern lv_obj_t * ui_backCancelAdminButton;
 extern lv_obj_t * ui_Label8;
+void ui_event_adminScanButton(lv_event_t * e);
 extern lv_obj_t * ui_adminScanButton;
 extern lv_obj_t * ui_addPrintLabel2;
 extern lv_obj_t * ui_adminScanLabel;
-void ui_event_Button5(lv_event_t * e);
-extern lv_obj_t * ui_Button5;
+void ui_event_adminScreenAddMemberButton(lv_event_t * e);
+extern lv_obj_t * ui_adminScreenAddMemberButton;
 extern lv_obj_t * ui_Label9;
-extern lv_obj_t * ui_Button6;
-extern lv_obj_t * ui_Label10;
+void ui_event_adminScreenQueueManagmentButton(lv_event_t * e);
+extern lv_obj_t * ui_adminScreenQueueManagmentButton;
+extern lv_obj_t * ui_queueManagmentLabel;
+extern lv_obj_t * ui_adminScanStatusLabel;
 // SCREEN: ui_addMemberScreen
 void ui_addMemberScreen_screen_init(void);
 extern lv_obj_t * ui_addMemberScreen;
@@ -109,6 +112,18 @@ extern lv_obj_t * ui_Label16;
 extern lv_obj_t * ui_Label17;
 extern lv_obj_t * ui_Label18;
 extern lv_obj_t * ui_scanMemberInfoLabel;
+// SCREEN: ui_queueManagmentScreen
+void ui_queueManagmentScreen_screen_init(void);
+extern lv_obj_t * ui_queueManagmentScreen;
+extern lv_obj_t * ui_Label2;
+void ui_event_emptyQueueButton(lv_event_t * e);
+extern lv_obj_t * ui_emptyQueueButton;
+extern lv_obj_t * ui_Label1;
+extern lv_obj_t * ui_queueManagmentStatusLabel;
+void ui_event_backCancelButton(lv_event_t * e);
+extern lv_obj_t * ui_backCancelButton;
+extern lv_obj_t * ui_Label10;
+extern lv_obj_t * ui_Label19;
 extern lv_obj_t * ui____initial_actions0;
 
 

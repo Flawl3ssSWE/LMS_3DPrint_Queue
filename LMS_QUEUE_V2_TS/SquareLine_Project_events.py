@@ -62,3 +62,19 @@ def scanMemberCardButtonClick(event_struct):
 def addMemberButtonClick(event_struct):
     return
 
+
+def emptyQueueButtonClick(event_struct):
+    return
+
+
+def backCancelAdminButtonClick(event_struct):
+    return
+
+
+def backCancelButtonQueueManagmentClick(event_struct):
+    return
+
+
+def adminScanButtonClick(event_struct):
+    return
+

@@ -183,6 +183,12 @@ userData getUserFromSQLite(String SHA256UID) {
   char SHA256UIDtoCharArray[65];
   SHA256UID.toCharArray(SHA256UIDtoCharArray, 65);
 
+  // Reset userData
+  userDataFromSQLite.Name = "No user found";
+  userDataFromSQLite.PhoneNumber = "No user found";
+  userDataFromSQLite.uniqueSHA256ID = "No user found";
+  userDataFromSQLite.Role = "No user found";
+
   int rc;
   char *zErrMsg = 0;
   sprintf(SELECT_SQL, "SELECT * FROM users WHERE uniqueSHA256ID = '%s'", SHA256UIDtoCharArray);
@@ -196,6 +202,7 @@ userData getUserFromSQLite(String SHA256UID) {
   } else {
     return userDataFromSQLite;
   }
+
 }
 
 bool addPrintIntoSQLite(userData userInfo, String printWeight, String printTime, String SHA256UID) {

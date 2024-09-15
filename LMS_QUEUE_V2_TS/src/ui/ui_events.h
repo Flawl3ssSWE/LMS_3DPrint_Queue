@@ -20,11 +20,15 @@ void addPrintToQueueButton(lv_event_t * e);
 void scanCardButtonAction(lv_event_t * e);
 void arcHoursEventIncrement(lv_event_t * e);
 void arcMinutesEventIncrement(lv_event_t * e);
+void backCancelAdminButtonClick(lv_event_t * e);
+void adminScanButtonClick(lv_event_t * e);
 void scanMemberCardButtonClick(lv_event_t * e);
 void addMemberButtonClick(lv_event_t * e);
 void memberNameTextAreaClickChangeToNumbers(lv_event_t * e);
 void phoneNumberTextAreaClickChangeToNumbers(lv_event_t * e);
 void backButtonClick(lv_event_t * e);
+void emptyQueueButtonClick(lv_event_t * e);
+void backCancelButtonQueueManagmentClick(lv_event_t * e);
 
 #ifdef __cplusplus
 } /*extern "C"*/

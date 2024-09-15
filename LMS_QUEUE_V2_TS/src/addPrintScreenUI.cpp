@@ -15,6 +15,13 @@ void scanCardButtonAction(lv_event_t * e)
 	lv_event_code_t event_code = lv_event_get_code(e);
 	lv_obj_t * target = lv_event_get_target(e);
 
+    userToAddToQueue.Name = "ERROR";
+    userToAddToQueue.PhoneNumber = "ERROR";
+    userToAddToQueue.uniqueSHA256ID = "ERROR";
+    userToAddToQueue.Role = "ERROR";
+
+    SHA256UIDtoQueue = "-1";
+
 	if(event_code == LV_EVENT_CLICKED) {
     //_ui_label_set_property(ui_timerAndInfoLabel, _UI_LABEL_PROPERTY_TEXT, "Scanning...");
     SHA256UIDtoQueue = requestRFID();
@@ -59,6 +66,10 @@ void addPrintToQueueButton(lv_event_t * e)
 
 	if(event_code == LV_EVENT_CLICKED) {
     if (SHA256UIDtoQueue != "") {
+      if (userToAddToQueue.Name == "No user found") {
+        _ui_label_set_property(ui_timerAndInfoLabel, _UI_LABEL_PROPERTY_TEXT, "No user found, try again.");
+        return;
+      }
       addPrintIntoSQLite(userToAddToQueue, "0", printTime, SHA256UIDtoQueue);
       _ui_label_set_property(ui_timerAndInfoLabel, _UI_LABEL_PROPERTY_TEXT, "Print added to queue");
     } else {

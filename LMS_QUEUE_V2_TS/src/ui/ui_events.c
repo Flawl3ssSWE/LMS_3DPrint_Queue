@@ -106,3 +106,23 @@ void Killr(lv_event_t * e)
 // {
 // 	// Your code here
 // }
+
+// void emptyQueueButtonClick(lv_event_t * e)
+// {
+// 	// Your code here
+// }
+
+// void backCancelAdminButtonClick(lv_event_t * e)
+// {
+// 	// Your code here
+// }
+
+// void backCancelButtonQueueManagmentClick(lv_event_t * e)
+// {
+// 	// Your code here
+// }
+
+// void adminScanButtonClick(lv_event_t * e)
+// {
+// 	// Your code here
+// }
