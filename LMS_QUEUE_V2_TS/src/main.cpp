@@ -12,10 +12,14 @@
 #include <FS.h>
 #include "SD.h"
 
+#include <PN532_I2C.h>
+#include <PN532.h>
+#include <NfcAdapter.h>
+
 #include "TotalltNotJonatansMasterPassword.h"
 #include "connectWIFI.h"
 #include "sqlFunctions.h"
-#include "httpRFID.h"
+#include "readRFID.h"
 #include "lvgl.h"
 #include "queueHandler.h"
 
@@ -23,12 +27,16 @@
 #include "addPrintScreenUI.h"
 #include "addMemberScreenUI.h"
 
+
+
 #define DEBUG
 
 TaskHandle_t Task1;
 void Task1code(void * pvParameters);
 
 sqlite3 *printqueDB;
+
+
 
 void setup() {
   #ifdef ARDUINO_USB_CDC_ON_BOOT
@@ -73,6 +81,9 @@ void setup() {
   #endif
 
   updateQueueUi();
+
+  Wire1.begin(17, 18);
+  nfc.begin();
  
     //sqlite3_close(printqueDB);
 }
@@ -86,11 +97,13 @@ void loop() {
 void Task1code(void * pvParameters) {
    while(1) {
     delay(1000);
-      if (WiFi.status() != WL_CONNECTED)
-      {
-        Serial.println("Missing WiFi connection, trying to reconnect: ");
-         connectToWifi();
-      }
+      // if (WiFi.status() != WL_CONNECTED)
+      // {
+      //   Serial.println("Missing WiFi connection, trying to reconnect: ");
+      //    connectToWifi();
+      // }
     }
+
+
 }
 

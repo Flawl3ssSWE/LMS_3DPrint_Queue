@@ -3,7 +3,7 @@
 #include "Arduino.h"
 #include "sqlFunctions.h"
 #include "queueHandler.h"
-#include "httpRFID.h"
+#include "readRFID.h"
 
 userData userToAddToQueue;
 int minutesArc, hoursArc;
@@ -17,7 +17,7 @@ void scanCardButtonAction(lv_event_t * e)
 
 	if(event_code == LV_EVENT_CLICKED) {
     //_ui_label_set_property(ui_timerAndInfoLabel, _UI_LABEL_PROPERTY_TEXT, "Scanning...");
-    SHA256UIDtoQueue = requestRFIDRemote();
+    SHA256UIDtoQueue = requestRFID();
     if (SHA256UIDtoQueue == "-1" ){return;}
     userToAddToQueue = getUserFromSQLite(SHA256UIDtoQueue);
     if (userToAddToQueue.Name == "No user found") {

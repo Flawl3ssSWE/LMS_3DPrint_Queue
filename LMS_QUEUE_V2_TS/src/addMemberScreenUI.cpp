@@ -1,7 +1,7 @@
 #include "addPrintScreenUI.h"
 #include "ui/ui.h"
 #include "Arduino.h"
-#include "httpRFID.h"
+#include "readRFID.h"
 #include "sqlFunctions.h"
 
 String SHA256UIDtoAdd;
@@ -33,7 +33,7 @@ void scanMemberCardButtonClick(lv_event_t * e)
 
 	if(event_code == LV_EVENT_CLICKED) {
         //_ui_label_set_property(ui_timerAndInfoLabel, _UI_LABEL_PROPERTY_TEXT, "Scanning...");
-        SHA256UIDtoAdd = requestRFIDRemote();
+        SHA256UIDtoAdd = requestRFID();
 
         if (SHA256UIDtoAdd == "-1" ){return;}
             memberToAdd = getUserFromSQLite(SHA256UIDtoAdd);
