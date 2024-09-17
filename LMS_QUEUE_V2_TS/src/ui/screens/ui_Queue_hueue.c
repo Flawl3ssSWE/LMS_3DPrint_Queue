@@ -28,6 +28,7 @@ void ui_Queue_hueue_screen_init(void)
     lv_obj_set_y(ui_Printer2, -290);
     lv_obj_set_align(ui_Printer2, LV_ALIGN_CENTER);
     lv_label_set_text(ui_Printer2, "Knut");
+    lv_obj_add_flag(ui_Printer2, LV_OBJ_FLAG_CLICKABLE);     /// Flags
     lv_obj_set_style_text_decor(ui_Printer2, LV_TEXT_DECOR_UNDERLINE, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_font(ui_Printer2, &lv_font_montserrat_36, LV_PART_MAIN | LV_STATE_DEFAULT);
 
@@ -76,6 +77,7 @@ void ui_Queue_hueue_screen_init(void)
     lv_obj_set_x(ui_queuespot2, 0);
     lv_obj_set_y(ui_queuespot2, -50);
     lv_obj_set_align(ui_queuespot2, LV_ALIGN_CENTER);
+    lv_obj_add_flag(ui_queuespot2, LV_OBJ_FLAG_CLICKABLE);     /// Flags
     lv_obj_set_style_text_font(ui_queuespot2, &lv_font_montserrat_36, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_queuespot3 = lv_label_create(ui_Queue_hueue);
@@ -202,6 +204,7 @@ void ui_Queue_hueue_screen_init(void)
     lv_obj_set_style_text_font(ui_goToAddQueueScreenButtonLabel1, &lv_font_montserrat_22, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     lv_obj_add_event_cb(ui_Printer1, ui_event_Printer1, LV_EVENT_ALL, NULL);
+    lv_obj_add_event_cb(ui_Printer2, ui_event_Printer2, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui_queuespot1, ui_event_queuespot1, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui_queuespot2, ui_event_queuespot2, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui_goToAddQueueScreenButton, ui_event_goToAddQueueScreenButton, LV_EVENT_ALL, NULL);

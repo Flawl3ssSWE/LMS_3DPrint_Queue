@@ -12,8 +12,11 @@ extern "C" {
 
 void printer1Click(lv_event_t * e);
 void printer1LongClick(lv_event_t * e);
+void printer2Click(lv_event_t * e);
 void queueSpot1Click(lv_event_t * e);
 void queueSpot1LongClick(lv_event_t * e);
+void queueSpot2LongClick1(lv_event_t * e);
+void queueSpot2EventClick2(lv_event_t * e);
 void updateButtonEventAction(lv_event_t * e);
 void cancelButton(lv_event_t * e);
 void addPrintToQueueButton(lv_event_t * e);
@@ -29,6 +32,7 @@ void phoneNumberTextAreaClickChangeToNumbers(lv_event_t * e);
 void backButtonClick(lv_event_t * e);
 void emptyQueueButtonClick(lv_event_t * e);
 void backCancelButtonQueueManagmentClick(lv_event_t * e);
+void emptyCurrentlyPrintingButtonClick(lv_event_t * e);
 void backCancelManageMyPrintsButtonClick(lv_event_t * e);
 void manageMyPrintsScanButtonClick(lv_event_t * e);
 void deleteMyPrintsButtonClick(lv_event_t * e);

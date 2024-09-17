@@ -25,14 +25,17 @@
 
     extern printData printsInQueue[6];
     extern printData printsPrinting[2];
+    extern printData printKlumpen;
+    extern printData printKnut;
 
     enum printStatus {
         Knut,
         Klumpen
     };
 
+    extern int callbackPrintqueueCounter;
 
-        bool updateQueue();
+    bool updateQueue();
     bool updatePrintBasedOnID(int id, int printer);
 
     int openDBSQLite(const char *filename, sqlite3 **db);
@@ -45,5 +48,6 @@
     bool deleteEntireQueueSQLite();
     bool deleteUsersPrintBasedOnSHA256UIDSQLite(String SHA256UID);
     bool deletePrintBasedOnIDSQLite(int id);
+    bool deleteEntireCurrentlyPrintingQueueSQLite();
 
 #endif //SQLFUNCTIONS_H

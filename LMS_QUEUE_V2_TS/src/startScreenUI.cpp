@@ -31,7 +31,7 @@ void queueSpot1Click(lv_event_t * e) {
 
 void queueSpot1LongClick(lv_event_t * e) {
   Serial.println("Queue spot 1 Long Pressed");
-  _ui_label_set_property(ui_queue, _UI_LABEL_PROPERTY_TEXT, "Queue spot 1 Long Pressed");
+  _ui_label_set_property(ui_queue, _UI_LABEL_PROPERTY_TEXT, "You found an easter egg");
   lv_color_t new_color = lv_color_hex(0x00FF00); 
   lv_obj_set_style_text_color(ui_queuespot1, new_color, LV_PART_MAIN | LV_STATE_DEFAULT); 
   String label1text = lv_label_get_text(ui_queuespot1);
@@ -102,7 +102,7 @@ void printer1LongClick(lv_event_t * e)
 	// Your code here
 }
 
-void queueSpot2Click(lv_event_t * e)
+void queueSpot2EventClick2(lv_event_t * e)
 {
 	 Serial.println("Queue spot 2 clicked");
   
@@ -121,7 +121,7 @@ void queueSpot2Click(lv_event_t * e)
   _ui_label_set_property(ui_queuespot2, _UI_LABEL_PROPERTY_TEXT, queueSpot2Text.c_str());
 }
 
-void queueSpot2LongClick(lv_event_t * e)
+void queueSpot2LongClick1(lv_event_t * e)
 {
 	// Your code here
 }

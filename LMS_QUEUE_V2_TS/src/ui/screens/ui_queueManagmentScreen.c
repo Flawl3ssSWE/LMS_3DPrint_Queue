@@ -35,7 +35,7 @@ void ui_queueManagmentScreen_screen_init(void)
     lv_obj_set_x(ui_Label1, 0);
     lv_obj_set_y(ui_Label1, -270);
     lv_obj_set_align(ui_Label1, LV_ALIGN_CENTER);
-    lv_label_set_text(ui_Label1, "EMPTY ENTIRE QUEUE");
+    lv_label_set_text(ui_Label1, "EMPTY PRINT QUEUE");
     lv_obj_set_style_text_color(ui_Label1, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_Label1, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_font(ui_Label1, &lv_font_montserrat_22, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -77,7 +77,28 @@ void ui_queueManagmentScreen_screen_init(void)
     lv_obj_set_align(ui_Label19, LV_ALIGN_CENTER);
     lv_label_set_text(ui_Label19, "You must hold down the button, to empty the queue");
 
+    ui_emptyCurrentlyPrintingButton = lv_btn_create(ui_queueManagmentScreen);
+    lv_obj_set_width(ui_emptyCurrentlyPrintingButton, 400);
+    lv_obj_set_height(ui_emptyCurrentlyPrintingButton, 50);
+    lv_obj_set_x(ui_emptyCurrentlyPrintingButton, 0);
+    lv_obj_set_y(ui_emptyCurrentlyPrintingButton, -160);
+    lv_obj_set_align(ui_emptyCurrentlyPrintingButton, LV_ALIGN_CENTER);
+    lv_obj_set_style_bg_color(ui_emptyCurrentlyPrintingButton, lv_color_hex(0x0534FF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_opa(ui_emptyCurrentlyPrintingButton, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+
+    ui_Label22 = lv_label_create(ui_queueManagmentScreen);
+    lv_obj_set_width(ui_Label22, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_height(ui_Label22, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_x(ui_Label22, 0);
+    lv_obj_set_y(ui_Label22, -160);
+    lv_obj_set_align(ui_Label22, LV_ALIGN_CENTER);
+    lv_label_set_text(ui_Label22, "EMPTY CURRENTLY PRINTING");
+    lv_obj_set_style_text_color(ui_Label22, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_opa(ui_Label22, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_Label22, &lv_font_montserrat_22, LV_PART_MAIN | LV_STATE_DEFAULT);
+
     lv_obj_add_event_cb(ui_emptyQueueButton, ui_event_emptyQueueButton, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui_backCancelButton, ui_event_backCancelButton, LV_EVENT_ALL, NULL);
+    lv_obj_add_event_cb(ui_emptyCurrentlyPrintingButton, ui_event_emptyCurrentlyPrintingButton, LV_EVENT_ALL, NULL);
 
 }

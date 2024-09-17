@@ -20,6 +20,7 @@ void ui_Queue_hueue_screen_init(void);
 extern lv_obj_t * ui_Queue_hueue;
 void ui_event_Printer1(lv_event_t * e);
 extern lv_obj_t * ui_Printer1;
+void ui_event_Printer2(lv_event_t * e);
 extern lv_obj_t * ui_Printer2;
 extern lv_obj_t * ui_printerspot1;
 extern lv_obj_t * ui_printerspot2;
@@ -125,6 +126,9 @@ void ui_event_backCancelButton(lv_event_t * e);
 extern lv_obj_t * ui_backCancelButton;
 extern lv_obj_t * ui_Label10;
 extern lv_obj_t * ui_Label19;
+void ui_event_emptyCurrentlyPrintingButton(lv_event_t * e);
+extern lv_obj_t * ui_emptyCurrentlyPrintingButton;
+extern lv_obj_t * ui_Label22;
 // SCREEN: ui_manageMyPrintsScreen
 void ui_manageMyPrintsScreen_screen_init(void);
 extern lv_obj_t * ui_manageMyPrintsScreen;

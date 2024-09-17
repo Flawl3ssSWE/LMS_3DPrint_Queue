@@ -94,3 +94,19 @@ def manageMyPrintsScanButtonClick(event_struct):
 def deleteMyPrintsButtonClick(event_struct):
     return
 
+
+def emptyCurrentlyPrintingButtonClick(event_struct):
+    return
+
+
+def queueSpot2LongClick1(event_struct):
+    return
+
+
+def queueSpot2EventClick234(event_struct):
+    return
+
+
+def queueSpot2EventClick2(event_struct):
+    return
+

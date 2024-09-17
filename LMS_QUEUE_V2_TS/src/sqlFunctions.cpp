@@ -255,6 +255,22 @@ bool deleteEntireQueueSQLite() {
   }
 }
 
+bool deleteEntireCurrentlyPrintingQueueSQLite() {
+  sprintf(INSERT_SQL, "DELETE FROM currentlyPrinting");
+  int rc;
+  char *zErrMsg = 0;
+  rc = sqlite3_exec(printqueDB, INSERT_SQL, NULL, (void*)data, &zErrMsg);
+  if (rc != SQLITE_OK) {
+    Serial.printf("SQL error: %s\n", zErrMsg);
+    sqlite3_free(zErrMsg);
+    sqlite3_close(printqueDB);
+    return false;
+  } else {
+    Serial.println("Deleted entire queue");
+    return true;
+  }
+}
+
 bool updateQueueSQLite() {
   #ifdef DEBUG
     Serial.println("Updating queue (updateQueue) with data from SQLite");
@@ -299,7 +315,7 @@ bool deleteUsersPrintBasedOnSHA256UIDSQLite(String SHA256UID) {
   char SHA256UIDtoCharArray[65];
   SHA256UID.toCharArray(SHA256UIDtoCharArray, 65);
   sprintf(INSERT_SQL, "DELETE FROM queue WHERE uniqueSHA256UID = '%s'", SHA256UIDtoCharArray);
-  
+
   int rc;
   char *zErrMsg = 0;
   rc = sqlite3_exec(printqueDB, INSERT_SQL, NULL, (void*)data, &zErrMsg);
@@ -373,4 +389,20 @@ int getCurrentQueueLengthSQLite() {
   } else {
     return callbackPrintqueueCounter;
   }
+}
+
+bool getCurrentlyPrinting() {
+  int rc;
+  char *zErrMsg = 0;
+  rc = sqlite3_exec(printqueDB, "SELECT Name, PhoneNumber, printWeight, printTime, printer, startedPrintingTimestamp, id FROM currentlyPrinting WHERE printer = 1 ORDER BY id DESC LIMIT 1", callbackPrintdata, (void*)data, &zErrMsg);
+  if (rc != SQLITE_OK) {
+    Serial.printf("SQL error: %s\n", zErrMsg);
+    sqlite3_free(zErrMsg);
+    sqlite3_close(printqueDB);
+    return false;
+  } else {
+    
+  }
+
+
 }

@@ -14,6 +14,7 @@ void ui_Queue_hueue_screen_init(void);
 lv_obj_t * ui_Queue_hueue;
 void ui_event_Printer1(lv_event_t * e);
 lv_obj_t * ui_Printer1;
+void ui_event_Printer2(lv_event_t * e);
 lv_obj_t * ui_Printer2;
 lv_obj_t * ui_printerspot1;
 lv_obj_t * ui_printerspot2;
@@ -127,6 +128,9 @@ void ui_event_backCancelButton(lv_event_t * e);
 lv_obj_t * ui_backCancelButton;
 lv_obj_t * ui_Label10;
 lv_obj_t * ui_Label19;
+void ui_event_emptyCurrentlyPrintingButton(lv_event_t * e);
+lv_obj_t * ui_emptyCurrentlyPrintingButton;
+lv_obj_t * ui_Label22;
 
 
 // SCREEN: ui_manageMyPrintsScreen
@@ -169,6 +173,14 @@ void ui_event_Printer1(lv_event_t * e)
         printer1LongClick(e);
     }
 }
+void ui_event_Printer2(lv_event_t * e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+    lv_obj_t * target = lv_event_get_target(e);
+    if(event_code == LV_EVENT_CLICKED) {
+        printer2Click(e);
+    }
+}
 void ui_event_queuespot1(lv_event_t * e)
 {
     lv_event_code_t event_code = lv_event_get_code(e);
@@ -184,11 +196,11 @@ void ui_event_queuespot2(lv_event_t * e)
 {
     lv_event_code_t event_code = lv_event_get_code(e);
     lv_obj_t * target = lv_event_get_target(e);
-    if(event_code == LV_EVENT_SHORT_CLICKED) {
-        queueSpot1Click(e);
-    }
     if(event_code == LV_EVENT_LONG_PRESSED) {
-        queueSpot1LongClick(e);
+        queueSpot2LongClick1(e);
+    }
+    if(event_code == LV_EVENT_SHORT_CLICKED) {
+        queueSpot2EventClick2(e);
     }
 }
 void ui_event_goToAddQueueScreenButton(lv_event_t * e)
@@ -375,6 +387,14 @@ void ui_event_backCancelButton(lv_event_t * e)
     }
     if(event_code == LV_EVENT_CLICKED) {
         backCancelButtonQueueManagmentClick(e);
+    }
+}
+void ui_event_emptyCurrentlyPrintingButton(lv_event_t * e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+    lv_obj_t * target = lv_event_get_target(e);
+    if(event_code == LV_EVENT_LONG_PRESSED) {
+        emptyCurrentlyPrintingButtonClick(e);
     }
 }
 void ui_event_backCancelManageMyPrintsButton(lv_event_t * e)

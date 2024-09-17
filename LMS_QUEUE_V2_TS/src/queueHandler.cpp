@@ -4,6 +4,8 @@
 
 // Call this to update the queue on the screen
 void updateQueueUi() {
+  callbackPrintqueueCounter = 0;
+  
   if (updateQueueSQLite()) {
     Serial.println("Queue updated");
   } else {

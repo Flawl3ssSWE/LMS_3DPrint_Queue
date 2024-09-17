@@ -141,3 +141,18 @@ void Killr(lv_event_t * e)
 // {
 // 	// Your code here
 // }
+
+// void emptyCurrentlyPrintingButtonClick(lv_event_t * e)
+// {
+// 	// Your code here
+// }
+
+// void queueSpot2LongClick1(lv_event_t * e)
+// {
+// 	// Your code here
+// }
+
+// void queueSpot2EventClick2(lv_event_t * e)
+// {
+// 	// Your code here
+// }

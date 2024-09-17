@@ -18,3 +18,14 @@ void backCancelButtonQueueManagmentClick(lv_event_t * e)
 {
 	_ui_label_set_property(ui_queueManagmentStatusLabel, _UI_LABEL_PROPERTY_TEXT, "STATUS LABEL");
 }
+
+void emptyCurrentlyPrintingButtonClick(lv_event_t * e)
+{
+	// Your code here
+    bool status = deleteEntireCurrentlyPrintingQueueSQLite();
+    if (status) {
+        _ui_label_set_property(ui_queueManagmentStatusLabel, _UI_LABEL_PROPERTY_TEXT, "Currntly Printing Queue is empty");
+    } else {
+        _ui_label_set_property(ui_queueManagmentStatusLabel, _UI_LABEL_PROPERTY_TEXT, "Error emptying queue");
+    }
+}
