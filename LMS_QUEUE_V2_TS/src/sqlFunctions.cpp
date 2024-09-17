@@ -121,7 +121,6 @@ int openDBSQLite(const char *filename, sqlite3 **db) {
 
 const char* data = "Callback function called";
 
-// TODO Test function :P
 void addUserIntoSQLite(userData user) {
   if (checkIfUserExistsInSQLite(user.uniqueSHA256ID)) {
     Serial.println("User already exists");
@@ -130,7 +129,7 @@ void addUserIntoSQLite(userData user) {
 
   char SHA256UIDtoCharArray[65];
   user.uniqueSHA256ID.toCharArray(SHA256UIDtoCharArray, 65);
-  sprintf(INSERT_SQL, "INSERT INTO users (Name, PhoneNumber, uniqueSHA256ID, Printquota, Role) VALUE ('%s', '%s', '%s', 0, '%s')", user.Name, user.PhoneNumber, SHA256UIDtoCharArray, user.Role);
+  sprintf(INSERT_SQL, "INSERT INTO users (Name, PhoneNumber, uniqueSHA256ID, Printquota, Date, Role) VALUES ('%s', '%s', '%s', 0, '%s', '%s')", user.Name, user.PhoneNumber, SHA256UIDtoCharArray, "0", user.Role);
   int rc;
   char *zErrMsg = 0;
   rc = sqlite3_exec(printqueDB, INSERT_SQL, callbackUserdata, (void*)data, &zErrMsg);
@@ -143,7 +142,6 @@ void addUserIntoSQLite(userData user) {
   }
 }
 
-// TODO Test function :P
 bool checkIfUserExistsInSQLite(String SHA256UID) {
   char SHA256UIDtoCharArray[65];
   SHA256UID.toCharArray(SHA256UIDtoCharArray, 65);
@@ -230,7 +228,7 @@ bool addPrintIntoSQLite(userData userInfo, String printWeight, String printTime,
     Serial.println(INSERT_SQL);
   #endif
 
-  rc = sqlite3_exec(printqueDB, INSERT_SQL, callbackPrintdata, (void*)data, &zErrMsg);
+  rc = sqlite3_exec(printqueDB, INSERT_SQL, NULL, (void*)data, &zErrMsg);
   if (rc != SQLITE_OK) {
     Serial.printf("SQL error: %s\n", zErrMsg);
     sqlite3_free(zErrMsg);
@@ -241,12 +239,11 @@ bool addPrintIntoSQLite(userData userInfo, String printWeight, String printTime,
   }
 }
 
-// TODO Test function :P
 bool deleteEntireQueueSQLite() {
   sprintf(INSERT_SQL, "DELETE FROM queue");
   int rc;
   char *zErrMsg = 0;
-  rc = sqlite3_exec(printqueDB, INSERT_SQL, callbackPrintdata, (void*)data, &zErrMsg);
+  rc = sqlite3_exec(printqueDB, INSERT_SQL, NULL, (void*)data, &zErrMsg);
   if (rc != SQLITE_OK) {
     Serial.printf("SQL error: %s\n", zErrMsg);
     sqlite3_free(zErrMsg);
@@ -294,11 +291,34 @@ bool updateQueueSQLite() {
 
   
 }
+
+
+
+// Right now it deletes all prints from a specific user, probably best to add granularity
+bool deleteUsersPrintBasedOnSHA256UIDSQLite(String SHA256UID) {
+  char SHA256UIDtoCharArray[65];
+  SHA256UID.toCharArray(SHA256UIDtoCharArray, 65);
+  sprintf(INSERT_SQL, "DELETE FROM queue WHERE uniqueSHA256UID = '%s'", SHA256UIDtoCharArray);
+  
+  int rc;
+  char *zErrMsg = 0;
+  rc = sqlite3_exec(printqueDB, INSERT_SQL, NULL, (void*)data, &zErrMsg);
+  if (rc != SQLITE_OK) {
+    Serial.printf("SQL error: %s\n", zErrMsg);
+    sqlite3_free(zErrMsg);
+    sqlite3_close(printqueDB);
+    return false;
+  } else {
+    Serial.println("Deleted prints for user based on SHA256UID");
+    return true;
+  } 
+}
+
 bool deletePrintBasedOnIDSQLite(int id) {
   sprintf(INSERT_SQL, "DELETE FROM queue WHERE Id = '%d'", id);
   int rc;
   char *zErrMsg = 0;
-  rc = sqlite3_exec(printqueDB, INSERT_SQL, callbackPrintdata, (void*)data, &zErrMsg);
+  rc = sqlite3_exec(printqueDB, INSERT_SQL, NULL, (void*)data, &zErrMsg);
   if (rc != SQLITE_OK) {
     Serial.printf("SQL error: %s\n", zErrMsg);
     sqlite3_free(zErrMsg);
@@ -316,7 +336,7 @@ bool addPrintToCurrentlyPrintingSQLite(int printqueueID, int printer) {
   sprintf(INSERT_SQL, "INSERT INTO currentlyPrinting (Name, PhoneNumber, uniqueSHA256UID, printTime, printWeight, printer, startedPrintingTimestamp) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s')", printsInQueue[printqueueID].Name, printsInQueue[printqueueID].PhoneNumber, printsInQueue[printqueueID].uniqueSHA256ID, printsInQueue[printqueueID].printTime, printsInQueue[printqueueID].printWeight, printsInQueue[printqueueID].printer, printsInQueue[printqueueID].startedPrintingTimestamp);
   int rc;
   char *zErrMsg = 0;
-  rc = sqlite3_exec(printqueDB, INSERT_SQL, callbackPrintdata, (void*)data, &zErrMsg);
+  rc = sqlite3_exec(printqueDB, INSERT_SQL, NULL, (void*)data, &zErrMsg);
   if (rc != SQLITE_OK) {
     Serial.printf("SQL error: %s\n", zErrMsg);
     sqlite3_free(zErrMsg);

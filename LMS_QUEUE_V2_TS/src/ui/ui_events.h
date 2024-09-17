@@ -29,6 +29,9 @@ void phoneNumberTextAreaClickChangeToNumbers(lv_event_t * e);
 void backButtonClick(lv_event_t * e);
 void emptyQueueButtonClick(lv_event_t * e);
 void backCancelButtonQueueManagmentClick(lv_event_t * e);
+void backCancelManageMyPrintsButtonClick(lv_event_t * e);
+void manageMyPrintsScanButtonClick(lv_event_t * e);
+void deleteMyPrintsButtonClick(lv_event_t * e);
 
 #ifdef __cplusplus
 } /*extern "C"*/

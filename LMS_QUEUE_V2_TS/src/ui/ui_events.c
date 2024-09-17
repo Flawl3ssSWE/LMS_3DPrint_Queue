@@ -126,3 +126,18 @@ void Killr(lv_event_t * e)
 // {
 // 	// Your code here
 // }
+
+// void backCancelManageMyPrintsButtonClick(lv_event_t * e)
+// {
+// 	// Your code here
+// }
+
+// void manageMyPrintsScanButtonClick(lv_event_t * e)
+// {
+// 	// Your code here
+// }
+
+// void deleteMyPrintsButtonClick(lv_event_t * e)
+// {
+// 	// Your code here
+// }

@@ -144,6 +144,8 @@ void ui_Queue_hueue_screen_init(void)
     lv_obj_set_align(ui_goToAddQueueScreenButton1, LV_ALIGN_CENTER);
     lv_obj_add_flag(ui_goToAddQueueScreenButton1, LV_OBJ_FLAG_SCROLL_ON_FOCUS);     /// Flags
     lv_obj_clear_flag(ui_goToAddQueueScreenButton1, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+    lv_obj_set_style_bg_color(ui_goToAddQueueScreenButton1, lv_color_hex(0x7A2121), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_opa(ui_goToAddQueueScreenButton1, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_updateButton = lv_imgbtn_create(ui_Queue_hueue);
     lv_imgbtn_set_src(ui_updateButton, LV_IMGBTN_STATE_RELEASED, NULL, &ui_img_31439854, NULL);
@@ -187,6 +189,17 @@ void ui_Queue_hueue_screen_init(void)
     lv_obj_set_style_text_color(ui_adminLabel, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_adminLabel, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_font(ui_adminLabel, &lv_font_montserrat_16, LV_PART_MAIN | LV_STATE_DEFAULT);
+
+    ui_goToAddQueueScreenButtonLabel1 = lv_label_create(ui_Queue_hueue);
+    lv_obj_set_width(ui_goToAddQueueScreenButtonLabel1, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_height(ui_goToAddQueueScreenButtonLabel1, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_x(ui_goToAddQueueScreenButtonLabel1, 0);
+    lv_obj_set_y(ui_goToAddQueueScreenButtonLabel1, 340);
+    lv_obj_set_align(ui_goToAddQueueScreenButtonLabel1, LV_ALIGN_CENTER);
+    lv_label_set_text(ui_goToAddQueueScreenButtonLabel1, "MANAGE MY PRINTS");
+    lv_obj_set_style_text_color(ui_goToAddQueueScreenButtonLabel1, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_opa(ui_goToAddQueueScreenButtonLabel1, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_goToAddQueueScreenButtonLabel1, &lv_font_montserrat_22, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     lv_obj_add_event_cb(ui_Printer1, ui_event_Printer1, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui_queuespot1, ui_event_queuespot1, LV_EVENT_ALL, NULL);

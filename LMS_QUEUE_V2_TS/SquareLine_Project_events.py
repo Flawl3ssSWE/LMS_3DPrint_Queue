@@ -78,3 +78,19 @@ def backCancelButtonQueueManagmentClick(event_struct):
 def adminScanButtonClick(event_struct):
     return
 
+
+def removeMyPrintsButtonClick(event_struct):
+    return
+
+
+def backCancelManageMyPrintsButtonClick(event_struct):
+    return
+
+
+def manageMyPrintsScanButtonClick(event_struct):
+    return
+
+
+def deleteMyPrintsButtonClick(event_struct):
+    return
+

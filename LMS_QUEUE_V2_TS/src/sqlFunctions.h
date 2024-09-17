@@ -43,5 +43,7 @@
     int getCurrentQueueLengthSQLite();
     void addUserIntoSQLite(userData user);
     bool deleteEntireQueueSQLite();
+    bool deleteUsersPrintBasedOnSHA256UIDSQLite(String SHA256UID);
+    bool deletePrintBasedOnIDSQLite(int id);
 
 #endif //SQLFUNCTIONS_H

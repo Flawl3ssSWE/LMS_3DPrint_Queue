@@ -43,6 +43,7 @@ extern lv_obj_t * ui_queueLength;
 void ui_event_adminButton(lv_event_t * e);
 extern lv_obj_t * ui_adminButton;
 extern lv_obj_t * ui_adminLabel;
+extern lv_obj_t * ui_goToAddQueueScreenButtonLabel1;
 // SCREEN: ui_addToQueueScreen
 void ui_addToQueueScreen_screen_init(void);
 extern lv_obj_t * ui_addToQueueScreen;
@@ -124,6 +125,21 @@ void ui_event_backCancelButton(lv_event_t * e);
 extern lv_obj_t * ui_backCancelButton;
 extern lv_obj_t * ui_Label10;
 extern lv_obj_t * ui_Label19;
+// SCREEN: ui_manageMyPrintsScreen
+void ui_manageMyPrintsScreen_screen_init(void);
+extern lv_obj_t * ui_manageMyPrintsScreen;
+void ui_event_backCancelManageMyPrintsButton(lv_event_t * e);
+extern lv_obj_t * ui_backCancelManageMyPrintsButton;
+extern lv_obj_t * ui_Label20;
+void ui_event_manageMyPrintsScanButton(lv_event_t * e);
+extern lv_obj_t * ui_manageMyPrintsScanButton;
+extern lv_obj_t * ui_manageMyPrintsLabel;
+extern lv_obj_t * ui_adminScanLabel1;
+extern lv_obj_t * ui_mangeMyPrintsStatusLabel;
+void ui_event_deleteMyPrintsButton(lv_event_t * e);
+extern lv_obj_t * ui_deleteMyPrintsButton;
+extern lv_obj_t * ui_deleteMyPrintsLabel;
+extern lv_obj_t * ui_Label21;
 extern lv_obj_t * ui____initial_actions0;
 
 

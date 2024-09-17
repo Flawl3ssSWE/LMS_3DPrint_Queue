@@ -28,7 +28,7 @@
 #include "addMemberScreenUI.h"
 #include "queueManagmentScreenUI.h"
 #include "adminScreen.h"
-
+#include "manageMyPrintsScreenUI.h"
 
 
 #define DEBUG

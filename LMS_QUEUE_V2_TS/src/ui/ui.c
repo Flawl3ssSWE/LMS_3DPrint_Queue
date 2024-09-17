@@ -37,6 +37,7 @@ lv_obj_t * ui_queueLength;
 void ui_event_adminButton(lv_event_t * e);
 lv_obj_t * ui_adminButton;
 lv_obj_t * ui_adminLabel;
+lv_obj_t * ui_goToAddQueueScreenButtonLabel1;
 
 
 // SCREEN: ui_addToQueueScreen
@@ -126,6 +127,23 @@ void ui_event_backCancelButton(lv_event_t * e);
 lv_obj_t * ui_backCancelButton;
 lv_obj_t * ui_Label10;
 lv_obj_t * ui_Label19;
+
+
+// SCREEN: ui_manageMyPrintsScreen
+void ui_manageMyPrintsScreen_screen_init(void);
+lv_obj_t * ui_manageMyPrintsScreen;
+void ui_event_backCancelManageMyPrintsButton(lv_event_t * e);
+lv_obj_t * ui_backCancelManageMyPrintsButton;
+lv_obj_t * ui_Label20;
+void ui_event_manageMyPrintsScanButton(lv_event_t * e);
+lv_obj_t * ui_manageMyPrintsScanButton;
+lv_obj_t * ui_manageMyPrintsLabel;
+lv_obj_t * ui_adminScanLabel1;
+lv_obj_t * ui_mangeMyPrintsStatusLabel;
+void ui_event_deleteMyPrintsButton(lv_event_t * e);
+lv_obj_t * ui_deleteMyPrintsButton;
+lv_obj_t * ui_deleteMyPrintsLabel;
+lv_obj_t * ui_Label21;
 lv_obj_t * ui____initial_actions0;
 const lv_img_dsc_t * ui_imgset_1953216864[1] = {&ui_img_31439854};
 
@@ -186,7 +204,7 @@ void ui_event_goToAddQueueScreenButton1(lv_event_t * e)
     lv_event_code_t event_code = lv_event_get_code(e);
     lv_obj_t * target = lv_event_get_target(e);
     if(event_code == LV_EVENT_CLICKED) {
-        _ui_screen_change(&ui_addToQueueScreen, LV_SCR_LOAD_ANIM_NONE, 500, 0, &ui_addToQueueScreen_screen_init);
+        _ui_screen_change(&ui_manageMyPrintsScreen, LV_SCR_LOAD_ANIM_NONE, 500, 0, &ui_manageMyPrintsScreen_screen_init);
     }
 }
 void ui_event_updateButton(lv_event_t * e)
@@ -359,6 +377,33 @@ void ui_event_backCancelButton(lv_event_t * e)
         backCancelButtonQueueManagmentClick(e);
     }
 }
+void ui_event_backCancelManageMyPrintsButton(lv_event_t * e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+    lv_obj_t * target = lv_event_get_target(e);
+    if(event_code == LV_EVENT_CLICKED) {
+        _ui_screen_change(&ui_Queue_hueue, LV_SCR_LOAD_ANIM_OVER_TOP, 500, 0, &ui_Queue_hueue_screen_init);
+    }
+    if(event_code == LV_EVENT_CLICKED) {
+        backCancelManageMyPrintsButtonClick(e);
+    }
+}
+void ui_event_manageMyPrintsScanButton(lv_event_t * e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+    lv_obj_t * target = lv_event_get_target(e);
+    if(event_code == LV_EVENT_CLICKED) {
+        manageMyPrintsScanButtonClick(e);
+    }
+}
+void ui_event_deleteMyPrintsButton(lv_event_t * e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+    lv_obj_t * target = lv_event_get_target(e);
+    if(event_code == LV_EVENT_LONG_PRESSED) {
+        deleteMyPrintsButtonClick(e);
+    }
+}
 
 ///////////////////// SCREENS ////////////////////
 
@@ -373,6 +418,7 @@ void ui_init(void)
     ui_adminScreen_screen_init();
     ui_addMemberScreen_screen_init();
     ui_queueManagmentScreen_screen_init();
+    ui_manageMyPrintsScreen_screen_init();
     ui____initial_actions0 = lv_obj_create(NULL);
     lv_disp_load_scr(ui_Queue_hueue);
 }

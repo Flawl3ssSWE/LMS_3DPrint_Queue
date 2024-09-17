@@ -37,8 +37,9 @@ void scanMemberCardButtonClick(lv_event_t * e)
 
         if (SHA256UIDtoAdd == "-1" ){return;}
             memberToAdd = getUserFromSQLite(SHA256UIDtoAdd);
-        if (memberToAdd.Name != "NULL") { // User exists in database, cancel adding
+        if (memberToAdd.Name != "No user found") { // User exists in database, cancel adding
             memberExists = true;
+            Serial.printf("User: %s\n", memberToAdd.Name.c_str());
             _ui_label_set_property(ui_scanMemberInfoLabel, _UI_LABEL_PROPERTY_TEXT, "User already exists in database!");
         } else {
             memberExists = false;

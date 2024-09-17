@@ -3,6 +3,7 @@ SET(SOURCES screens/ui_Queue_hueue.c
     screens/ui_adminScreen.c
     screens/ui_addMemberScreen.c
     screens/ui_queueManagmentScreen.c
+    screens/ui_manageMyPrintsScreen.c
     ui.c
     components/ui_comp_hook.c
     ui_helpers.c
