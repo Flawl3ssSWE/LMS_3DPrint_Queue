@@ -334,7 +334,7 @@ bool deletePrintBasedOnIDSQLite(int id) {
   sprintf(INSERT_SQL, "DELETE FROM queue WHERE Id = '%d'", id);
   int rc;
   char *zErrMsg = 0;
-  rc = sqlite3_exec(printqueDB, INSERT_SQL, NULL, (void*)data, &zErrMsg);
+  rc = sqlite3_exec(printqueDB, INSERT_SQL, callbackPrintdata, (void*)data, &zErrMsg);
   if (rc != SQLITE_OK) {
     Serial.printf("SQL error: %s\n", zErrMsg);
     sqlite3_free(zErrMsg);
@@ -347,12 +347,15 @@ bool deletePrintBasedOnIDSQLite(int id) {
 }
 
 bool addPrintToCurrentlyPrintingSQLite(int printqueueID, int printer) {
-  Serial.printf("Adding user: %s to currently printing", printsInQueue[printqueueID].Name);
-  
+  Serial.println("Before add To print print");
+  // Serial.printf("Adding user: %s to currently printing", printsInQueue[printqueueID].Name);
+  Serial.printf("Adding user: %s to currently printing", printDataFromSQLite.Name);
+  Serial.println("After add To print print, before SQL statement");
   sprintf(INSERT_SQL, "INSERT INTO currentlyPrinting (Name, PhoneNumber, uniqueSHA256UID, printTime, printWeight, printer, startedPrintingTimestamp) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s')", printsInQueue[printqueueID].Name, printsInQueue[printqueueID].PhoneNumber, printsInQueue[printqueueID].uniqueSHA256ID, printsInQueue[printqueueID].printTime, printsInQueue[printqueueID].printWeight, printsInQueue[printqueueID].printer, printsInQueue[printqueueID].startedPrintingTimestamp);
+  Serial.println("After SQL statement");
   int rc;
   char *zErrMsg = 0;
-  rc = sqlite3_exec(printqueDB, INSERT_SQL, NULL, (void*)data, &zErrMsg);
+  rc = sqlite3_exec(printqueDB, INSERT_SQL, callbackPrintdata, (void*)data, &zErrMsg);
   if (rc != SQLITE_OK) {
     Serial.printf("SQL error: %s\n", zErrMsg);
     sqlite3_free(zErrMsg);
@@ -368,8 +371,8 @@ bool updatePrintBasedOnID(int id, int printer) {
   #ifdef DEBUG
       Serial.println("Updating print based on ID");
   #endif
-
   deletePrintBasedOnIDSQLite(id);
+  Serial.println("Out of deleted print based on ID");
   addPrintToCurrentlyPrintingSQLite(id, printer);
 
   updateQueueUi();

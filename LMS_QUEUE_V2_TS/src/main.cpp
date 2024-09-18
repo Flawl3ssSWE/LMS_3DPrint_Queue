@@ -85,6 +85,7 @@ void setup() {
   updateQueueUi();
 
   Wire1.begin(17, 18);
+  delay(500);
   nfc.begin();
  
     //sqlite3_close(printqueDB);
