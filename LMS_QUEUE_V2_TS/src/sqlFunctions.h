@@ -27,6 +27,7 @@
     extern printData printsPrinting[2];
     extern printData printKlumpen;
     extern printData printKnut;
+    extern printData printDataFromSQLite;
 
     enum printStatus {
         Knut,
@@ -49,5 +50,6 @@
     bool deleteUsersPrintBasedOnSHA256UIDSQLite(String SHA256UID);
     bool deletePrintBasedOnIDSQLite(int id);
     bool deleteEntireCurrentlyPrintingQueueSQLite();
+    bool getPrintdataBasedOnIDSQLite(int id);
 
 #endif //SQLFUNCTIONS_H

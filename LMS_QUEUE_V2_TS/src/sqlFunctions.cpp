@@ -9,7 +9,7 @@
 #include <FS.h>
 #include "SD.h"
 #include "queueHandler.h"
-
+#include "ui/ui.h"
 #define DEBUG
 
 extern sqlite3 *printqueDB;
@@ -44,28 +44,27 @@ int callbackUserdata(void *data, int argc, char **argv, char **azColName){
 int callbackPrintdata(void *data, int argc, char **argv, char **azColName){
   Serial.println("Inserted data is:");
   printDataFromSQLite.Name = argv[0] ? argv[0]: "No print found";
-  printDataFromSQLite.Name = argv[1] ? argv[1]: "No print found";
-  printDataFromSQLite.Name = argv[2] ? argv[2]: "No print found";
-  printDataFromSQLite.Name = argv[3] ? argv[3]: "No print found";
-  printDataFromSQLite.Name = argv[4] ? argv[4]: "No print found";
-  printDataFromSQLite.Name = argv[5] ? argv[5]: "No print found";
-  printDataFromSQLite.Name = argv[6] ? argv[6]: "No print found";
-  printDataFromSQLite.Name = argv[7] ? argv[7]: "No print found";
-  printDataFromSQLite.Name = argv[8] ? argv[8]: "No print found";
-  printDataFromSQLite.Name = argv[9] ? argv[9]: "No print found";
+  printDataFromSQLite.PhoneNumber = argv[1] ? argv[1]: "No print found";
+  printDataFromSQLite.uniqueSHA256ID = argv[2] ? argv[2]: "No print found";
+  printDataFromSQLite.printTime = argv[3] ? argv[3]: "No print found";
+  printDataFromSQLite.printWeight = argv[4] ? argv[4]: "-1";
+  printDataFromSQLite.date = argv[5] ? argv[5]: "No print found";
+  printDataFromSQLite.printer = argv[6] ? argv[6]: "-1";
+  printDataFromSQLite.startedPrintingTimestamp = argv[7] ? argv[7]: "No print found";
+  printDataFromSQLite.id = atoi(argv[8]) ? atoi(argv[8]) : -1;
 
   #ifdef DEBUG
-    Serial.printf("Arg 0: %s \n", argv[0]);
-    Serial.printf("Arg 1: %s \n", argv[1]);
-    Serial.printf("Arg 2: %s \n", argv[2]);
-    Serial.printf("Arg 3: %s \n", argv[3]);
-    Serial.printf("Arg 4: %s \n", argv[4]);
-    Serial.printf("Arg 5: %s \n", argv[5]);
-    Serial.printf("Arg 6: %s \n", argv[6]);
-    Serial.printf("Arg 7: %s \n", argv[7]);
-    Serial.printf("Arg 8: %s \n", argv[8]);
-    Serial.printf("Arg 9: %s \n", argv[9]);
+    Serial.printf(argv[0]);
+    Serial.printf(argv[1]);
+    Serial.printf(argv[2]);
+    Serial.printf(argv[3]);
+    Serial.printf(argv[4]);
+    Serial.printf(argv[5]);
+    Serial.printf(argv[6]);
+    Serial.printf(argv[7]);
   #endif
+
+  Serial.println("Added all data");
 
   return 0;
 }
@@ -221,7 +220,7 @@ bool addPrintIntoSQLite(userData userInfo, String printWeight, String printTime,
   // Create and execute the query
   int rc;
   char *zErrMsg = 0;
-  sprintf(INSERT_SQL, "INSERT INTO queue (Name, PhoneNumber, uniqueSHA256UID, printTime, printWeight) VALUES ('%s', '%s', '%s', '%s', '%s')", userInfo.Name, userInfo.PhoneNumber, SHA256UID.c_str(), printTime, printWeight);
+  sprintf(INSERT_SQL, "INSERT INTO queue (Name, PhoneNumber, uniqueSHA256UID, printTime, printWeight, date, startedPrintingTimestamp, printer) VALUES ('%s', '%s', '%s', '%s', '%s', '0', '0', '0')", userInfo.Name, userInfo.PhoneNumber, SHA256UID.c_str(), printTime, printWeight);
 
   #ifdef DEBUG
     Serial.print("Insert String: ");
@@ -301,6 +300,7 @@ bool updateQueueSQLite() {
     return false;
   } else {
       Serial.println("Leaving updateQueueSQLite");
+      sqlite3_free(zErrMsg);
       callbackPrintqueueCounter = 0;
     return true;
   }
@@ -334,7 +334,7 @@ bool deletePrintBasedOnIDSQLite(int id) {
   sprintf(INSERT_SQL, "DELETE FROM queue WHERE Id = '%d'", id);
   int rc;
   char *zErrMsg = 0;
-  rc = sqlite3_exec(printqueDB, INSERT_SQL, callbackPrintdata, (void*)data, &zErrMsg);
+  rc = sqlite3_exec(printqueDB, INSERT_SQL, NULL, (void*)data, &zErrMsg);
   if (rc != SQLITE_OK) {
     Serial.printf("SQL error: %s\n", zErrMsg);
     sqlite3_free(zErrMsg);
@@ -348,14 +348,21 @@ bool deletePrintBasedOnIDSQLite(int id) {
 
 bool addPrintToCurrentlyPrintingSQLite(int printqueueID, int printer) {
   Serial.println("Before add To print print");
+  Serial.printf("\n\n");
+  Serial.printf("Id is %d\n", printqueueID);
+  Serial.printf("Printer is %d\n", printer);
+  Serial.printf("Amount of prints in variable %d", sizeof(printsInQueue));
+  Serial.printf("\n\n");
   // Serial.printf("Adding user: %s to currently printing", printsInQueue[printqueueID].Name);
-  Serial.printf("Adding user: %s to currently printing", printDataFromSQLite.Name);
+  Serial.printf("Adding user: %s to currently printing", printsInQueue[printqueueID].Name);
+
+
   Serial.println("After add To print print, before SQL statement");
   sprintf(INSERT_SQL, "INSERT INTO currentlyPrinting (Name, PhoneNumber, uniqueSHA256UID, printTime, printWeight, printer, startedPrintingTimestamp) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s')", printsInQueue[printqueueID].Name, printsInQueue[printqueueID].PhoneNumber, printsInQueue[printqueueID].uniqueSHA256ID, printsInQueue[printqueueID].printTime, printsInQueue[printqueueID].printWeight, printsInQueue[printqueueID].printer, printsInQueue[printqueueID].startedPrintingTimestamp);
   Serial.println("After SQL statement");
   int rc;
   char *zErrMsg = 0;
-  rc = sqlite3_exec(printqueDB, INSERT_SQL, callbackPrintdata, (void*)data, &zErrMsg);
+  rc = sqlite3_exec(printqueDB, INSERT_SQL, NULL, (void*)data, &zErrMsg);
   if (rc != SQLITE_OK) {
     Serial.printf("SQL error: %s\n", zErrMsg);
     sqlite3_free(zErrMsg);
@@ -365,15 +372,19 @@ bool addPrintToCurrentlyPrintingSQLite(int printqueueID, int printer) {
     Serial.println("Added print to currently printing");
     return true;
   }
+  return true;
 }
 
 bool updatePrintBasedOnID(int id, int printer) {
   #ifdef DEBUG
       Serial.println("Updating print based on ID");
   #endif
+  // lv_timer_handler();
+  getPrintdataBasedOnIDSQLite(id);
+  Serial.printf("Out of getPrintData \n User is %s\n", printDataFromSQLite.Name);
   deletePrintBasedOnIDSQLite(id);
   Serial.println("Out of deleted print based on ID");
-  addPrintToCurrentlyPrintingSQLite(id, printer);
+  // addPrintToCurrentlyPrintingSQLite(id, printer);
 
   updateQueueUi();
 
@@ -394,10 +405,27 @@ int getCurrentQueueLengthSQLite() {
   }
 }
 
+bool getPrintdataBasedOnIDSQLite(int id) {
+  int rc;
+  char *zErrMsg = 0;
+  sprintf(SELECT_SQL, "SELECT Name, PhoneNumber, uniqueSHA256UID, printTime, printWeight, date, printer, startedPrintingTimestamp, id FROM queue WHERE id = %d", id);
+  lv_timer_handler();
+  rc = sqlite3_exec(printqueDB, SELECT_SQL, callbackPrintdata, (void*)data, &zErrMsg);
+  if (rc != SQLITE_OK) {
+    Serial.printf("SQL error: %s\n", zErrMsg);
+    sqlite3_free(zErrMsg);
+    sqlite3_close(printqueDB);
+    return false;
+  } else {
+    sqlite3_free(zErrMsg);
+    return true;
+  }
+}
+
 bool getCurrentlyPrinting() {
   int rc;
   char *zErrMsg = 0;
-  rc = sqlite3_exec(printqueDB, "SELECT Name, PhoneNumber, printWeight, printTime, printer, startedPrintingTimestamp, id FROM currentlyPrinting WHERE printer = 1 ORDER BY id DESC LIMIT 1", callbackPrintdata, (void*)data, &zErrMsg);
+  rc = sqlite3_exec(printqueDB, "SELECT Name, PhoneNumber, printWeight, printTime, printer, startedPrintingTimestamp, id FROM currentlyPrinting WHERE printer = 1 ORDER BY id DESC LIMIT 1", NULL, (void*)data, &zErrMsg);
   if (rc != SQLITE_OK) {
     Serial.printf("SQL error: %s\n", zErrMsg);
     sqlite3_free(zErrMsg);

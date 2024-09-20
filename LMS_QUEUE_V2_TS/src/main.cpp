@@ -50,15 +50,15 @@ void setup() {
   lv_disp_set_rotation(lv_disp_get_default(), LV_DISP_ROT_90);
   ui_init();
 
-  xTaskCreatePinnedToCore(
-      Task1code, /* Function to implement the task */
-      "Task1", /* Name of the task */
-      10000,  /* Stack size in words */
-      NULL,  /* Task input parameter */
-      0,  /* Priority of the task */
-      &Task1,  /* Task handle. */
-      1 /* Core where the task should run */
-  ); 
+  // xTaskCreatePinnedToCore(
+  //     Task1code, /* Function to implement the task */
+  //     "Task1", /* Name of the task */
+  //     10000,  /* Stack size in words */
+  //     NULL,  /* Task input parameter */
+  //     0,  /* Priority of the task */
+  //     &Task1,  /* Task handle. */
+  //     1 /* Core where the task should run */
+  // ); 
 
   lv_timer_handler();
 
@@ -97,16 +97,16 @@ void loop() {
 }
 
 // Code to run the WiFi connection on the second core
-void Task1code(void * pvParameters) {
-   while(1) {
-    delay(1000);
-      // if (WiFi.status() != WL_CONNECTED)
-      // {
-      //   Serial.println("Missing WiFi connection, trying to reconnect: ");
-      //    connectToWifi();
-      // }
-    }
+// void Task1code(void * pvParameters) {
+//    while(1) {
+//     delay(1000);
+//       // if (WiFi.status() != WL_CONNECTED)
+//       // {
+//       //   Serial.println("Missing WiFi connection, trying to reconnect: ");
+//       //    connectToWifi();
+//       // }
+//     }
 
 
-}
+// }
 
