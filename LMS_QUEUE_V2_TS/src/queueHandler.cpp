@@ -44,10 +44,6 @@ void updateQueueUi() {
   } else {
     Serial.println("Currently printing update failed");
   }
-  
-
-  
-
 
   if (printOnKlumpen.Name != "No print found") {
     _ui_label_set_property(ui_printerspot1, _UI_LABEL_PROPERTY_TEXT, printOnKlumpen.Name.c_str());
@@ -60,6 +56,10 @@ void updateQueueUi() {
   int queueLength = getCurrentQueueLengthSQLite();
   String queueLengthString = "Queue length: " + String(queueLength);
   _ui_label_set_property(ui_queueLength, _UI_LABEL_PROPERTY_TEXT, queueLengthString.c_str());
+
+  #ifdef DEBUG
+    Serial.println("Queue updated");
+  #endif
 
   lv_timer_handler();
 }

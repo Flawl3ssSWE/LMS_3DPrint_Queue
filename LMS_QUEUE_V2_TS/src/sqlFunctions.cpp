@@ -73,52 +73,34 @@ int callbackPrintdata(void *data, int argc, char **argv, char **azColName){
 }
 
 int callbackCurrentlyPrinting(void *data, int argc, char **argv, char **azColName){
-  Serial.println("In callbackCurrentlyPrinting");
-
-  for (int i = 0; i<argc; i++){
-       Serial.printf("Index: %d, %s = %s\n", i, azColName[i], argv[i] ? argv[i] : "NULL");
-   }
+  #ifdef DEBUG
+    Serial.println("In callbackCurrentlyPrinting");
+  #endif
 
   if (argv[6] && atoi(argv[6]) == 0) {
     printOnKlumpen.Name = argv[0] ? argv[0]: "No print found";
-    Serial.println("Name");
     printOnKlumpen.PhoneNumber = argv[1] ? argv[1]: "-1";
-    Serial.println("PhoneNumber");
     printOnKlumpen.uniqueSHA256ID = argv[2] ? argv[2]: "No print found";
-    Serial.println("SHA256UID");
     printOnKlumpen.printTime = argv[3] ? argv[3]: "No print found";
-    Serial.println("Printtime");
     printOnKlumpen.printWeight = argv[4] ? argv[4]: "-1";
-    Serial.println("Printweight");
     printOnKlumpen.date = argv[5] ? argv[5]: "No print found";
-    Serial.println("Date");
     printOnKlumpen.printer = argv[6] ? argv[6]: "-1";
-    Serial.println("Printer");
     printOnKlumpen.startedPrintingTimestamp = argv[7] ? argv[7]: "No print found";
-    Serial.println("StartedPrintingTimestamp");
-    // printOnKlumpen.id = atoi(argv[8]) ? atoi(argv[8]) : -1;
-    // Serial.println("ID");
+    printOnKlumpen.id = atoi(argv[8]) ? atoi(argv[8]) : -1;
   } else if (argv[6] && atoi(argv[6]) == 1) {
     printOnKnut.Name = argv[0] ? argv[0]: "No print found";
-    Serial.println("Name");
     printOnKnut.PhoneNumber = argv[1] ? argv[1]: "-1";
-    Serial.println("PhoneNumber");
     printOnKnut.uniqueSHA256ID = argv[2] ? argv[2]: "No print found";
-    Serial.println("SHA256UID");
     printOnKnut.printTime = argv[3] ? argv[3]: "No print found";
-    Serial.println("Printtime");
     printOnKnut.printWeight = argv[4] ? argv[4]: "-1";
-    Serial.println("Printweight");
     printOnKnut.date = argv[5] ? argv[5]: "No print found";
-    Serial.println("Date");
     printOnKnut.printer = argv[6] ? argv[6]: "-1";
-    Serial.println("Printer");
     printOnKnut.startedPrintingTimestamp = argv[7] ? argv[7]: "No print found";
-    Serial.println("StartedPrintingTimestamp");
-    // printOnKnut.id = atoi(argv[8]) ? atoi(argv[8]) : -1;
-    // Serial.println("ID");
+    printOnKnut.id = atoi(argv[8]) ? atoi(argv[8]) : -1;
   } else {
-    Serial.println("No print found");
+    #ifdef DEBUG
+      Serial.println("No print found");
+    #endif
   }
 
   return 0;
@@ -408,12 +390,8 @@ bool addPrintToCurrentlyPrintingSQLite(int printqueueID, int printer) {
 
   #ifdef DEBUG
     Serial.println("Adding print to currently printing");
-    Serial.print("INSERT_SQL: ");
-    Serial.println(INSERT_SQL);
   #endif
 
-  Serial.println("SQL Statement Created");
-  Serial.println(INSERT_SQL);
   int rc;
   char *zErrMsg = 0;
   rc = sqlite3_exec(printqueDB, INSERT_SQL, NULL, (void*)data, &zErrMsg);
@@ -519,12 +497,9 @@ bool updatePrintBasedOnID(int id, int printer) {
   #ifdef DEBUG
       Serial.println("Updating print based on ID");
   #endif
-  // lv_timer_handler();
+
   getPrintdataBasedOnIDSQLite(id);
-  Serial.printf("Out of getPrintData \n User is %s\n", printDataFromSQLite.Name);
-  deletePrintBasedOnIDSQLite(id);
-  Serial.println("Out of deleted print based on ID");
-  
+  deletePrintBasedOnIDSQLite(id);  
   addPrintToCurrentlyPrintingSQLite(id, printer);
 
   updateQueueUi();
