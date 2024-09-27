@@ -25,13 +25,14 @@
 
     extern printData printsInQueue[6];
     extern printData printsPrinting[2];
-    extern printData printKlumpen;
-    extern printData printKnut;
+    extern printData printOnKlumpen;
+    extern printData printOnKnut;
     extern printData printDataFromSQLite;
 
+    // Klumpen = 0, Knut = 1
     enum printStatus {
-        Knut,
-        Klumpen
+        Klumpen,
+        Knut
     };
 
     extern int callbackPrintqueueCounter;
@@ -51,5 +52,6 @@
     bool deletePrintBasedOnIDSQLite(int id);
     bool deleteEntireCurrentlyPrintingQueueSQLite();
     bool getPrintdataBasedOnIDSQLite(int id);
+    bool getCurrentlyPrintingSQLite();
 
 #endif //SQLFUNCTIONS_H
