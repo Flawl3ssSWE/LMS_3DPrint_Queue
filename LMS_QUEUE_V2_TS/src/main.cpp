@@ -31,7 +31,7 @@
 #include "manageMyPrintsScreenUI.h"
 
 
-#define DEBUG
+//#define DEBUG
 
 TaskHandle_t Task1;
 void Task1code(void * pvParameters);

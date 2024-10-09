@@ -45,6 +45,9 @@ void ui_event_adminButton(lv_event_t * e);
 extern lv_obj_t * ui_adminButton;
 extern lv_obj_t * ui_adminLabel;
 extern lv_obj_t * ui_goToAddQueueScreenButtonLabel1;
+void ui_event_goToAddInstructionsScreenButton(lv_event_t * e);
+extern lv_obj_t * ui_goToAddInstructionsScreenButton;
+extern lv_obj_t * ui_adminLabel1;
 // SCREEN: ui_addToQueueScreen
 void ui_addToQueueScreen_screen_init(void);
 extern lv_obj_t * ui_addToQueueScreen;
@@ -144,13 +147,21 @@ void ui_event_deleteMyPrintsButton(lv_event_t * e);
 extern lv_obj_t * ui_deleteMyPrintsButton;
 extern lv_obj_t * ui_deleteMyPrintsLabel;
 extern lv_obj_t * ui_Label21;
+// SCREEN: ui_instructionsScreen
+void ui_instructionsScreen_screen_init(void);
+extern lv_obj_t * ui_instructionsScreen;
+void ui_event_goToQueueScreenButton3(lv_event_t * e);
+extern lv_obj_t * ui_goToQueueScreenButton3;
+extern lv_obj_t * ui_goToQueueScreenButtonLabel3;
+extern lv_obj_t * ui_Label23;
+extern lv_obj_t * ui_Label24;
+extern lv_obj_t * ui_Label25;
+extern lv_obj_t * ui_instructionsLabel;
+extern lv_obj_t * ui_Label26;
 extern lv_obj_t * ui____initial_actions0;
-
 
 LV_IMG_DECLARE(ui__temporary_image);
 LV_IMG_DECLARE(ui_img_31439854);    // assets/update-12-32.png
-
-
 
 
 

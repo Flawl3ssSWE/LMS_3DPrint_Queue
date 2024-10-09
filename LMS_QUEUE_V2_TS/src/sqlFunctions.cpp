@@ -10,7 +10,7 @@
 #include "SD.h"
 #include "queueHandler.h"
 #include "ui/ui.h"
-#define DEBUG
+//#define DEBUG
 
 extern sqlite3 *printqueDB;
 
@@ -30,39 +30,29 @@ int callbackUserdata(void *data, int argc, char **argv, char **azColName){
   userDataFromSQLite.PhoneNumber = argv[1] ? argv[1]: "-1";
   userDataFromSQLite.uniqueSHA256ID = argv[2] ? argv[2]: "No user found";
   userDataFromSQLite.Role  = argv[5] ? argv[5]: "No user found";
-
-  Serial.printf("Arg 0: %s \n", argv[0]);
-  Serial.printf("Arg 1: %s \n", argv[1]);
-  Serial.printf("Arg 2: %s \n", argv[2]);
-  Serial.printf("Arg 3: %s \n", argv[3]);
-  Serial.printf("Arg 4: %s \n", argv[4]);
-  Serial.printf("Arg 5: %s \n", argv[5]);
-  Serial.printf("Arg 6: %s \n", argv[6]);
-  Serial.printf("Arg 7: %s \n", argv[7] ? argv[7]: "NULL");
-
+  #ifdef DEBUG
+    Serial.printf("Arg 0: %s \n", argv[0]);
+    Serial.printf("Arg 1: %s \n", argv[1]);
+    Serial.printf("Arg 2: %s \n", argv[2]);
+    Serial.printf("Arg 3: %s \n", argv[3]);
+    Serial.printf("Arg 4: %s \n", argv[4]);
+    Serial.printf("Arg 5: %s \n", argv[5]);
+    Serial.printf("Arg 6: %s \n", argv[6]);
+    Serial.printf("Arg 7: %s \n", argv[7] ? argv[7]: "NULL");
+  #endif
   return 0;
 }
 
 int callbackPrintdata(void *data, int argc, char **argv, char **azColName){
-  Serial.println("Inserted data is:");
   printDataFromSQLite.Name = argv[0] ? argv[0]: "No print found";
-    Serial.println("is the name"); Serial.printf(argv[0]);
   printDataFromSQLite.PhoneNumber = argv[1] ? argv[1]: "-1";
-    Serial.println("is the PhoneNumber"); Serial.printf(argv[1]);
   printDataFromSQLite.uniqueSHA256ID = argv[2] ? argv[2]: "No print found";
-    Serial.println("is the SHA256UID");Serial.printf(argv[2]);
   printDataFromSQLite.printTime = argv[3] ? argv[3]: "No print found";
-     Serial.println("is the printTime"); Serial.printf(argv[3]);
   printDataFromSQLite.printWeight = argv[4] ? argv[4]: "-1";
-    Serial.println("is the printWeight"); Serial.printf(argv[4]);
   printDataFromSQLite.date = argv[5] ? argv[5]: "No print found";
-    Serial.println("is the date"); Serial.printf(argv[5]);
   printDataFromSQLite.printer = argv[6] ? argv[6]: "-1";
-    Serial.println("is the printer");Serial.printf(argv[6]);
   printDataFromSQLite.startedPrintingTimestamp = argv[7] ? argv[7]: "No print found";
-    Serial.println("is the starttimestamp"); Serial.printf(argv[7]);
   printDataFromSQLite.id = atoi(argv[8]) ? atoi(argv[8]) : -1;
-    Serial.println("is the id"); Serial.printf(argv[8]);
 
   #ifdef DEBUG
   #endif

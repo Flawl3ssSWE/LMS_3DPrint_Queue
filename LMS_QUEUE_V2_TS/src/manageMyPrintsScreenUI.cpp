@@ -50,8 +50,8 @@ void deleteMyPrintsButtonClick(lv_event_t * e)
 {
 	bool status = deleteUsersPrintBasedOnSHA256UIDSQLite(userToManage.uniqueSHA256ID);
     if (status) {
-        _ui_label_set_property(ui_timerAndInfoLabel, _UI_LABEL_PROPERTY_TEXT, "Prints deleted!");
+        _ui_label_set_property(ui_mangeMyPrintsStatusLabel, _UI_LABEL_PROPERTY_TEXT, "Prints deleted!");
     } else {
-        _ui_label_set_property(ui_timerAndInfoLabel, _UI_LABEL_PROPERTY_TEXT, "Error!");
+        _ui_label_set_property(ui_mangeMyPrintsStatusLabel, _UI_LABEL_PROPERTY_TEXT, "Error!");
     }
 }

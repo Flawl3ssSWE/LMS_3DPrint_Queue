@@ -158,8 +158,8 @@ void ui_Queue_hueue_screen_init(void)
     lv_imgbtn_set_src(ui_updateButton, LV_IMGBTN_STATE_CHECKED_DISABLED, NULL, &ui__temporary_image, NULL);
     lv_obj_set_height(ui_updateButton, 33);
     lv_obj_set_width(ui_updateButton, LV_SIZE_CONTENT);   /// 1
-    lv_obj_set_x(ui_updateButton, 222);
-    lv_obj_set_y(ui_updateButton, -380);
+    lv_obj_set_x(ui_updateButton, 221);
+    lv_obj_set_y(ui_updateButton, 380);
     lv_obj_set_align(ui_updateButton, LV_ALIGN_CENTER);
 
     ui_queueLength = lv_label_create(ui_Queue_hueue);
@@ -203,6 +203,26 @@ void ui_Queue_hueue_screen_init(void)
     lv_obj_set_style_text_opa(ui_goToAddQueueScreenButtonLabel1, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_font(ui_goToAddQueueScreenButtonLabel1, &lv_font_montserrat_22, LV_PART_MAIN | LV_STATE_DEFAULT);
 
+    ui_goToAddInstructionsScreenButton = lv_btn_create(ui_Queue_hueue);
+    lv_obj_set_width(ui_goToAddInstructionsScreenButton, 118);
+    lv_obj_set_height(ui_goToAddInstructionsScreenButton, 32);
+    lv_obj_set_x(ui_goToAddInstructionsScreenButton, 175);
+    lv_obj_set_y(ui_goToAddInstructionsScreenButton, -370);
+    lv_obj_set_align(ui_goToAddInstructionsScreenButton, LV_ALIGN_CENTER);
+    lv_obj_set_style_bg_color(ui_goToAddInstructionsScreenButton, lv_color_hex(0x505050), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_opa(ui_goToAddInstructionsScreenButton, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+
+    ui_adminLabel1 = lv_label_create(ui_Queue_hueue);
+    lv_obj_set_width(ui_adminLabel1, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_height(ui_adminLabel1, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_x(ui_adminLabel1, 175);
+    lv_obj_set_y(ui_adminLabel1, -370);
+    lv_obj_set_align(ui_adminLabel1, LV_ALIGN_CENTER);
+    lv_label_set_text(ui_adminLabel1, "Instructions");
+    lv_obj_set_style_text_color(ui_adminLabel1, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_opa(ui_adminLabel1, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_adminLabel1, &lv_font_montserrat_16, LV_PART_MAIN | LV_STATE_DEFAULT);
+
     lv_obj_add_event_cb(ui_Printer1, ui_event_Printer1, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui_Printer2, ui_event_Printer2, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui_queuespot1, ui_event_queuespot1, LV_EVENT_ALL, NULL);
@@ -211,5 +231,6 @@ void ui_Queue_hueue_screen_init(void)
     lv_obj_add_event_cb(ui_goToAddQueueScreenButton1, ui_event_goToAddQueueScreenButton1, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui_updateButton, ui_event_updateButton, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui_adminButton, ui_event_adminButton, LV_EVENT_ALL, NULL);
+    lv_obj_add_event_cb(ui_goToAddInstructionsScreenButton, ui_event_goToAddInstructionsScreenButton, LV_EVENT_ALL, NULL);
 
 }

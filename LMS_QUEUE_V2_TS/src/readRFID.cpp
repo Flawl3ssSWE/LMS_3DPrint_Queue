@@ -2,7 +2,7 @@
 #include <Arduino.h>
 #include <string.h>
 #include <TotalltNotJonatansMasterPassword.h>
-#define DEBUG
+//#define DEBUG
 
 #include <PN532_I2C.h>
 #include <PN532.h>

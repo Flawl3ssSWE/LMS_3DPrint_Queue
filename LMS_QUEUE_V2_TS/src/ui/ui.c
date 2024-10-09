@@ -39,6 +39,9 @@ void ui_event_adminButton(lv_event_t * e);
 lv_obj_t * ui_adminButton;
 lv_obj_t * ui_adminLabel;
 lv_obj_t * ui_goToAddQueueScreenButtonLabel1;
+void ui_event_goToAddInstructionsScreenButton(lv_event_t * e);
+lv_obj_t * ui_goToAddInstructionsScreenButton;
+lv_obj_t * ui_adminLabel1;
 
 
 // SCREEN: ui_addToQueueScreen
@@ -148,6 +151,19 @@ void ui_event_deleteMyPrintsButton(lv_event_t * e);
 lv_obj_t * ui_deleteMyPrintsButton;
 lv_obj_t * ui_deleteMyPrintsLabel;
 lv_obj_t * ui_Label21;
+
+
+// SCREEN: ui_instructionsScreen
+void ui_instructionsScreen_screen_init(void);
+lv_obj_t * ui_instructionsScreen;
+void ui_event_goToQueueScreenButton3(lv_event_t * e);
+lv_obj_t * ui_goToQueueScreenButton3;
+lv_obj_t * ui_goToQueueScreenButtonLabel3;
+lv_obj_t * ui_Label23;
+lv_obj_t * ui_Label24;
+lv_obj_t * ui_Label25;
+lv_obj_t * ui_instructionsLabel;
+lv_obj_t * ui_Label26;
 lv_obj_t * ui____initial_actions0;
 const lv_img_dsc_t * ui_imgset_1953216864[1] = {&ui_img_31439854};
 
@@ -233,6 +249,14 @@ void ui_event_adminButton(lv_event_t * e)
     lv_obj_t * target = lv_event_get_target(e);
     if(event_code == LV_EVENT_CLICKED) {
         _ui_screen_change(&ui_adminScreen, LV_SCR_LOAD_ANIM_FADE_ON, 0, 0, &ui_adminScreen_screen_init);
+    }
+}
+void ui_event_goToAddInstructionsScreenButton(lv_event_t * e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+    lv_obj_t * target = lv_event_get_target(e);
+    if(event_code == LV_EVENT_CLICKED) {
+        _ui_screen_change(&ui_instructionsScreen, LV_SCR_LOAD_ANIM_NONE, 500, 0, &ui_instructionsScreen_screen_init);
     }
 }
 void ui_event_goToQueueScreenButton(lv_event_t * e)
@@ -424,6 +448,17 @@ void ui_event_deleteMyPrintsButton(lv_event_t * e)
         deleteMyPrintsButtonClick(e);
     }
 }
+void ui_event_goToQueueScreenButton3(lv_event_t * e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+    lv_obj_t * target = lv_event_get_target(e);
+    if(event_code == LV_EVENT_CLICKED) {
+        _ui_screen_change(&ui_Queue_hueue, LV_SCR_LOAD_ANIM_NONE, 500, 0, &ui_Queue_hueue_screen_init);
+    }
+    if(event_code == LV_EVENT_CLICKED) {
+        cancelButton(e);
+    }
+}
 
 ///////////////////// SCREENS ////////////////////
 
@@ -439,6 +474,7 @@ void ui_init(void)
     ui_addMemberScreen_screen_init();
     ui_queueManagmentScreen_screen_init();
     ui_manageMyPrintsScreen_screen_init();
+    ui_instructionsScreen_screen_init();
     ui____initial_actions0 = lv_obj_create(NULL);
     lv_disp_load_scr(ui_Queue_hueue);
 }

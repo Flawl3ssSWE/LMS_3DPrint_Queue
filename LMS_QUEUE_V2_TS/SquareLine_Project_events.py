@@ -110,3 +110,7 @@ def queueSpot2EventClick234(event_struct):
 def queueSpot2EventClick2(event_struct):
     return
 
+
+def printer2Click(event_struct):
+    return
+
