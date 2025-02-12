@@ -74,7 +74,7 @@ void setup() {
 
   sqlite3_initialize();
 
-    if (openDBSQLite("/sd/LMS_Printque.db", &printqueDB))
+    if (openDBSQLite("/sd/DB-Example.db", &printqueDB))
         return;
   
   // Credit the creators if not in debug mode
